@@ -6,7 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { ATLAS_URI } = require('../config');
 
 mongoose
-  .connect(`mongodb://127.0.0.1:27017/${ATLAS_URI}`)
+  .connect(ATLAS_URI) // Changed this to fix mongodb atlas connection
   .then(() => console.log('Database connected!'))
   .catch((err) => console.log(err));
 
