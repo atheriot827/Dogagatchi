@@ -13,6 +13,7 @@ import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
 import Dogtionary from './Dogtionary.jsx';
 import WordOfTheDay from './WordOfTheDay.jsx';
+import Popup from 'reactjs-popup';
 
 const bark = new Audio(barkSound);
 
@@ -546,6 +547,18 @@ function Dog(props) {
                     </Dropdown.Item>
                   </DropdownButton>
                 )}
+
+                <div>
+                  <h4>Popup Test</h4>
+                  <Popup trigger={
+                    <button> Click to open</button>}
+                      position="right center">
+                      <div>Pop Up</div>
+
+                  </Popup>
+
+
+                </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
                 <WordOfTheDay
