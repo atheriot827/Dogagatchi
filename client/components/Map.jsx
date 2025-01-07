@@ -1,4 +1,4 @@
-import './Map.css';
+// import './Map.css';
 import { useMemo } from 'react';
 
 import { BlurFilter, TextStyle } from 'pixi.js';
