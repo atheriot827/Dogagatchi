@@ -409,6 +409,7 @@ function Dog(props) {
                   added={added}
                   addWordToDogtionary={addWordToDogtionary}
                 />
+                
                 <Button variant='primary' onClick={openDogtionary}>
                   {`${dog.name}'s Dogtionary`}
                 </Button>
@@ -567,6 +568,7 @@ function Dog(props) {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
+                <Button>{`Take ${dog.name} For A Walk!`}</Button>
               </div>
             </Card.Body>
           </div>
