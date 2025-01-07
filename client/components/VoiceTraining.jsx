@@ -2,13 +2,45 @@ import React from 'react';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
 
-export default function VoiceTraining() {
+export default function VoiceTraining({dogId}) {
     // Modal pop up functionality
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
+    // AXIOS REQEUSTS
+    const healDog = () => {
+        axios.put(`/dog/${dogId}`)
+            .then((dog) => {
+                dog.health += 5;
+        })
+            .catch((err) => {
+                console.log('Error healing dog', err);
+        })
+    };
+
+    const yellAtDog = () => {
+        axios.put(`/dog/${dogId}`, {
+            update: {
+                health: -25,
+            }
+        })
+            .then((dog) => {
+                console.log('dog health: ', dog.health);
+                console.log('dog has been updated in db');
+        })
+            .catch((err) => {
+                console.log('error updating health value in db', err);
+        })
+    }
+
+    // const powerUpDog = () => {
+    //     axios.put(`/dog/id/${dog._id}`)
+    //         .then((dog) => {})
+    // }
 
     /** Very unlikely this webspeech setup will need to be edited ever */
     const speechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Speech recognition constructor (standard and webkit version for Safari compatability)
@@ -35,6 +67,7 @@ export default function VoiceTraining() {
                 case "healing magic drop the beat fix this dog from head to feet":
                     // invoke heal function
                     console.log('WE GONNA HEAL THAT DOG FASHO!')
+                    healDog();
                     break;
                 case "power surging through this pup strength and speed now level up":
                     // invoke power up function
@@ -43,6 +76,8 @@ export default function VoiceTraining() {
                 case "stupid dog":
                     // transfer dog to another user in db
                     console.log('You have lost ownership of your Dog. Be better next time.');
+                    yellAtDog();
+                    console.log('just yelled at dog: ', dogId);
                     break;
             }
         }
@@ -62,6 +97,7 @@ export default function VoiceTraining() {
                     <h4>Commands</h4>
                     <p> Heal Command: healing magic drop the beat fix this dog from head to feet</p>
                     <p> Power Up Command: power surging through this pup strength and speed now level up</p>
+                    <p> bad dog: stupid dog</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
