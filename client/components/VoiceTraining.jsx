@@ -25,7 +25,7 @@ export default function VoiceTraining() {
     recognition.interimResults = false; // Only return fully recognized commands - not partial recognitions
     recognition.maxAlternatives = 1; // Only return one output
 
-   
+
     const renderSpeech = () => {
         recognition.start()
         recognition.onresult = (event) => {

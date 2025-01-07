@@ -54,6 +54,19 @@ const dogSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   isGroomed: Boolean,
   activities: [String],
+  health: {
+    type: Number,
+    default: 100,
+    min: 0,
+    max: 100,
+  },
+  attackDmg: {
+    type: Number,
+    default: 25,
+    min: 25,
+    max: 100,
+  },
+
 });
 
 const Dog = mongoose.model('Dog', dogSchema);
