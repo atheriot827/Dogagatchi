@@ -13,8 +13,7 @@ import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
 import Dogtionary from './Dogtionary.jsx';
 import WordOfTheDay from './WordOfTheDay.jsx';
-import Popup from 'reactjs-popup';
-
+import VoiceTraining from './VoiceTraining.jsx';
 const bark = new Audio(barkSound);
 
 function Dog(props) {
@@ -549,13 +548,7 @@ function Dog(props) {
                 )}
 
                 <div>
-                  <h4>Popup Test</h4>
-                  <Popup trigger={
-                    <button> Click to open</button>}
-                      position="right center">
-                      <div>Pop Up</div>
-
-                  </Popup>
+                  <VoiceTraining />
 
 
                 </div>
