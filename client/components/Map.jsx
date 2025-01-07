@@ -36,5 +36,5 @@ const Map = () => {
     </Stage>
   );
 };
-
+///
 export default Map;
