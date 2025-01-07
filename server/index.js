@@ -19,9 +19,9 @@ const routeHandler = express.Router();
 const port = 4000;
 const { User, Dog } = require('./db/index');
 
-const clientId = process.env.GOOGLE_CLIENT_ID;
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const hobbiesApi = process.env.HOBBIES_API_KEY;
+// const clientId = process.env.GOOGLE_CLIENT_ID;
+// const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+// const hobbiesApi = process.env.HOBBIES_API_KEY;
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
@@ -68,8 +68,8 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: clientId,
-      clientSecret: clientSecret,
+      clientID: `${process.env.GOOGLE_CLIENT_ID}`,
+      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
       // callbackURL: 'http://ec2-13-58-125-52.us-east-2.compute.amazonaws.com/auth/google/callback'
       callbackURL: '/auth/google/callback',
     },
@@ -93,7 +93,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// **************** AUTH ROUTES ********************
+//**************** AUTH ROUTES ********************
 
 app.post(
   '/auth/login',
