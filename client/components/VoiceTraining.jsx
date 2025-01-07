@@ -11,6 +11,15 @@ export default function VoiceTraining({dogId}) {
     const handleShow = () => setShow(true);
 
 
+    const getDog = () => {
+        axios
+        .get(`/dog/id/${dogId}`)
+        .then(({ data }) => console.log(data))
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
     // AXIOS REQEUSTS
     const healDog = () => {
         axios.put(`/dog/${dogId}`)
@@ -24,7 +33,7 @@ export default function VoiceTraining({dogId}) {
 
     const yellAtDog = () => {
         axios.put(`/dog/${dogId}`, {
-            update: {
+            status: {
                 health: -25,
             }
         })
@@ -77,7 +86,7 @@ export default function VoiceTraining({dogId}) {
                     // transfer dog to another user in db
                     console.log('You have lost ownership of your Dog. Be better next time.');
                     yellAtDog();
-                    console.log('just yelled at dog: ', dogId);
+                    getDog();
                     break;
             }
         }
