@@ -567,6 +567,9 @@ function Dog(props) {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
+                <Link to="/Map">
+                <Button className="boot-button">{`Take ${dog.name} for a Walk!`}</Button>
+                </Link>
               </div>
             </Card.Body>
           </div>

@@ -8,7 +8,7 @@ const Map = () => {
   const blurFilter = useMemo(() => new BlurFilter(2), []);
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
   return (
-    <Stage width={800} height={600} options={{ background: 'https://i.sstatic.net/t6Hry.jpg' }}>
+    <Stage width={800} height={600} options={{ background: 0x1099bb }}>
       <Sprite image={bunnyUrl} x={300} y={150} />
       <Sprite image={bunnyUrl} x={500} y={150} />
       <Sprite image={bunnyUrl} x={400} y={200} />
