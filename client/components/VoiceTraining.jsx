@@ -14,6 +14,7 @@ export default function VoiceTraining() {
     const speechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Speech recognition constructor (standard and webkit version for Safari compatability)
     let SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList // Grammar list constructor - used to define words/phrases to recognize
     let commands = ['healing magic drop the beat fix this dog from head to feet', 'power surging through this pup strength and speed now level up', 'stupid dog',] // Commands we want the Grammar List to recognize
+    // JSGF - Java Speech Grammar Format: Essentially, we're telling the webspeech engine to 'listen' for any one of our commands in the variable above
     let grammar = '#JSGF V1.0; grammar commands; public <commands> = ' + commands.join(' | ') + ';';
     const recognition = new speechRecognition()  // Create instance for speech recognition object
     const recognitionList = new SpeechGrammarList() // Create instance for grammar list
@@ -24,7 +25,7 @@ export default function VoiceTraining() {
     recognition.interimResults = false; // Only return fully recognized commands - not partial recognitions
     recognition.maxAlternatives = 1; // Only return one output
 
-
+   
     const renderSpeech = () => {
         recognition.start()
         recognition.onresult = (event) => {
