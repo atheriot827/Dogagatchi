@@ -95,6 +95,15 @@ function App() {
                 </div>
               }
             />
+            <Route
+              path='/map'
+              element={
+                <div>
+                  <NavBar />
+                  <Map />
+                </div>
+              }
+            />
           </Route>
           <Route path='/' element={<Login />} />
           <Route path='deleted' element={<DeletedUser />} />
