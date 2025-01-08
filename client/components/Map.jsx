@@ -91,6 +91,21 @@ const Map = () => {
     let x = dogPosition[0];
     let y = dogPosition[1];
     console.log(key);
+    switch(key){
+      case 'w':
+        console.log('move up');
+        break;
+      case 'a':
+        console.log('move left');
+        break;
+      case 's':
+        console.log('move down');
+        break;
+      case 'd':
+        console.log('move right');
+        break;
+        
+    }
  
 
   }
