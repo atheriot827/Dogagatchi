@@ -32,9 +32,9 @@ export default function VoiceTraining({dogId}) {
     };
 
     const yellAtDog = () => {
-        axios.put(`/dog/${dogId}`, {
+        axios.put(`/dog/yell/${dogId}`, {
             status: {
-                health: -25,
+                decreaseHealth: 25,
             }
         })
             .then((dog) => {
