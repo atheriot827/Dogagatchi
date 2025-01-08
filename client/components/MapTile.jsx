@@ -33,8 +33,6 @@ const MapTile = () => {
       case 7:
         image = 'character'
         break;                        
-        
-      
     }
     return image;
   }
@@ -64,6 +62,8 @@ const MapTile = () => {
       'character',
     ]).then((assets) => {
       setTileset(assets)
+    }).catch((err) => {
+      console.error(error, 'error loading tiles')
     })
   }, []);
 
