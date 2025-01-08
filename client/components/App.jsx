@@ -15,6 +15,8 @@ import About from './About.jsx';
 import DeletedUser from './DeletedUser.jsx';
 import Activity from './Activity.jsx';
 import GetWellCenter from './GetWellCenter.jsx';
+import Map from './Map.jsx'
+
 
 function App() {
   return (
@@ -92,6 +94,15 @@ function App() {
                 <div>
                   <NavBar />
                   <About />
+                </div>
+              }
+            />
+            <Route
+              path='/Map'
+              element={
+                <div>
+                  <NavBar />
+                  <Map />
                 </div>
               }
             />
