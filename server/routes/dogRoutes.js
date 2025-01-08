@@ -135,14 +135,15 @@ router.put('/:dogId', (req, res) => {
 // ROUTE FOR YELLING AT DOG
 router.put('/yell/:dogId', (req, res) => {
   const { dogId } = req.params;
-  Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
+  const { status } = req.body;
+  Dog.findByIdAndUpdate(dogId, { returnDocument: 'after' })
       .then((updatedDog) => {
 
         console.log('updatedDog: ', updatedDog);
-        const newHealth = updatedDog.health - 25;
+        const newHealth = updatedDog.health - status.decreaseHealth;
         console.log('Updated Dogs new health: ', newHealth);
 
-        return Dog.findById(dogId, { health: newHealth })
+        return Dog.findByIdAndUpdate(dogId, { health: newHealth })
   })
       .then((updatedDog) => {
         console.log('updated dog after update?', updatedDog);
