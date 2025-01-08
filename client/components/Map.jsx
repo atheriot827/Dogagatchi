@@ -98,12 +98,22 @@ const Map = () => {
       case 'w':
         console.log('move up');
         //setDogPosition[y + 32]
-        setDogY(dogY - 32)
+        //setDogY(dogY - 32)
+        if(dogY - 32 < 0){
+          console.log('you cannot go there')
+        } else {
+          setDogY(dogY - 32)
+        }
         break;
       case 'a':
         console.log('move left');
        //setDogPosition[x - 32]
-       setDogX(dogX - 32)
+       //setDogX(dogX - 32)
+       if(dogX - 32 < 0){
+        console.log('you cannot go there')
+      } else {
+        setDogX(dogX - 32)
+      }
         break;
       case 's':
         console.log('move down');
@@ -117,7 +127,12 @@ const Map = () => {
       case 'd':
         console.log('move right');
         //setDogPosition[x + 32]
-        setDogX(dogX + 32)
+        //setDogX(dogX + 32)
+        if(dogX + 32 >= (tileSize * mapData[0].length)){
+          console.log('you cannot go there')
+        } else {
+          setDogX(dogX + 32)
+        }
         break;
         
     }
