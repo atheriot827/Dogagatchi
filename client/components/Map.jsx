@@ -20,7 +20,7 @@ const Map = () => {
 
   return (
     <Stage width={800} height={600} options={{ background: 0x1099bb }}>
-      {/* <Graphics>
+      <Graphics>
         {(Map) => {
           const graphics = new PIXI.Graphics();
           graphics.beginFill(0xff0000);
@@ -28,7 +28,7 @@ const Map = () => {
           graphics.endFill();
           return graphics;
         }}
-      </Graphics> */}
+      </Graphics>
       <Sprite image={bunnyUrl} x={300} y={150} />
       <Sprite image={bunnyUrl} x={500} y={150} />
       <Sprite image={bunnyUrl} x={400} y={200} />
