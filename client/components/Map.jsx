@@ -18,6 +18,19 @@ const Map = () => {
   const blurFilter = useMemo(() => new BlurFilter(2), []);
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
+  // useEffect(() => {
+  //   const loader = PIXI.Loader.shared;
+  //   loader.add('background', './assets/maptiles/t6Hry.jpg');
+  //   loader.load((loader, resources) => {
+  //     if (stageRef.current) {
+  //       const background = new PIXI.Sprite(resources.background.texture);
+  //       background.width = stageRef.current.width;
+  //       background.height = stageRef.current.height;
+  //       stageRef.current.addChild(background);
+  //     }
+  //   });
+  // }, []);
+
   return (
     <Stage width={800} height={600} options={{ background: 0x1099bb }}>
       <Graphics>
