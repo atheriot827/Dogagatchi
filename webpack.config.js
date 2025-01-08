@@ -58,7 +58,8 @@ module.exports = {
       "os": false,
       "path": false,
       "crypto": false
-    }
+    },
+    extensions: [".js", ".jsx", ".json"],
   },
   performance: {
     hints: false,
