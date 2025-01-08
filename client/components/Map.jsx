@@ -50,7 +50,6 @@ const Map = () => {
       default:
         console.log('PLEASE USE "WASD" CONTROLS');
     }
-    checkBattle();
   };
 
   const checkBattle = () => {
