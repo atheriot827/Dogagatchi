@@ -4,6 +4,7 @@ import { Container, AnimatedSprite, useApp, Stage, Sprite } from "@pixi/react";
 import * as PIXI from "pixi.js";
 
 const Map = () => {
+  // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState([
     [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -85,11 +86,11 @@ const Map = () => {
 
   const [dogPosition, setDogPosition] = useState([0, 0]);
   const [inputVal, setInputVal] = useState('');
-  // Example map data, 0: grass, 1: dirt, 2: hill
+  
   const moveDog = (event) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
-    
+
   }
 
   const tileSize = 32; // Size of each tile in pixels
@@ -114,6 +115,7 @@ const Map = () => {
         )}
         <Container position={[10, 20]}>
           <AnimatedSprite
+            key={`dogPos`}
             images={dogAnimation}
             isPlaying={true}
             initialFrame={0}
