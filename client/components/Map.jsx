@@ -14,43 +14,53 @@ const Map = () => {
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy)
-  const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
   const [enemyX, setEnemyX] = useState(256);
   const [enemyY, setEnemyY] = useState(128);
+  const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
   const [dogPosition, setDogPosition] = useState([dogX, dogY]);
 
   const tileSize = 32; // Size of each tile in pixels
-  const moveDog = ({ key }) => {
+  const moveDog = async ({ key }) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
     switch (key) {
       case 'w':
         if (dogY - 32 < 0) {
         } else {
-          setDogY(dogY - 32);
+        await setDogY(dogY - 32);
         }
         break;
       case 'a':
         if (!(dogX - 32 < 0)) {
-          setDogX(dogX - 32);
+          await setDogX(dogX - 32);
         }
         break;
       case 's':
         if (!(dogY + 32 >= tileSize * mapData.length)) {
-          setDogY(dogY + 32);
+        await setDogY(dogY + 32);
         }
         break;
       case 'd':
         if (!(dogX + 32 >= tileSize * mapData[0].length)) {
-          setDogX(dogX + 32);
+        await setDogX(dogX + 32);
         }
         break;
+      default:
+        console.log('PLEASE USE "WASD" CONTROLS')
     }
-    if((dogX === enemyX) && (dogY === enemyY)){
-      console.log('YOU MUST FIGHT')
+    checkBattle();
+  };
+
+  const checkBattle = () => {
+    console.log(dogX, `dogX`)
+    console.log(enemyX, `enemyX`)
+    console.log(dogY, `dogY`)
+    console.log(enemyY, `enemyY`)
+    if ((dogX === enemyX) && (dogY === enemyY)) {
+      console.log(' YOU MUST FIGHT ');
     }
   };
 
@@ -89,7 +99,7 @@ const Map = () => {
             />
           ))
         )}
-        <Container position={[32,32]}>
+        <Container position={[16, 16]}>
         <AnimatedSprite
             key={`enemyPos`}
             images={enemyAnimation}
