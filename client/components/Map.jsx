@@ -86,7 +86,9 @@ const Map = () => {
 
   const [dogPosition, setDogPosition] = useState([0, 0]);
   const [inputVal, setInputVal] = useState('');
-  
+  const [dogX, setDogX] = useState(0);
+  const [dogY, setDogY] = useState(0);
+
   const moveDog = ({key}) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
@@ -94,15 +96,19 @@ const Map = () => {
     switch(key){
       case 'w':
         console.log('move up');
+        //setDogPosition[y + 32]
         break;
       case 'a':
         console.log('move left');
+       //setDogPosition[x - 32]
         break;
       case 's':
         console.log('move down');
+        //setDogPosition[y - 32]
         break;
       case 'd':
         console.log('move right');
+        //setDogPosition[x + 32]
         break;
         
     }
