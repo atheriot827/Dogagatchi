@@ -72,14 +72,17 @@ const dogwalk = [
   '../assets/animations/dogwalk8.png',
 ]
 
+const enemy = [
+  `../assets/overlaytiles/enemy1-Photoroom.png`,
+  `../assets/overlaytiles/enemy2-Photoroom.png`,
+  `../assets/overlaytiles/enemy3-Photoroom.png`,
+]
+
 const overlays = [
   `../assets/nothing.png`,
   `../assets/overlaytiles/apple-Photoroom.png`,
   `../assets/overlaytiles/bltree-Photoroom.png`,
   `../assets/overlaytiles/brtree-Photoroom.png`,
-  `../assets/overlaytiles/enemy1-Photoroom.png`,
-  `../assets/overlaytiles/enemy2-Photoroom.png`,
-  `../assets/overlaytiles/enemy3-Photoroom.png`,
   `../assets/overlaytiles/fenceDLcorner-Photoroom.png`,
   `../assets/overlaytiles/fenceDRcorner-Photoroom.png`,
   `../assets/overlaytiles/fenceULcorner-Photoroom.png`,
