@@ -28,8 +28,7 @@ const Map = () => {
 // Example map data, 0: grass, 1: dirt, 2: hill
 
   const tileSize = 32; // Size of each tile in pixels
-  
-  //const tileSprites = ;
+
   
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
@@ -46,7 +45,13 @@ const Map = () => {
           />
         ))
       ))}
-      <Sprite image={tileSprites[8]} x={10} y={20} />
+      <Sprite 
+      image={tileSprites[8]} 
+      x={10} 
+      y={20} 
+      width={32}
+      height={32}
+      />
       
     </Stage>
     </div>
