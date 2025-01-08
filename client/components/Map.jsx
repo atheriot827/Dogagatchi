@@ -1,79 +1,37 @@
 // import './Map.css';
-import { useMemo, useState } from 'react';
-import { BlurFilter, TextStyle } from 'pixi.js';
-import { Stage, Container, Sprite, Text, Graphics } from '@pixi/react';
-import MapTile from './MapTile.jsx'
+import React from 'react';
+import { Stage, Sprite } from '@pixi/react';
+
+const tileSize = 32; // Size of each tile in pixels
+const mapData = [
+  [1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 1],
+  [1, 0, 2, 0, 1],
+  [1, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1],
+]; // Example map data, 0: grass, 1: wall, 2: treasure
+
+const tileSprites = {
+  0: '../assets/grass.png',
+  1: '../assets/dirt.png',
+  2: '../assets/hill.png',
+};
 
 const Map = () => {
-  const [dogPark, setDogPark] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-  ])
-
-  const blurFilter = useMemo(() => new BlurFilter(2), []);
-  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
-
-  // useEffect(() => {
-  //   const loader = PIXI.Loader.shared;
-  //   loader.add('background', './assets/maptiles/t6Hry.jpg');
-  //   loader.load((loader, resources) => {
-  //     if (stageRef.current) {
-  //       const background = new PIXI.Sprite(resources.background.texture);
-  //       background.width = stageRef.current.width;
-  //       background.height = stageRef.current.height;
-  //       stageRef.current.addChild(background);
-  //     }
-  //   });
-  // }, []);
-
   return (
-    <MapTile/>
+    <Stage width={tileSize * mapData[0].length} height={tileSize * mapData.length}>
+      {mapData.map((row, y) => (
+        row.map((tile, x) => (
+          <Sprite
+            key={`${x}-${y}`}
+            image={tileSprites[tile]}
+            x={x * tileSize}
+            y={y * tileSize}
+          />
+        ))
+      ))}
+    </Stage>
   );
 };
-///
+
 export default Map;
-
-{/* <div>
-<Stage width={800} height={600} options={{ background: 0x1099bb }}>
-  <Graphics>
-    {(Map) => {
-      const graphics = new PIXI.Graphics();
-      graphics.beginFill(0xff0000);
-      graphics.drawRect(50, 50, 100, 100);
-      graphics.endFill();
-      return graphics;
-    }}
-  </Graphics>
-  <Sprite image={bunnyUrl} x={300} y={150} />
-  <Sprite image={bunnyUrl} x={500} y={150} />
-  <Sprite image={bunnyUrl} x={400} y={200} />
-
-  <Container x={200} y={200}>
-    <Text
-      text="Hello World"
-      anchor={0.5}
-      x={220}
-      y={150}
-      filters={[blurFilter]}
-      style={
-        new TextStyle({
-          align: 'center',
-          fill: '0xffffff',
-          fontSize: 50,
-          letterSpacing: 20,
-          dropShadow: true,
-          dropShadowColor: '#E72264',
-          dropShadowDistance: 6,
-        })
-      }
-    />
-  </Container>
-</Stage>
-      <MapTile/>
-</div> */}
