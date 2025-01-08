@@ -107,4 +107,4 @@ const overlays = [
   `../assets/overlaytiles/weapon-Photoroom.png`,
 ]
 
-export { overlays, dogwalk,  tiles, mapLayout };
+export { enemy, overlays, dogwalk,  tiles, mapLayout };

@@ -2,7 +2,7 @@
 import { React, useEffect, useState } from 'react';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { overlays, dogwalk,  tiles, mapLayout } from "./MapFiles"
+import { enemy, overlays, dogwalk,  tiles, mapLayout } from "./MapFiles"
 
 const Map = () => {
   // Example map data, 0: grass, 1: dirt, 2: hill
@@ -13,7 +13,10 @@ const Map = () => {
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
-  
+  const [enemyAnimation, setEnemyAnimation] = useState(enemy)
+  const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
+  const [enemyX, setEnemyX] = useState(256);
+  const [enemyY, setEnemyY] = useState(128);
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
@@ -83,7 +86,7 @@ const Map = () => {
             />
           ))
         )}
-        <Container position={[0,0]}>
+        <Container position={[32,32]}>
         <AnimatedSprite
             key={`enemyPos`}
             images={enemyAnimation}
@@ -91,8 +94,8 @@ const Map = () => {
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
-            x={128}
-            y={64}
+            x={enemyX}
+            y={enemyY}
             width={32}
             height={32}
           />
