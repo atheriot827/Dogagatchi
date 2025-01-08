@@ -84,10 +84,10 @@ const Map = () => {
     `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
   ]);
 
-  const [dogPosition, setDogPosition] = useState([0, 0]);
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
+  const [dogPosition, setDogPosition] = useState([dogX, dogY]);
 
   const moveDog = ({key}) => {
     let x = dogPosition[0];
