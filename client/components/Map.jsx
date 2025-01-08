@@ -15,10 +15,19 @@ const tileSprites = {
   0: '../assets/grass.png',
   1: '../assets/dirt.png',
   2: '../assets/hill.png',
+  3:  '../assets/exit.png',
+  4:  '../assets/grass2.png',
+  5:  '../assets/prize.png',
+  6:  '../assets/hill.png',
+  7:  '../assets/character.png',
 };
 
 const Map = () => {
+
+  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
+
   return (
+    <div>
     <Stage width={tileSize * mapData[0].length} height={tileSize * mapData.length}>
       {mapData.map((row, y) => (
         row.map((tile, x) => (
@@ -30,7 +39,10 @@ const Map = () => {
           />
         ))
       ))}
+      <Sprite image={tileSprites[7]} x={10} y={20} />
+      
     </Stage>
+    </div>
   );
 };
 
