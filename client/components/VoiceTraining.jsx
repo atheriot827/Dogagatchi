@@ -4,16 +4,20 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 
-export default function VoiceTraining({dogId}) {
+export default function VoiceTraining({dogObj}) {
+
+
     // Modal pop up functionality
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
 
+    const [health, setHealth] = useState();
+
     const getDog = () => {
         axios
-        .get(`/dog/id/${dogId}`)
+        .get(`/dog/id/${dogObj._id}`)
         .then(({ data }) => console.log(data))
         .catch((err) => {
             console.error(err);
@@ -22,7 +26,7 @@ export default function VoiceTraining({dogId}) {
 
     // AXIOS REQEUSTS
     const healDog = () => {
-        axios.put(`/dog/${dogId}`)
+        axios.put(`/dog/${dogObj._id}`)
             .then((dog) => {
                 dog.health += 5;
         })
@@ -32,7 +36,7 @@ export default function VoiceTraining({dogId}) {
     };
 
     const yellAtDog = () => {
-        axios.put(`/dog/yell/${dogId}`, {
+        axios.put(`/dog/yell/${dogObj._id}`, {
             status: {
                 decreaseHealth: 25,
             }

@@ -548,7 +548,7 @@ function Dog(props) {
                 )}
 
                 <div>
-                  <VoiceTraining dogId={dog._id} />
+                  <VoiceTraining dogId={dogObj} />
                 </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
