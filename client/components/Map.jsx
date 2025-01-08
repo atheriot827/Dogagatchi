@@ -57,14 +57,15 @@ const Map = () => {
           />
         ))
       ))}
-      <Sprite 
+      <Container position={[10, 20]}>
+      <AnimatedSprite 
       image={tileSprites[8]} 
       x={10} 
       y={20} 
       width={32}
       height={32}
       />
-      
+      </Container>
     </Stage>
     </div>
   );
