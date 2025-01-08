@@ -2,8 +2,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const path = require('path');
+<<<<<<< HEAD
+const Dotenv = require('dotenv-webpack');
+
+=======
 const Dotenv = require('dotenv-webpack')
 const CopyPlugin = require("copy-webpack-plugin")
+>>>>>>> upstream/main
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
@@ -11,18 +16,18 @@ module.exports = {
 
   resolve: {
     fallback: {
-      "fs": false,
-      "os": false,
-      "path": false,
-      "crypto": false
-    }
+      fs: false,
+      os: false,
+      path: false,
+      crypto: false,
+    },
   },
 
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-},
+    maxAssetSize: 512000,
+  },
   entry: {
     app: path.resolve(SRC_DIR, 'index.jsx'),
   },
@@ -42,6 +47,9 @@ module.exports = {
       template: path.resolve(SRC_DIR, 'index.html'),
     }),
 
+<<<<<<< HEAD
+    new Dotenv(),
+=======
     new CopyPlugin({
       patterns: [
         {from: "client/components/assets", to: "assets"},
@@ -49,21 +57,8 @@ module.exports = {
     }),
 
     new Dotenv()
+>>>>>>> upstream/main
   ],
-  
-  resolve: {
-    fallback: {
-      "fs": false,
-      "os": false,
-      "path": false,
-      "crypto": false
-    }
-  },
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-},
 
   module: {
     rules: [
