@@ -32,9 +32,19 @@ const MapTile = () => {
     PIXI.Assets.add('hill', './assets/maptiles/hill.png');
     PIXI.Assets.add('prize', './assets/maptiles/prize.png');
     PIXI.Assets.add('water', './assets/maptiles/water.png');
-    PIXI.Assets.add('prize', './assets/maptiles/prize.png');
     PIXI.Assets.add('character', './assets/maptiles/character.png');
-    PIXI.Assets.load([''])
+    const texturePromise = PIXI.Assets.load([
+      'dirt',
+      'exit',
+      'grass',
+      'grass2',
+      'hill',
+      'prize',
+      'water',
+      'character',
+    ]).then((assets) => {
+      setTileset(assets)
+    })
   }, []);
 
   if (!tileset) return null;
