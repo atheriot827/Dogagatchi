@@ -147,7 +147,7 @@ const Map = () => {
             />
           ))
         )}
-        <Container position={[10, 20]}>
+        <Container position={[16, 16]}>
           <AnimatedSprite
             key={`dogPos`}
             images={dogAnimation}
