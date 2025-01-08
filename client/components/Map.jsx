@@ -84,7 +84,18 @@ const Map = () => {
           ))
         )}
         <Container position={[0,0]}>
-        
+        <AnimatedSprite
+            key={`enemyPos`}
+            images={enemyAnimation}
+            isPlaying={true}
+            initialFrame={0}
+            animationSpeed={0.1}
+            anchor={0.5}
+            x={128}
+            y={64}
+            width={32}
+            height={32}
+          />
         </Container>
         <Container position={[16, 16]}>
           <AnimatedSprite
