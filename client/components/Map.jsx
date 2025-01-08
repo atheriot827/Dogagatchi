@@ -1,6 +1,6 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
-import { AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
+import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
 
 
@@ -59,7 +59,11 @@ const Map = () => {
       ))}
       <Container position={[10, 20]}>
       <AnimatedSprite 
-      image={tileSprites[8]} 
+      textures={dogAnimation} 
+      isPlaying={true}
+      initialFrame={0}
+      animationSpeed={0.1}
+      anchor={0.5}
       x={10} 
       y={20} 
       width={32}
