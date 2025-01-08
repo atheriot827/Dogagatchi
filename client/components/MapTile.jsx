@@ -13,8 +13,28 @@ const MapTile = () => {
         image = 'dirt'
         break;
       case 1:
+        image = 'exit'
+        break;
+      case 2:
         image = 'grass'
         break;
+      case 3:
+        image = 'grass2'
+        break;
+      case 4:
+        image = 'hill'
+        break;
+      case 5:
+        image = 'prize'
+        break;
+      case 6:
+        image = 'water'
+        break;
+      case 7:
+        image = 'character'
+        break;                        
+        
+      
     }
     return image;
   }
