@@ -571,7 +571,6 @@ function Dog(props) {
                 <Link to='/Map'>
                 <Button>{`Take ${dog.name} For A Walk!`}</Button>
                 </Link>
-                
               </div>
             </Card.Body>
           </div>

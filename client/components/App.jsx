@@ -15,7 +15,8 @@ import About from './About.jsx';
 import DeletedUser from './DeletedUser.jsx';
 import Activity from './Activity.jsx';
 import GetWellCenter from './GetWellCenter.jsx';
-import Map from './Map.jsx';
+import Map from './Map.jsx'
+
 
 function App() {
   return (
@@ -95,15 +96,16 @@ function App() {
                   <About />
                 </div>
               }
-            /><Route
-            path='/Map'
-            element={
-              <div>
-                <NavBar />
-                <Map />
-              </div>
-            }
-          />
+            />
+            <Route
+              path='/Map'
+              element={
+                <div>
+                  <NavBar />
+                  <Map />
+                </div>
+              }
+            />
           </Route>
           <Route path='/' element={<Login />} />
           <Route path='deleted' element={<DeletedUser />} />
