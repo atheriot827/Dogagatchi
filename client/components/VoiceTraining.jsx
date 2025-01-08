@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
@@ -12,8 +12,15 @@ export default function VoiceTraining({dogObj}) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
     const [health, setHealth] = useState();
+
+
+    useEffect(() => {
+        if (show && dogObj) {
+            setHealth(dogObj.health);
+        }
+    }, [show, dogObj]);
+
 
     const getDog = () => {
         axios
@@ -28,7 +35,7 @@ export default function VoiceTraining({dogObj}) {
     const healDog = () => {
         axios.put(`/dog/${dogObj._id}`)
             .then((dog) => {
-                dog.health += 5;
+                dog.data.health += 5;
         })
             .catch((err) => {
                 console.log('Error healing dog', err);
@@ -42,7 +49,8 @@ export default function VoiceTraining({dogObj}) {
             }
         })
             .then((dog) => {
-                console.log('dog health: ', dog.health);
+                setHealth(dog.data.health);
+                console.log('dog health: ', dog.data.health);
                 console.log('dog has been updated in db');
         })
             .catch((err) => {
@@ -111,6 +119,7 @@ export default function VoiceTraining({dogObj}) {
                     <p> Heal Command: healing magic drop the beat fix this dog from head to feet</p>
                     <p> Power Up Command: power surging through this pup strength and speed now level up</p>
                     <p> bad dog: stupid dog</p>
+                    <p> Health: {health} </p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
