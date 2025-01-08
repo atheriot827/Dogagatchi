@@ -13,6 +13,7 @@ const Map = () => {
     [1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1],
   ])
+
   const [tileSprites, setTileSprites] = useState({
     0: '../assets/grass.png',
     1: '../assets/dirt.png',
@@ -25,6 +26,17 @@ const Map = () => {
     8:  '../assets/gifs/bernese_mountain_dog/Walking.gif'
   })
   
+  const [dogAnimation, setDogAnimation] = useState([
+    '../assets/animations/dogwalk1.png',
+    '../assets/animations/dogwalk2.png',
+    '../assets/animations/dogwalk3.png',
+    '../assets/animations/dogwalk4.png',
+    '../assets/animations/dogwalk5.png',
+    '../assets/animations/dogwalk6.png',
+    '../assets/animations/dogwalk7.png',
+    '../assets/animations/dogwalk8.png'
+  ]);
+
 // Example map data, 0: grass, 1: dirt, 2: hill
 
   const tileSize = 32; // Size of each tile in pixels
