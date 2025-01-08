@@ -59,6 +59,21 @@ const Map = () => {
     }
   };
 
+  const collisionDetection = () => {
+    // mapData.map((row, y) => {
+    //   row.map((tile, x) => {
+    //     // Get the array of collidable tiles
+    //     let collidableTiles = []
+    //     // If the collideableTiles includes a number equal to the current tile
+    //     if(collidableTiles.includes(tile)){
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    // })
+    // })
+  }
+
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
