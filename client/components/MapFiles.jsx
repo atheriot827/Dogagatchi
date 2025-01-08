@@ -73,6 +73,7 @@ const dogwalk = [
 ]
 
 const overlays = [
+  `../assets/nothing.png`,
   `../assets/overlaytiles/apple-Photoroom.png`,
   `../assets/overlaytiles/bltree-Photoroom.png`,
   `../assets/overlaytiles/brtree-Photoroom.png`,
