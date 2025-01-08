@@ -10,12 +10,6 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 module.exports = {
 
   resolve: {
-    fallback: {
-      "fs": false,
-      "os": false,
-      "path": false,
-      "crypto": false
-    },
     extensions: [".js", ".jsx", ".json"],
   },
 
