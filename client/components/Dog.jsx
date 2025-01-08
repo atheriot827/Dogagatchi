@@ -13,7 +13,7 @@ import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
 import Dogtionary from './Dogtionary.jsx';
 import WordOfTheDay from './WordOfTheDay.jsx';
-
+import VoiceTraining from './VoiceTraining.jsx';
 const bark = new Audio(barkSound);
 
 function Dog(props) {
@@ -541,6 +541,10 @@ function Dog(props) {
                     </Dropdown.Item>
                   </DropdownButton>
                 )}
+
+                <div>
+                  <VoiceTraining dogObj={dogObj} />
+                </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
                 <WordOfTheDay
