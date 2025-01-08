@@ -1,0 +1,86 @@
+
+const mapLayout = [
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 2, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+]
+
+const tiles = {
+  0: '../assets/grass.png',
+  1: '../assets/dirt.png',
+  2: '../assets/hill.png',
+  3: '../assets/exit.png',
+  4: '../assets/grass2.png',
+  5: '../assets/prize.png',
+  6: '../assets/water.png',
+  7: '../assets/character.png',
+  8: '../assets/gifs/bernese_mountain_dog/Walking.gif',
+}
+
+const dogwalk = [
+  '../assets/animations/dogwalk1.png',
+  '../assets/animations/dogwalk2.png',
+  '../assets/animations/dogwalk3.png',
+  '../assets/animations/dogwalk4.png',
+  '../assets/animations/dogwalk5.png',
+  '../assets/animations/dogwalk6.png',
+  '../assets/animations/dogwalk7.png',
+  '../assets/animations/dogwalk8.png',
+]
+
+const overlays = [
+  `Dogagatchi/client/components/assets/overlaytiles/apple-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/bltree-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/brtree-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/enemy1-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/enemy2-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/enemy3-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceDLcorner-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceDRcorner-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceULcorner-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceURcorner-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceVert-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/fenceVertical-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLbigrock-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLlog1-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLlogleftside-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLlogrightside-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLplant1-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLplant2-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLplant3-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLplant4-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLrubble-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLshrooms-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLsmallbush-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLsmallrock-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/OLtadpoles-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/tltree-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/trtree-Photoroom.png`,
+  `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
+]
+
+export default {
+  overlays,
+  dogwalk,
+  tiles,
+  mapLayout
+}
