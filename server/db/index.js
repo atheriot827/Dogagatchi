@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema({
 });
 // creates user docs in the db
 const User = mongoose.model('User', userSchema);
+
 // schema for Dogs
 const dogSchema = new mongoose.Schema({
   name: String,

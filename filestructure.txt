@@ -170,6 +170,15 @@
                     |-- Sleeping.gif
                     |-- Standing.gif
                     |-- Walking.gif
+            |-- maptiles
+                |-- character.png
+                |-- dirt.png
+                |-- exit.png
+                |-- grass.png
+                |-- grass2.png
+                |-- hill.png
+                |-- prize.png
+                |-- water.png
     |-- index.html
     |-- index.jsx
 |-- package-lock.json

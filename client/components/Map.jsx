@@ -1,9 +1,12 @@
 // import './Map.css';
 import { useMemo, useState } from 'react';
 import { BlurFilter, TextStyle } from 'pixi.js';
-import { Stage, Container, Sprite, Text, Graphics } from '@pixi/react';
 
-const Map = () => {
+import {
+  Stage, Container, Sprite, Text, Graphics,
+} from '@pixi/react';
+
+function Map() {
   const [dogPark, setDogPark] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -13,7 +16,7 @@ const Map = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-  ])
+  ]);
 
   const blurFilter = useMemo(() => new BlurFilter(2), []);
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
@@ -55,6 +58,6 @@ const Map = () => {
       </Container>
     </Stage>
   );
-};
+}
 ///
 export default Map;
