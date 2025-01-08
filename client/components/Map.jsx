@@ -23,28 +23,28 @@ const Map = () => {
   const [dogPosition, setDogPosition] = useState([dogX, dogY]);
 
   const tileSize = 32; // Size of each tile in pixels
-  const moveDog = async ({ key }) => {
+  const moveDog = ({ key }) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
     switch (key) {
       case 'w':
         if (!(dogY - 32 < 0)) {
-          await setDogY(dogY - 32);
+          setDogY(dogY - 32);
         }
         break;
       case 'a':
         if (!(dogX - 32 < 0)) {
-          await setDogX(dogX - 32);
+          setDogX(dogX - 32);
         }
         break;
       case 's':
         if (!(dogY + 32 >= tileSize * mapData.length)) {
-          await setDogY(dogY + 32);
+          setDogY(dogY + 32);
         }
         break;
       case 'd':
         if (!(dogX + 32 >= tileSize * mapData[0].length)) {
-          await setDogX(dogX + 32);
+          setDogX(dogX + 32);
         }
         break;
       default:
@@ -54,10 +54,6 @@ const Map = () => {
   };
 
   const checkBattle = () => {
-    console.log(dogX, `dogX`);
-    console.log(enemyX, `enemyX`);
-    console.log(dogY, `dogY`);
-    console.log(enemyY, `enemyY`);
     if (dogX === enemyX && dogY === enemyY) {
       console.log(' YOU MUST FIGHT ');
     }
