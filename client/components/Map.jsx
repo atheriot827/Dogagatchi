@@ -5,15 +5,18 @@ import * as PIXI from 'pixi.js';
 
 
 const Map = () => {
-  const tileSize = 32; // Size of each tile in pixels
-  
-  const mapData = [
+
+  const [mapData, setMapData] = useState([
     [1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1],
     [1, 0, 2, 0, 1],
     [1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1],
-  ]; // Example map data, 0: grass, 1: dirt, 2: hill
+  ])
+  
+// Example map data, 0: grass, 1: dirt, 2: hill
+
+  const tileSize = 32; // Size of each tile in pixels
   
   const tileSprites = {
     0: '../assets/grass.png',
