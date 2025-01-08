@@ -13,7 +13,7 @@ const Map = () => {
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
-
+  
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
@@ -73,6 +73,19 @@ const Map = () => {
             />
           ))
         )}
+        {mapData.map((row, y) =>
+          row.map((tile, x) => (
+            <Sprite
+              key={`${x}-${y}`}
+              image={overlayTiles[tile]}
+              x={x * tileSize}
+              y={y * tileSize}
+            />
+          ))
+        )}
+        <Container position={[0,0]}>
+        
+        </Container>
         <Container position={[16, 16]}>
           <AnimatedSprite
             key={`dogPos`}
