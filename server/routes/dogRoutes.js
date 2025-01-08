@@ -131,29 +131,19 @@ router.put('/:dogId', (req, res) => {
     });
 });
 
-
 // ROUTE FOR YELLING AT DOG
-router.put('/yell/:dogId', (req, res) => {
+router.put('/yell/:dogId', async (req, res) => {
   const { dogId } = req.params;
   const { status } = req.body;
-  Dog.findByIdAndUpdate(dogId, { returnDocument: 'after' })
-      .then((updatedDog) => {
-
-        console.log('updatedDog: ', updatedDog);
-        const newHealth = updatedDog.health - status.decreaseHealth;
-        console.log('Updated Dogs new health: ', newHealth);
-
-        return Dog.findByIdAndUpdate(dogId, { health: newHealth })
-  })
-      .then((updatedDog) => {
-        console.log('updated dog after update?', updatedDog);
-        res.status(200).send(updatedDog);
-  })
-      .catch((err) => {
-        console.log('Error updating dogs health value after yell', err);
-        res.status(500);
-  })
+  try {
+    const newHealth = status.decreaseHealth;
+    const updatedDog = await Dog.findByIdAndUpdate(dogId, { $inc: { health: -status.decreaseHealth } }, { returnDocument: 'after' });
+    res.status(200).send(updatedDog);
+  } catch (error) {
+     console.error('Error decrementing dog health stat', error);
+   }
 })
+
 
 // **************** DELETE ROUTES ********************
 
