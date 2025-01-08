@@ -49,6 +49,9 @@ const Map = () => {
         }
         break;
     }
+    if((dogX === enemyX) && (dogY === enemyY)){
+      console.log('YOU MUST FIGHT')
+    }
   };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
