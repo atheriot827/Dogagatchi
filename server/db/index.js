@@ -57,7 +57,7 @@ const dogSchema = new mongoose.Schema({
   health: {
     type: Number,
     default: 100,
-    min: 0,
+    min: 25,
     max: 100,
   },
   attackDmg: {
