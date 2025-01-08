@@ -83,7 +83,14 @@ const Map = () => {
     `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
   ]);
 
+  const [dogPosition, setDogPosition] = useState([0, 0]);
+  const [inputVal, setInputVal] = useState('');
   // Example map data, 0: grass, 1: dirt, 2: hill
+  const moveDog = (event) => {
+    let x = dogPosition[0];
+    let y = dogPosition[1];
+    
+  }
 
   const tileSize = 32; // Size of each tile in pixels
 
