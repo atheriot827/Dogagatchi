@@ -20,6 +20,7 @@ const tileSprites = {
   5:  '../assets/prize.png',
   6:  '../assets/hill.png',
   7:  '../assets/character.png',
+  8:  '../assets/gifs/bernese_mountain_dog/Walking.gif'
 };
 
 const Map = () => {
@@ -39,7 +40,7 @@ const Map = () => {
           />
         ))
       ))}
-      <Sprite image={tileSprites[7]} x={10} y={20} />
+      <Sprite image={tileSprites[8]} x={10} y={20} />
       
     </Stage>
     </div>
