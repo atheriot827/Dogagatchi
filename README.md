@@ -208,5 +208,6 @@ The [Dog API](https://dog.ceo/dog-api/).
 
 _Where you getting the activities from?_\
 The Hobbies API(api-ninjas.comapi-ninjas.com)
+
 _Where are you getting the words for the Dogtionary/Speak feature?_\
 The Random Word API (api-ninjas.comapi-ninjas.com)

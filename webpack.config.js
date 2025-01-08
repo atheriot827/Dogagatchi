@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const path = require('path');
 const Dotenv = require('dotenv-webpack')
-
+const CopyPlugin = require("copy-webpack-plugin")
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
@@ -15,7 +15,8 @@ module.exports = {
       "os": false,
       "path": false,
       "crypto": false
-    }
+    },
+    extensions: [".js", ".jsx", ".json"],
   },
 
   performance: {
@@ -42,6 +43,12 @@ module.exports = {
       template: path.resolve(SRC_DIR, 'index.html'),
     }),
 
+    new CopyPlugin({
+      patterns: [
+        {from: "client/components/assets", to: "assets"},
+      ],
+    }),
+
     new Dotenv()
   ],
   
@@ -51,7 +58,8 @@ module.exports = {
       "os": false,
       "path": false,
       "crypto": false
-    }
+    },
+    extensions: [".js", ".jsx", ".json"],
   },
   performance: {
     hints: false,

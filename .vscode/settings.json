@@ -1,0 +1,9 @@
+{
+  "javascript.preferences.quoteStyle": "single",
+"prettier.jsxSingleQuote": true,
+"prettier.singleQuote": true,
+  "cSpell.words": [
+    "Meds",
+    "PIXI"
+  ]
+}
