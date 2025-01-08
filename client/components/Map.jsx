@@ -1,7 +1,7 @@
 // import './Map.css';
-import { React, useEffect, useState } from "react";
-import { Container, AnimatedSprite, useApp, Stage, Sprite } from "@pixi/react";
-import * as PIXI from "pixi.js";
+import { React, useEffect, useState } from 'react';
+import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
+import * as PIXI from 'pixi.js';
 
 const Map = () => {
   // Example map data, 0: grass, 1: dirt, 2: hill
@@ -31,26 +31,26 @@ const Map = () => {
   ]);
 
   const [tileSprites, setTileSprites] = useState({
-    0: "../assets/grass.png",
-    1: "../assets/dirt.png",
-    2: "../assets/hill.png",
-    3: "../assets/exit.png",
-    4: "../assets/grass2.png",
-    5: "../assets/prize.png",
-    6: "../assets/water.png",
-    7: "../assets/character.png",
-    8: "../assets/gifs/bernese_mountain_dog/Walking.gif",
+    0: '../assets/grass.png',
+    1: '../assets/dirt.png',
+    2: '../assets/hill.png',
+    3: '../assets/exit.png',
+    4: '../assets/grass2.png',
+    5: '../assets/prize.png',
+    6: '../assets/water.png',
+    7: '../assets/character.png',
+    8: '../assets/gifs/bernese_mountain_dog/Walking.gif',
   });
 
   const [dogAnimation, setDogAnimation] = useState([
-    "../assets/animations/dogwalk1.png",
-    "../assets/animations/dogwalk2.png",
-    "../assets/animations/dogwalk3.png",
-    "../assets/animations/dogwalk4.png",
-    "../assets/animations/dogwalk5.png",
-    "../assets/animations/dogwalk6.png",
-    "../assets/animations/dogwalk7.png",
-    "../assets/animations/dogwalk8.png",
+    '../assets/animations/dogwalk1.png',
+    '../assets/animations/dogwalk2.png',
+    '../assets/animations/dogwalk3.png',
+    '../assets/animations/dogwalk4.png',
+    '../assets/animations/dogwalk5.png',
+    '../assets/animations/dogwalk6.png',
+    '../assets/animations/dogwalk7.png',
+    '../assets/animations/dogwalk8.png',
   ]);
 
   const [overlayTiles, setOverlayTiles] = useState([
@@ -83,72 +83,49 @@ const Map = () => {
     `Dogagatchi/client/components/assets/overlaytiles/trtree-Photoroom.png`,
     `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
   ]);
-  
+
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
   const [dogPosition, setDogPosition] = useState([dogX, dogY]);
-  
+
   const tileSize = 32; // Size of each tile in pixels
-  const moveDog = ({key}) => {
+  const moveDog = ({ key }) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
-    console.log(key);
-    switch(key){
+    switch (key) {
       case 'w':
-        console.log('move up');
-        //setDogPosition[y + 32]
-        //setDogY(dogY - 32)
-        if(dogY - 32 < 0){
-          console.log('you cannot go there')
+        if (dogY - 32 < 0) {
         } else {
-          setDogY(dogY - 32)
+          setDogY(dogY - 32);
         }
         break;
       case 'a':
-        console.log('move left');
-       //setDogPosition[x - 32]
-       //setDogX(dogX - 32)
-       if(dogX - 32 < 0){
-        console.log('you cannot go there')
-      } else {
-        setDogX(dogX - 32)
-      }
+        if (!(dogX - 32 < 0)) {
+          setDogX(dogX - 32);
+        }
         break;
       case 's':
-        console.log('move down');
-        //setDogPosition[y + 32]
-        if(dogY + 32 >= (tileSize * mapData.length)){
-          console.log('you cannot go there')
-        } else {
-        setDogY(dogY + 32)
+        if (!(dogY + 32 >= tileSize * mapData.length)) {
+          setDogY(dogY + 32);
         }
         break;
       case 'd':
-        console.log('move right');
-        //setDogPosition[x + 32]
-        //setDogX(dogX + 32)
-        if(dogX + 32 >= (tileSize * mapData[0].length)){
-          console.log('you cannot go there')
-        } else {
-          setDogX(dogX + 32)
+        if (!(dogX + 32 >= tileSize * mapData[0].length)) {
+          setDogX(dogX + 32);
         }
         break;
-        
     }
-  
+  };
 
-  }
-
-
-  const bunnyUrl = "https://pixijs.io/pixi-react/img/bunny.png";
+  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
     document.addEventListener('keydown', moveDog);
     return () => {
-      document.removeEventListener('keydown', moveDog)
-    }
-  })
+      document.removeEventListener('keydown', moveDog);
+    };
+  });
   //
   return (
     <div onKeyDown={moveDog}>
@@ -181,7 +158,6 @@ const Map = () => {
           />
         </Container>
       </Stage>
-      
     </div>
   );
 };
