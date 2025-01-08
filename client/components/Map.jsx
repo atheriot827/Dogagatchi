@@ -1,6 +1,5 @@
 // import './Map.css';
 import { useMemo } from 'react';
-
 import { BlurFilter, TextStyle } from 'pixi.js';
 import { Stage, Container, Sprite, Text, Graphics } from '@pixi/react';
 
@@ -16,6 +15,9 @@ const Map = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ])
+import { Stage, Container, Sprite, Text } from '@pixi/react';
+
+const Map = () => {
   const blurFilter = useMemo(() => new BlurFilter(2), []);
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
   return (
