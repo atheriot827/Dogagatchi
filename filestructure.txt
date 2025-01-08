@@ -27,6 +27,7 @@
         |-- Leaderboard.jsx
         |-- Login.jsx
         |-- Map.jsx
+        |-- MapTile.jsx
         |-- Meal.jsx
         |-- Medicine.jsx
         |-- Navbar.jsx
@@ -37,6 +38,19 @@
         |-- WordOfTheDay.jsx
         |-- assets
             |-- 7101902.webp
+            |-- animations
+                |-- dogwalk1.png
+                |-- dogwalk2.png
+                |-- dogwalk3.png
+                |-- dogwalk4.png
+                |-- dogwalk5.png
+                |-- dogwalk6.png
+                |-- dogwalk7.png
+                |-- dogwalk8.png
+            |-- character.png
+            |-- dirt.png
+            |-- dogParkMap.png
+            |-- exit.png
             |-- gifs
                 |-- australian_shepherd
                     |-- Barking.gif
@@ -170,15 +184,42 @@
                     |-- Sleeping.gif
                     |-- Standing.gif
                     |-- Walking.gif
-            |-- maptiles
-                |-- character.png
-                |-- dirt.png
-                |-- exit.png
-                |-- grass.png
-                |-- grass2.png
-                |-- hill.png
-                |-- prize.png
-                |-- water.png
+            |-- grass.png
+            |-- grass2.png
+            |-- hill.png
+            |-- overlaytiles
+                |-- OLbigrock-Photoroom.png
+                |-- OLlog1-Photoroom.png
+                |-- OLlogleftside-Photoroom.png
+                |-- OLlogrightside-Photoroom.png
+                |-- OLplant1-Photoroom.png
+                |-- OLplant2-Photoroom.png
+                |-- OLplant3-Photoroom.png
+                |-- OLplant4-Photoroom.png
+                |-- OLrubble-Photoroom.png
+                |-- OLshrooms-Photoroom.png
+                |-- OLsmallbush-Photoroom.png
+                |-- OLsmallrock-Photoroom.png
+                |-- OLtadpoles-Photoroom.png
+                |-- apple-Photoroom.png
+                |-- bltree-Photoroom.png
+                |-- brtree-Photoroom.png
+                |-- enemy1-Photoroom.png
+                |-- enemy2-Photoroom.png
+                |-- enemy3-Photoroom.png
+                |-- fenceDLcorner-Photoroom.png
+                |-- fenceDRcorner-Photoroom.png
+                |-- fenceULcorner-Photoroom.png
+                |-- fenceURcorner-Photoroom.png
+                |-- fenceVert-Photoroom.png
+                |-- fenceVertical-Photoroom.png
+                |-- tltree-Photoroom.png
+                |-- trtree-Photoroom.png
+                |-- weapon-Photoroom.png
+            |-- prize.png
+            |-- spriteSheet.jsx
+            |-- t6Hry.jpg
+            |-- water.png
     |-- index.html
     |-- index.jsx
 |-- package-lock.json

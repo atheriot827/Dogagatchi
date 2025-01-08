@@ -2,8 +2,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const path = require('path');
+<<<<<<< HEAD
 const Dotenv = require('dotenv-webpack');
 
+=======
+const Dotenv = require('dotenv-webpack')
+const CopyPlugin = require("copy-webpack-plugin")
+>>>>>>> upstream/main
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
@@ -42,7 +47,17 @@ module.exports = {
       template: path.resolve(SRC_DIR, 'index.html'),
     }),
 
+<<<<<<< HEAD
     new Dotenv(),
+=======
+    new CopyPlugin({
+      patterns: [
+        {from: "client/components/assets", to: "assets"},
+      ],
+    }),
+
+    new Dotenv()
+>>>>>>> upstream/main
   ],
 
   module: {
