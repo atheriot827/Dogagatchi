@@ -97,22 +97,22 @@ const Map = () => {
       case 'w':
         console.log('move up');
         //setDogPosition[y + 32]
-        setDogY(dogY + 32)
+        setDogY(dogY - 32)
         break;
       case 'a':
         console.log('move left');
        //setDogPosition[x - 32]
-       setDogY(dogX - 32)
+       setDogX(dogX - 32)
         break;
       case 's':
         console.log('move down');
-        //setDogPosition[y - 32]
-        setDogY(dogY - 32)
+        //setDogPosition[y + 32]
+        setDogY(dogY + 32)
         break;
       case 'd':
         console.log('move right');
         //setDogPosition[x + 32]
-        setDogY(dogX + 32)
+        setDogX(dogX + 32)
         break;
         
     }
@@ -155,8 +155,8 @@ const Map = () => {
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
-            x={10}
-            y={20}
+            x={dogX}
+            y={dogY}
             width={32}
             height={32}
           />
