@@ -2,7 +2,7 @@
 import { React, useEffect, useState } from 'react';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { enemy, overlays, dogwalk,  tiles, mapLayout } from "./MapFiles"
+import { enemy, overlays, dogwalk, tiles, mapLayout } from './MapFiles';
 
 const Map = () => {
   // Example map data, 0: grass, 1: dirt, 2: hill
@@ -13,7 +13,7 @@ const Map = () => {
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
-  const [enemyAnimation, setEnemyAnimation] = useState(enemy)
+  const [enemyAnimation, setEnemyAnimation] = useState(enemy);
   const [enemyX, setEnemyX] = useState(256);
   const [enemyY, setEnemyY] = useState(128);
   const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
@@ -28,9 +28,8 @@ const Map = () => {
     let y = dogPosition[1];
     switch (key) {
       case 'w':
-        if (dogY - 32 < 0) {
-        } else {
-        await setDogY(dogY - 32);
+        if (!(dogY - 32 < 0)) {
+          await setDogY(dogY - 32);
         }
         break;
       case 'a':
@@ -40,26 +39,26 @@ const Map = () => {
         break;
       case 's':
         if (!(dogY + 32 >= tileSize * mapData.length)) {
-        await setDogY(dogY + 32);
+          await setDogY(dogY + 32);
         }
         break;
       case 'd':
         if (!(dogX + 32 >= tileSize * mapData[0].length)) {
-        await setDogX(dogX + 32);
+          await setDogX(dogX + 32);
         }
         break;
       default:
-        console.log('PLEASE USE "WASD" CONTROLS')
+        console.log('PLEASE USE "WASD" CONTROLS');
     }
     checkBattle();
   };
 
   const checkBattle = () => {
-    console.log(dogX, `dogX`)
-    console.log(enemyX, `enemyX`)
-    console.log(dogY, `dogY`)
-    console.log(enemyY, `enemyY`)
-    if ((dogX === enemyX) && (dogY === enemyY)) {
+    console.log(dogX, `dogX`);
+    console.log(enemyX, `enemyX`);
+    console.log(dogY, `dogY`);
+    console.log(enemyY, `enemyY`);
+    if (dogX === enemyX && dogY === enemyY) {
       console.log(' YOU MUST FIGHT ');
     }
   };
@@ -67,11 +66,12 @@ const Map = () => {
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
+    checkBattle();
     document.addEventListener('keydown', moveDog);
     return () => {
       document.removeEventListener('keydown', moveDog);
     };
-  });
+  }, [dogX, dogY]);
   //
   return (
     <div onKeyDown={moveDog}>
@@ -100,7 +100,7 @@ const Map = () => {
           ))
         )}
         <Container position={[16, 16]}>
-        <AnimatedSprite
+          <AnimatedSprite
             key={`enemyPos`}
             images={enemyAnimation}
             isPlaying={true}
