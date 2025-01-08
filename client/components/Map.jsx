@@ -83,12 +83,13 @@ const Map = () => {
     `Dogagatchi/client/components/assets/overlaytiles/trtree-Photoroom.png`,
     `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
   ]);
-
+  
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
   const [dogPosition, setDogPosition] = useState([dogX, dogY]);
-
+  
+  const tileSize = 32; // Size of each tile in pixels
   const moveDog = ({key}) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
@@ -107,7 +108,11 @@ const Map = () => {
       case 's':
         console.log('move down');
         //setDogPosition[y + 32]
+        if(dogY + 32 >= (tileSize * mapData.length)){
+          console.log('you cannot go there')
+        } else {
         setDogY(dogY + 32)
+        }
         break;
       case 'd':
         console.log('move right');
@@ -116,11 +121,10 @@ const Map = () => {
         break;
         
     }
- 
+  
 
   }
 
-  const tileSize = 32; // Size of each tile in pixels
 
   const bunnyUrl = "https://pixijs.io/pixi-react/img/bunny.png";
 
