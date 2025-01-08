@@ -54,6 +54,38 @@ const Map = () => {
     '../assets/animations/dogwalk8.png'
   ]);
 
+  const [overlayTiles, setOverlayTiles] = useState([
+    `Dogagatchi/client/components/assets/overlaytiles/apple-Photoroom.png`,
+     `Dogagatchi/client/components/assets/overlaytiles/bltree-Photoroom.png`,
+    `Dogagatchi/client/components/assets/overlaytiles/brtree-Photoroom.png`, 
+    `Dogagatchi/client/components/assets/overlaytiles/enemy1-Photoroom.png`, 
+    `Dogagatchi/client/components/assets/overlaytiles/enemy2-Photoroom.png`,
+     `Dogagatchi/client/components/assets/overlaytiles/enemy3-Photoroom.png`,
+      `Dogagatchi/client/components/assets/overlaytiles/fenceDLcorner-Photoroom.png`,
+      `Dogagatchi/client/components/assets/overlaytiles/fenceDRcorner-Photoroom.png`,
+       `Dogagatchi/client/components/assets/overlaytiles/fenceULcorner-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/fenceURcorner-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/fenceVert-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/fenceVertical-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLbigrock-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLlog1-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLlogleftside-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLlogrightside-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLplant1-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLplant2-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLplant3-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLplant4-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLrubble-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLshrooms-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLsmallbush-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLsmallrock-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/OLtadpoles-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/tltree-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/trtree-Photoroom.png`, 
+       `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
+  ])
+
+  
 // Example map data, 0: grass, 1: dirt, 2: hill
 
   const tileSize = 32; // Size of each tile in pixels
