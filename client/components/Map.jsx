@@ -2,12 +2,12 @@
 import { React, useEffect, useState } from 'react';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { enemy, overlays, dogwalk, tiles, mapLayout } from './MapFiles';
+import { enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout } from './MapFiles';
 
 const Map = () => {
   // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState(mapLayout);
-
+  const [overlayData, setOverlayData] = useState(overlayLayout)
   const [tileSprites, setTileSprites] = useState(tiles);
 
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
@@ -99,7 +99,7 @@ const Map = () => {
             />
           ))
         )}
-        {mapData.map((row, y) =>
+        {overlayData.map((row, y) =>
           row.map((tile, x) => (
             <Sprite
               key={`${x}-${y}`}
