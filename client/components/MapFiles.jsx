@@ -78,9 +78,4 @@ const overlays = [
   `Dogagatchi/client/components/assets/overlaytiles/weapon-Photoroom.png`,
 ]
 
-export default {
-  overlays,
-  dogwalk,
-  tiles,
-  mapLayout
-}
+export { overlays, dogwalk,  tiles, mapLayout };
