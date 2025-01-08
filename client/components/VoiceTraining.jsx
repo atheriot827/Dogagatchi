@@ -11,13 +11,14 @@ export default function VoiceTraining({dogObj}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
 
 
     useEffect(() => {
         if (show && dogObj) {
             setHealth(dogObj.health);
+            setAttackDmg(dogObj.attackDmg);
         }
     }, [show, dogObj]);
 
@@ -33,12 +34,16 @@ export default function VoiceTraining({dogObj}) {
 
     // AXIOS REQEUSTS
     const healDog = () => {
-        axios.put(`/dog/${dogObj._id}`)
+        axios.put(`/dog/yell/${dogObj._id}`, {
+            status: {
+                increaseHealth: 25,
+            }
+        })
             .then((dog) => {
-                dog.data.health += 5;
+                setHealth(dog.data.health);
         })
             .catch((err) => {
-                console.log('Error healing dog', err);
+                console.error('Error increasing dogs health', err);
         })
     };
 
@@ -58,10 +63,19 @@ export default function VoiceTraining({dogObj}) {
         })
     }
 
-    // const powerUpDog = () => {
-    //     axios.put(`/dog/id/${dog._id}`)
-    //         .then((dog) => {})
-    // }
+    const powerUpDog = () => {
+        axios.put(`/dog/yell/${dogObj._id}`, {
+            status: {
+                increaseAttackDmg: 5,
+            }
+        })
+            .then((dog) => {
+                setAttackDmg(dog.data.attackDmg);
+        })
+            .catch((err) => {
+                console.log('error updating attack value in db', err);
+        })
+    }
 
     /** Very unlikely this webspeech setup will need to be edited ever */
     const speechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Speech recognition constructor (standard and webkit version for Safari compatability)
@@ -93,6 +107,7 @@ export default function VoiceTraining({dogObj}) {
                 case "power surging through this pup strength and speed now level up":
                     // invoke power up function
                     console.log('WE GONNA GIVE THAT DOG SOME POWERS MAN!');
+                    powerUpDog()
                     break;
                 case "stupid dog":
                     // transfer dog to another user in db
@@ -120,6 +135,7 @@ export default function VoiceTraining({dogObj}) {
                     <p> Power Up Command: power surging through this pup strength and speed now level up</p>
                     <p> bad dog: stupid dog</p>
                     <p> Health: {health} </p>
+                    <p> Attack Dmg: {attackDmg}</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
