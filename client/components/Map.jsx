@@ -13,12 +13,7 @@ const Map = () => {
     [1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1],
   ])
-  
-// Example map data, 0: grass, 1: dirt, 2: hill
-
-  const tileSize = 32; // Size of each tile in pixels
-  
-  const tileSprites = {
+  const [tileSprites, setTileSprites] = useState({
     0: '../assets/grass.png',
     1: '../assets/dirt.png',
     2: '../assets/hill.png',
@@ -28,7 +23,13 @@ const Map = () => {
     6:  '../assets/hill.png',
     7:  '../assets/character.png',
     8:  '../assets/gifs/bernese_mountain_dog/Walking.gif'
-  };
+  })
+  
+// Example map data, 0: grass, 1: dirt, 2: hill
+
+  const tileSize = 32; // Size of each tile in pixels
+  
+  //const tileSprites = ;
   
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
