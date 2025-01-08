@@ -19,7 +19,7 @@ const MapTile = () => {
     return image;
   }
 
-  useEffect(() => {
+  useEffect( async () => {
 
     // PIXI.Assets.load('path/to/your/tileset.png').then((asset) => {
     //   setTileset(asset);
@@ -33,7 +33,7 @@ const MapTile = () => {
     PIXI.Assets.add('prize', './assets/maptiles/prize.png');
     PIXI.Assets.add('water', './assets/maptiles/water.png');
     PIXI.Assets.add('character', './assets/maptiles/character.png');
-    const texturePromise = PIXI.Assets.load([
+    await PIXI.Assets.load([
       'dirt',
       'exit',
       'grass',
