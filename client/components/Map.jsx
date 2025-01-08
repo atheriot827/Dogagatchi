@@ -126,7 +126,7 @@ const Map = () => {
       document.removeEventListener('keydown', moveDog)
     }
   })
-
+  //
   return (
     <div onKeyDown={moveDog}>
       <Stage
