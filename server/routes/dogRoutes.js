@@ -135,13 +135,36 @@ router.put('/:dogId', (req, res) => {
 router.put('/yell/:dogId', async (req, res) => {
   const { dogId } = req.params;
   const { status } = req.body;
-  try {
-    const newHealth = status.decreaseHealth;
-    const updatedDog = await Dog.findByIdAndUpdate(dogId, { $inc: { health: -status.decreaseHealth } }, { returnDocument: 'after' });
-    res.status(200).send(updatedDog);
-  } catch (error) {
-     console.error('Error decrementing dog health stat', error);
-   }
+  if (status.decreaseHealth) {
+    try {
+      const healthChange = status.decreaseHealth;
+      const updatedDog = await Dog.findByIdAndUpdate(dogId, { $inc: { health: -healthChange } }, { returnDocument: 'after' });
+      res.status(200).send(updatedDog);
+    } catch (error) {
+      console.error('Error decrementing dog health stat', error);
+    }
+  }
+
+  if (status.increaseHealth) {
+    try {
+      const healthChange = status.increaseHealth;
+      const updatedDog = await Dog.findByIdAndUpdate(dogId, { $inc: { health: healthChange } }, { returnDocument: 'after' });
+      res.status(200).send(updatedDog);
+    } catch (error) {
+      console.error('Error incrementing dog health stat', error);
+    }
+
+  }
+
+  if (status.increaseAttackDmg) {
+    try {
+      const attackChange = status.increaseAttackDmg;
+      const updatedDog = await Dog.findByIdAndUpdate(dogId, { $inc: { attackDmg: attackChange } }, { returnDocument: 'after' });
+      res.status(200).send(updatedDog);
+    } catch (error) {
+      console.error('Error incrementing dog health stat', error);
+    }
+  }
 })
 
 
