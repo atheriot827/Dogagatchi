@@ -87,9 +87,11 @@ const Map = () => {
   const [dogPosition, setDogPosition] = useState([0, 0]);
   const [inputVal, setInputVal] = useState('');
   
-  const moveDog = (event) => {
+  const moveDog = ({key}) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
+    console.log(key);
+ 
 
   }
 
@@ -97,8 +99,15 @@ const Map = () => {
 
   const bunnyUrl = "https://pixijs.io/pixi-react/img/bunny.png";
 
+  useEffect(() => {
+    document.addEventListener('keydown', moveDog);
+    return () => {
+      document.removeEventListener('keydown', moveDog)
+    }
+  })
+
   return (
-    <div>
+    <div onKeyDown={moveDog}>
       <Stage
         width={tileSize * mapData[0].length}
         height={tileSize * mapData.length}
@@ -128,6 +137,7 @@ const Map = () => {
           />
         </Container>
       </Stage>
+      
     </div>
   );
 };
