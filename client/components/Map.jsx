@@ -32,6 +32,8 @@ const Map = () => {
   const [enemyY32, setenemyY32] = useState(160);
   // enemy position is based on 32 bits
   const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
+  const [itemXY, setItemXY] = useState(itemLoc);
+  const [weaponXY, setWeaponXY] = useState(weaponLoc)
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
