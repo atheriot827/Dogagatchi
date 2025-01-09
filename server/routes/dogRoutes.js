@@ -97,7 +97,7 @@ router.put('/:dogId', (req, res) => {
 });
 
 // ROUTE FOR YELLING AT DOG
-router.put('/yell/:dogId', async (req, res) => {
+router.put('/stats/:dogId', async (req, res) => {
     const {dogId} = req.params;
     const {status} = req.body;
     if (status.decreaseHealth) {
