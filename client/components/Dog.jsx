@@ -129,7 +129,7 @@ function Dog(props) {
       alert('Not enough coins!');
     }
   };
-  /** ********** Subscribe for Groom ********* */
+
 
   // (dogToFeedObj, mealToFeedObj)
   const giveMedicine = (dogToGiveMeds, medsToGiveObj) => {

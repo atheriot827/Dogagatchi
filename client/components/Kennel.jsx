@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Dog from './Dog.jsx';
 
-function Kennel({ dogs, setCoins, coins }) {
+function Kennel({ dogs, setDogs, coins, setCoins }) {
   const [currentDog, setCurrentDog] = useState(null);
   const [currentAction, setCurrentAction] = useState(null);
   const [actionPosition, setActionPosition] = useState({ x: 0, y: 0 });
@@ -32,33 +32,43 @@ function Kennel({ dogs, setCoins, coins }) {
     }, 2000);
   };
 
+  // Add a refresh function to update dogs
+  const refreshDogs = () => {
+    const userObj = JSON.parse(sessionStorage.getItem('user'));
+    axios.get(`/dog/users/${userObj._id}`)
+      .then(response => {
+        setDogs(response.data.dogsArr);
+      })
+      .catch(err => console.error('Error refreshing dogs:', err));
+  };
+
   return (
     <div className="kennel-container">
       {/* 8-bit background */}
       <div className="kennel-background">
         {/* Interaction areas */}
-        <div 
+        <div
           className="sleeping-area"
           onClick={() => handleActionClick('sleep', KENNEL_POSITIONS.sleepingArea)}
         >
           <img src="/assets/kennel-items/dog-bed.png" alt="Dog Bed" />
         </div>
 
-        <div 
+        <div
           className="feeding-area"
           onClick={() => handleActionClick('feed', KENNEL_POSITIONS.feedingArea)}
         >
           <img src="/assets/kennel-items/food-bowl.png" alt="Food Bowl" />
         </div>
 
-        <div 
+        <div
           className="play-area"
           onClick={() => handleActionClick('play', KENNEL_POSITIONS.playArea)}
         >
           <img src="/assets/kennel-items/toys.png" alt="Toys" />
         </div>
 
-        <div 
+        <div
           className="grooming-area"
           onClick={() => handleActionClick('groom', KENNEL_POSITIONS.groomingArea)}
         >
@@ -67,7 +77,7 @@ function Kennel({ dogs, setCoins, coins }) {
 
         {/* Current dog animation */}
         {currentDog && (
-          <div 
+          <div
             className="current-dog"
             style={{
               left: actionPosition.x,
@@ -75,7 +85,7 @@ function Kennel({ dogs, setCoins, coins }) {
               transition: 'all 0.5s ease-in-out'
             }}
           >
-            <img 
+            <img
               src={`/assets/gifs/${currentDog.breed}/${
                 currentAction ? `${currentAction}.gif` : 'Standing.gif'
               }`}
@@ -95,7 +105,7 @@ function Kennel({ dogs, setCoins, coins }) {
                 <Button
                   key={dog._id}
                   onClick={() => setCurrentDog(dog)}
-                  variant={currentDog?._id === dog._id ? 'primary' : 'outline-primary'}
+                  variant={currentDog && currentDog._id === dog._id ? 'primary' : 'outline-primary'}
                 >
                   {dog.name}
                 </Button>

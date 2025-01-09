@@ -46,23 +46,28 @@ function DogShop({ coins, setCoins }) {
 
   const handlePurchase = (dog) => {
     if (coins >= dog.price) {
+      const userObj = JSON.parse(sessionStorage.getItem('user'));
+
       // Create new dog in database
       axios.post('/api/dogs', {
         breed: dog.breed,
-        name: `New ${dog.breed.split('_').map(w => 
+        name: `New ${dog.breed.split('_').map(w =>
           w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
-        img: dog.animation
+        img: dog.animation,
+        owner: userObj._id
       })
-      .then(() => 
-        // Deduct coins
-         axios.put('/api/users/coins', {
+      .then((response) => {
+        // Update dogs list
+        setDogs(prev => [...prev, response.data]);
+
+        // Update coins
+        return axios.put(`/api/users/${userObj._id}/coins`, {
           coins: coins - dog.price
-        })
-      )
+        });
+      })
       .then(() => {
         setCoins(prev => prev - dog.price);
         setShowPurchaseModal(false);
-        // Show success message
         alert('Dog purchased successfully!');
       })
       .catch(err => {
@@ -119,13 +124,13 @@ function DogShop({ coins, setCoins }) {
         <Modal.Body>
           {selectedDog && (
             <>
-              <img 
-                src={selectedDog.animation} 
+              <img
+                src={selectedDog.animation}
                 alt={selectedDog.breed}
                 style={{ width: '200px', marginBottom: '20px' }}
               />
               <p>Are you sure you want to purchase this {
-                selectedDog.breed.split('_').map(w => 
+                selectedDog.breed.split('_').map(w =>
                   w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
               } for {selectedDog.price} coins?</p>
             </>
@@ -135,8 +140,8 @@ function DogShop({ coins, setCoins }) {
           <Button variant="secondary" onClick={() => setShowPurchaseModal(false)}>
             Cancel
           </Button>
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             onClick={() => handlePurchase(selectedDog)}
           >
             Confirm Purchase
