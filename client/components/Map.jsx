@@ -119,11 +119,8 @@ const Map = () => {
       dogPosition[1] === exitPosition[1]
     ) {
       console.log(' YOU FIND THE EXIT!');
-      window.alert(
-        'You have walked your Dog! They will now be a little hungrier but much healthier!'
-      );
       axios
-        .post('map/exit')
+        .post('map/exit', { dog })
         .then(() => {
           window.alert(
             'You have walked your Dog! They will now be a little hungrier but much healthier!'
