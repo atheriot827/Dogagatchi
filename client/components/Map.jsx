@@ -107,14 +107,14 @@ const Map = () => {
         ))
       ))}
       <Container position={[10, 20]}>
-      <AnimatedSprite 
-      images={dogAnimation} 
+      <AnimatedSprite
+      images={dogAnimation}
       isPlaying={true}
       initialFrame={0}
       animationSpeed={0.1}
       anchor={0.5}
-      x={10} 
-      y={20} 
+      x={10}
+      y={20}
       width={32}
       height={32}
       />

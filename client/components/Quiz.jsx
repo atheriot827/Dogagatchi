@@ -86,7 +86,7 @@ return (
   <Container className="quiz-container">
     <Card className="quiz-card">
       <Card.Header>
-        <h2>Pooch Picker</h2>
+        <h2>Quiz</h2>
         <div className="quiz-stats">
           <p>Current Streak: {streak}</p>
           <p>Coins Earned: {coinsEarned}</p>

@@ -32,10 +32,10 @@ function PoochCenter() {
         defaultActiveKey="quiz"
         className="mb-3"
       >
-        <Tab eventKey="quiz" title="Pooch Picker">
+        <Tab eventKey="quiz">
           <Quiz onCoinsEarned={handleCoinsEarned} />
         </Tab>
-        <Tab eventKey="shop" title="Pet Shop">
+        <Tab eventKey="shop" title="Dog Shop">
           <DogShop coins={coins} setCoins={setCoins} />
         </Tab>
       </Tabs>

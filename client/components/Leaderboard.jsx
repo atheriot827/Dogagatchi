@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
@@ -9,12 +8,12 @@ import Leader from './Leader.jsx';
 function LeaderBoard(props) {
   const [leaders, setLeaders] = useState([]);
   const [board, setBoard] = useState('smartest');
-  
+
   function getLeaders(type) {
     axios.get(`/user/leaderboard/${type}`)
       .then(({ data }) => { // sets leaders to data property from User query obj
         const topTen = data.slice(0,10)
-        setLeaders(topTen); 
+        setLeaders(topTen);
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
   }
