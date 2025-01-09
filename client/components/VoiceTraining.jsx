@@ -7,7 +7,7 @@ import {ProgressBar} from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-export default function VoiceTraining({dogStateParent, setDogParent, setHealthParent}) {
+export default function VoiceTraining({dogStateParent, setDogParent}) {
 
 
     // Modal pop up
@@ -41,7 +41,6 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
         }).then((dog) => {
             setHealth(dog.data.health);
             setDogParent(dog.data); // update state for parent component
-            setHealthParent(dog.data.health);
         }).catch((err) => {
             console.error('Error increasing dogs health', err);
         });
@@ -56,7 +55,6 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
         }).then((dog) => {
             setHealth(dog.data.health);
             setDogParent(dog.data); // update state for parent component
-            setHealthParent(dog.data.health);
             console.log('dog health: ', dog.data.health);
             console.log('dog has been updated in db');
         }).catch((err) => {
