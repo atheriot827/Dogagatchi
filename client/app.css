@@ -486,10 +486,9 @@ body {
 
 /* Kennel Styles ***************************************************/
 .kennel-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .kennel-background {
@@ -640,4 +639,29 @@ body {
 .nav-tabs .nav-link.active {
   color: white;
   background-color: #007bff;
+}
+
+/* Navigation Styles */
+.navbar {
+  margin-bottom: 20px;
+}
+
+/* Shop Container Styles */
+.shop-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.shop-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.coins-display {
+  color: white;
+  padding: 8px 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  margin-right: 15px;
 }
