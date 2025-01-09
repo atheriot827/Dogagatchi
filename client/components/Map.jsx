@@ -33,25 +33,38 @@ const Map = () => {
   const moveDog = ({ key }) => {
     let x = dogPosition[0];
     let y = dogPosition[1];
+    console.log(dogPosition)
+    
+    if (collisionDetection(x, y)) {
+      console.log('collision detected');
+    }
     switch (key) {
       case 'w':
         if (!(dogY - 32 < 0)) {
           setDogY(dogY - 32);
+          y = y - 1;
+          updatePos(1, y);
         }
         break;
       case 'a':
         if (!(dogX - 32 < 0)) {
           setDogX(dogX - 32);
+          x = x - 1;
+          updatePos(0, x);
         }
         break;
       case 's':
         if (!(dogY + 32 >= tileSize * mapData.length)) {
           setDogY(dogY + 32);
+          y = y + 1;
+          updatePos(1, y);
         }
         break;
       case 'd':
         if (!(dogX + 32 >= tileSize * mapData[0].length)) {
           setDogX(dogX + 32);
+          x = x + 1;
+          updatePos(0, x);
         }
         break;
       default:
@@ -68,7 +81,7 @@ const Map = () => {
   const updatePos = (index, newValue) => {
     setDogPosition((prevPosition) => {
       const newPos = [...prevPosition];
-      newPos[index] = newValue; 
+      newPos[index] = newValue;
       return newPos;
     });
   };
@@ -76,6 +89,7 @@ const Map = () => {
   const collisionDetection = (x, y) => {
     const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
     const mapCollidable = [2, 6];
+    console.log(mapLayout[x][y])
     if (mapCollidable.includes(mapLayout[x][y])) {
       return true;
     }
@@ -88,6 +102,7 @@ const Map = () => {
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
+
     checkBattle();
     document.addEventListener('keydown', moveDog);
     return () => {
