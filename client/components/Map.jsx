@@ -65,18 +65,25 @@ const Map = () => {
     }
   };
 
+  const updatePos = (index, newValue) => {
+    setDogPosition((prevPosition) => {
+      const newPos = [...prevPosition];
+      newPos[index] = newValue; 
+      return newPos;
+    });
+  };
+
   const collisionDetection = (x, y) => {
-        const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
-        const mapCollidable = [2, 6]
-      if(mapCollidable.includes(mapLayout[x][y])){
-        return true;
-      }
-      if(overlayCollidable.includes(overlayLayout[x][y])){
-        return true;
-      }
-      return false
+    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
+    const mapCollidable = [2, 6];
+    if (mapCollidable.includes(mapLayout[x][y])) {
+      return true;
     }
-  
+    if (overlayCollidable.includes(overlayLayout[x][y])) {
+      return true;
+    }
+    return false;
+  };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
