@@ -17,8 +17,9 @@ import VoiceTraining from './VoiceTraining.jsx';
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const location = useLocation();  // Hook allows you to retrieve information about the current location
+ // const location = useLocation();  // Hook allows you to retrieve information about the current location
   const { dogObj, setCoins, coins } = props;
+
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
