@@ -48,6 +48,9 @@ const overlayLayout = [
   [0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0],
 ];
 
+const weaponLoc = [21, 1];
+const itemLoc = [19, 5];
+
 const tiles = {
   0: '../assets/grass.png',
   1: '../assets/dirt.png',
@@ -107,5 +110,5 @@ const overlays = [
 ];
 
 export {
-  enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout,
+  enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout, weaponLoc, itemLoc
 };
