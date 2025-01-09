@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import {ProgressBar} from 'react-bootstrap';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 export default function VoiceTraining({dogObj, setDog}) {
 
@@ -148,6 +150,18 @@ export default function VoiceTraining({dogObj, setDog}) {
                 <p> Health: {health} </p>
                 <p> Attack Dmg: {attackDmg}</p>
                 <div>
+                    <div>
+                        <Dropdown>
+                            <Dropdown.Toggle variant='success'>
+                                Click To Train
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item href='#/action-1'>Heal</Dropdown.Item>
+                                <Dropdown.Item href='#/action-2'>Power Up</Dropdown.Item>
+                                <Dropdown.Item href='#/action-3'>Yell at {dogObj.name}</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                     <ProgressBar
                         animated={true}
                         striped
@@ -173,7 +187,7 @@ export default function VoiceTraining({dogObj, setDog}) {
                     Close Modal
                 </Button>
                 <Button variant='primary' onClick={renderSpeech}>
-                    {voiceInput ? 'LISTENING' : 'SPEAK TO THE DOGS'}
+                    {voiceInput ? 'LISTENING' : 'Speak To Train'}
                 </Button>
                 <p> {error ? `Last I checked "${[error]}" isn't a command.` : ''}</p>
             </Modal.Footer>
