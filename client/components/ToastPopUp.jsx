@@ -16,17 +16,17 @@ export default function ToastPopUp({message}) {
         <Row>
             <Col md={6} className='mb-2'>
                 <Button onClick={toggleShowToast} className='mb-2'>
-                    Toggle Toast
+                    {message}
                 </Button>
 
                 <Toast show={showToast} onClose={toggleShowToast}>
                     <Toast.Header>
-                        <img src='' className='rounded me-2'
+                        <img src='../assets/roman.webp' className='rounded me-2'
                              alt=''/>
-                        <strong className='me-auto'>Bootstrap</strong>
-                        <small>11 mins ago</small>
+                        <strong className='me-auto'>Roman Bellic</strong>
+                        <small>Dog Trainer</small>
                     </Toast.Header>
-                    <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+                    <Toast.Body>Cousin</Toast.Body>
                 </Toast>
             </Col>
         </Row>
