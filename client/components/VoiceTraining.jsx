@@ -5,7 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import {ProgressBar} from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Toast from 'react-bootstrap/Toast';
 
 export default function VoiceTraining({dogStateParent, setDogParent}) {
 
@@ -15,13 +17,18 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // Voice input
+    const [voiceInput, setVoiceInput] = useState(false);
+    const [error, setError] = useState();
+
+    // Error message toast
+    const [showError, setShowError] = useState(true);
+    const toggleShowError = () => setShowError(!showError);
+
     // Dog stats
     const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
 
-    // Voice input
-    const [voiceInput, setVoiceInput] = useState(false);
-    const [error, setError] = useState();
 
     useEffect(() => {
         if (show && dogStateParent) {
@@ -157,6 +164,26 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                 <Modal.Title>Chat with your stinky dog</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+
+                {/* TOAST MESSAGE */}
+                <Row>
+                    <Col md={6} className='mb-2'>
+                        <Button onClick={toggleShowError} className='mb-2'>
+                            Toggle Toast
+                        </Button>
+
+                        <Toast show={showError} onClose={toggleShowError}>
+                            <Toast.Header>
+                                <img src='' className='rounded me-2'
+                                     alt=''/>
+                                <strong className='me-auto'>Bootstrap</strong>
+                                <small>11 mins ago</small>
+                            </Toast.Header>
+                            <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+                        </Toast>
+                    </Col>
+                </Row>
+
                 <h4>Commands</h4>
                 <p> Heal Command: healing magic drop the beat fix this dog from head to feet</p>
                 <p> Power Up Command: power surging through this pup strength and speed now level up</p>
