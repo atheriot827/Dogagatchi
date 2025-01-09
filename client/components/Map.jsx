@@ -15,19 +15,21 @@ import {
 } from './MapFiles';
 
 const Map = () => {
+  // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
   const location = useLocation(); 
   const { state: dog } = location;
-  // Example map data, 0: grass, 1: dirt, 2: hill
+  // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
-
   const [overlayTiles, setOverlayTiles] = useState(overlays);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
-  const [enemyX, setEnemyX] = useState(480);
-  const [enemyY, setEnemyY] = useState(160);
-  const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
+  // I chose to base these values off of 32 bits per square tile
+  const [enemyX32, setenemyX32] = useState(480); 
+  const [enemyY32, setenemyY32] = useState(160);
+  // enemy position is based on 32 bits
+  const [enemyPos, setEnemyPos] = useState([enemyX32, enemyY32]);
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
@@ -100,7 +102,7 @@ const Map = () => {
   };
 
   const checkBattle = () => {
-    if (dogX === enemyX && dogY === enemyY) {
+    if (dogX === enemyX32 && dogY === enemyY32) {
       console.log(' YOU MUST FIGHT ');
     }
   };
@@ -117,6 +119,15 @@ const Map = () => {
     //     });
     // }
   };
+
+  const foundItem = () => {
+    if (dogX === weaponX && dogY === weaponY) {
+      console.log(' YOU FIND A WEAPON!');
+    }
+    if (dogX === itemX && dogY === itemY) {
+      console.log(' YOU FIND A WEAPON!');
+    }
+  }
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
@@ -158,8 +169,8 @@ const Map = () => {
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
-            x={enemyX}
-            y={enemyY}
+            x={enemyX32}
+            y={enemyY32}
             width={32}
             height={32}
           />
