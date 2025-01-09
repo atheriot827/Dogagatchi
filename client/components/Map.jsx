@@ -30,35 +30,62 @@ const Map = () => {
   const [dogPosition, setDogPosition] = useState([0, 0]);
 
   const tileSize = 32; // Size of each tile in pixels
+
+  const collisionDetection = (x, y) => {
+    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
+    const mapCollidable = [2, 6];
+    if (mapCollidable.includes(mapLayout[y][x])) {
+      return true;
+    }
+    if (overlayCollidable.includes(overlayLayout[y][x])) {
+      return true;
+    }
+    return false;
+  };
+
+  const updatePos = (index, newValue) => {
+    setDogPosition((prevPosition) => {
+      const newPos = [...prevPosition];
+      newPos[index] = newValue;
+      return newPos;
+    });
+  };
+
   const moveDog = ({ key }) => {
     let x = dogPosition[1];
     let y = dogPosition[0];
-    
+
     switch (key) {
       case 'w':
         y = y - 1;
-        if (!(dogY - 32 < 0) && !(collisionDetection(x, y))) {
+        if (!(dogY - 32 < 0) && !collisionDetection(x, y)) {
           setDogY(dogY - 32);
           updatePos(0, y);
         }
         break;
       case 'a':
         x = x - 1;
-        if (!(dogX - 32 < 0)  && !(collisionDetection(x, y))) {
+        if (!(dogX - 32 < 0) && !collisionDetection(x, y)) {
           setDogX(dogX - 32);
           updatePos(1, x);
         }
         break;
       case 's':
         y = y + 1;
-        if (!(dogY + 32 >= tileSize * mapData.length) && !(collisionDetection(x, y))) {
+        if (
+          !(dogY + 32 >= tileSize * mapData.length) &&
+          !collisionDetection(x, y)
+        ) {
           setDogY(dogY + 32);
           updatePos(0, y);
         }
         break;
       case 'd':
         x = x + 1;
-        if (!(dogX + 32 >= tileSize * mapData[0].length) && !(collisionDetection(x, y))) {
+        if (
+          !(dogX + 32 >= tileSize * mapData[0].length) &&
+          !collisionDetection(x, y)
+        ) {
           setDogX(dogX + 32);
           updatePos(1, x);
         }
@@ -74,30 +101,9 @@ const Map = () => {
     }
   };
 
-  const updatePos = (index, newValue) => {
-    setDogPosition((prevPosition) => {
-      const newPos = [...prevPosition];
-      newPos[index] = newValue;
-      return newPos;
-    });
-  };
-
-  const collisionDetection = (x, y) => {
-    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
-    const mapCollidable = [2, 6];
-    if (mapCollidable.includes(mapLayout[y][x])) {
-      return true;
-    }
-    if (overlayCollidable.includes(overlayLayout[y][x])) {
-      return true;
-    }
-    return false;
-  };
-
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
-
     checkBattle();
     document.addEventListener('keydown', moveDog);
     return () => {
