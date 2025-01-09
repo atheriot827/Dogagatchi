@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from './Context';
 import {
   ListGroup,
   Table,
@@ -9,7 +11,6 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './Navbar';
 import DogShop from './DogShop';
@@ -17,7 +18,8 @@ import Achievements from './Achievements';
 import Kennel from './Kennel';
 import Grooms from './Grooms';
 
-function User(props) {
+function User() {
+  const { user: currentUser } = useAuth();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState('');
   const [globalRank, setGlobalRank] = useState(0);
@@ -31,29 +33,25 @@ function User(props) {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const userObj = JSON.parse(sessionStorage.getItem('user'));
-
   useEffect(() => {
     axios
       .get('/user/leaderboard/smartest')
       .then(({ data }) => {
         const index = data.findIndex(
-          (userData) => userData._id === userObj._id,
+          (userData) => userData._id === currentUser._id,
         );
         setGlobalRank(index + 1);
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
-
     setPage();
-    axios.get(`/dog/users/${userObj._id}`).then((dogArr) => {
+    axios.get(`/dog/users/${currentUser._id}`).then((dogArr) => {
       setOwnDogs(dogArr.data.dogsArr.length);
     });
-
     getKennel();
   }, [coins]);
 
   const setPage = () => {
-    axios.get(`/user/${userObj._id}`).then((user) => {
+    axios.get(`/user/${currentUser._id}`).then((user) => {
       setUser(user.data[0]);
       setCorrectQuestionCount(user.data[0].questionCount);
       setDogCount(user.data[0].dogCount);
@@ -63,7 +61,7 @@ function User(props) {
 
   const getKennel = () => {
     axios
-      .get(`/dog/users/${userObj._id}`)
+      .get(`/dog/users/${currentUser._id}`)
       .then(({ data }) => {
         setDogs(data.dogsArr);
         setLoading(false);
@@ -89,10 +87,10 @@ function User(props) {
 
   const deleteUser = () => {
     axios
-      .delete(`/user/${userObj._id}`)
+      .delete(`/user/${currentUser._id}`)
       .then(() => {
         axios
-          .delete(`/dog/all/${userObj._id}`)
+          .delete(`/dog/all/${currentUser._id}`)
           .then(() => console.log('deleted user dogs deleted'))
           .catch((err) => console.error('deleted dogs', err));
       })
@@ -308,7 +306,7 @@ function User(props) {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{`WARNING! Are you sure you want to delete ${userObj.username}'s account?`}</Modal.Title>
+          <Modal.Title>{`WARNING! Are you sure you want to delete ${currentUser.username}'s account?`}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{`By deleting your account, you will lose ${coins} coins and ${ownDogs} dogs. If you are PAW-sitive you want to delete your account, click delete.`}</Modal.Body>
         <Modal.Footer>
