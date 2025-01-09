@@ -32,8 +32,8 @@ const Map = () => {
   const [enemyY32, setenemyY32] = useState(160);
   // enemy position is based on 32 bits
   const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
-  const [itemXY, setItemXY] = useState(itemLoc);
-  const [weaponXY, setWeaponXY] = useState(weaponLoc)
+  const [itemPosition, setItemPosition] = useState(itemLoc);
+  const [weaponPosition, setWeaponPosition] = useState(weaponLoc)
   const [inputVal, setInputVal] = useState('');
   const [dogX32, setdogX32] = useState(0);
   const [dogY32, setdogY32] = useState(0);
@@ -125,7 +125,7 @@ const Map = () => {
   };
 
   const foundItem = () => {
-    if (dogX32 === weaponX && dogY32 === weaponY) {
+    if (dogPosition === weaponX && dogY32 === weaponY) {
       console.log(' YOU FIND A WEAPON!');
     }
     if (dogX32 === itemX && dogY32 === itemY) {
