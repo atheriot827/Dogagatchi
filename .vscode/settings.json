@@ -1,6 +1,8 @@
 {
-  "cSpell.words": [
-    "Meds",
-    "PIXI"
-  ]
+"javascript.preferences.quoteStyle": "single",
+"prettier.jsxSingleQuote": true,
+"prettier.singleQuote": true,
+"cSpell.words": [
+  "dogtionary"
+],
 }

@@ -9,13 +9,13 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
-import NavBar from './Navbar.jsx';
-import DogShop from './DogShop.jsx';
-import Achievements from './Achievements.jsx';
-import Kennel from './Kennel.jsx';
-import Grooms from './Grooms.jsx';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from './Navbar';
+import DogShop from './DogShop';
+import Achievements from './Achievements';
+import Kennel from './Kennel';
+import Grooms from './Grooms';
 
 function User(props) {
   const [loading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ function User(props) {
       .get('/user/leaderboard/smartest')
       .then(({ data }) => {
         const index = data.findIndex(
-          (userData) => userData._id === userObj._id
+          (userData) => userData._id === userObj._id,
         );
         setGlobalRank(index + 1);
       })
@@ -74,7 +74,7 @@ function User(props) {
   };
   const getGroomed = () => {
     axios
-      .get(`/groom/member`)
+      .get('/groom/member')
       .then(({ data }) => {
         setGroomed(data);
         setLoading(false);
@@ -123,33 +123,39 @@ function User(props) {
       </Row>
       <Row>
         <Col xs={4}>
-          <div className='user-stats'>
+          <div className="user-stats">
             {loading ? (
-              <h1></h1>
+              <h1 />
             ) : globalRank === 1 ? (
               <div>
-                <h2 id='heady'>🥇</h2>
-                <h2 id='heady' className='shimmer'>
-                  {user.username}'s Kennel
+                <h2 id="heady">🥇</h2>
+                <h2 id="heady" className="shimmer">
+                  {user.username}
+                  's Kennel
                 </h2>
               </div>
             ) : globalRank === 3 ? (
               <div>
-                <h2 id='heady'>🥉</h2>
-                <h2 id='heady' className='shimmer'>
-                  {user.username}'s Kennel
+                <h2 id="heady">🥉</h2>
+                <h2 id="heady" className="shimmer">
+                  {user.username}
+                  's Kennel
                 </h2>
               </div>
             ) : globalRank === 2 ? (
               <div>
-                <h1 id='heady'>🥈</h1>
-                <h1 id='heady' className='shimmer'>
-                  {user.username}'s Kennel
+                <h1 id="heady">🥈</h1>
+                <h1 id="heady" className="shimmer">
+                  {user.username}
+                  's Kennel
                 </h1>
               </div>
             ) : (
               <div>
-                <h1>{user.username}'s Kennel</h1>
+                <h1>
+                  {user.username}
+                  's Kennel
+                </h1>
               </div>
             )}
             <Card style={{ backgroundColor: '#4c5f63' }}>
@@ -182,7 +188,17 @@ function User(props) {
                   backgroundColor: color,
                 }}
               >
-                {{ coins } > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
+                {{ coins } > 1 ? (
+                  <p>
+                    Coin:
+                    {coins}
+                  </p>
+                ) : (
+                  <p>
+                    Coins:
+                    {coins}
+                  </p>
+                )}
               </Card.Header>
 
               <Card.Header
@@ -195,7 +211,8 @@ function User(props) {
                   backgroundColor: color,
                 }}
               >
-                Global Rank: #{globalRank}
+                Global Rank: #
+                {globalRank}
               </Card.Header>
 
               <Card.Header
@@ -208,7 +225,9 @@ function User(props) {
                   backgroundColor: color,
                 }}
               >
-                Correct Answers: {correctQuestionCount}
+                Correct Answers:
+                {' '}
+                {correctQuestionCount}
               </Card.Header>
 
               <Card.Header
@@ -221,7 +240,9 @@ function User(props) {
                   backgroundColor: color,
                 }}
               >
-                Purchasable Dogs: {dogCount}
+                Purchasable Dogs:
+                {' '}
+                {dogCount}
               </Card.Header>
 
               <Card.Header
@@ -234,12 +255,15 @@ function User(props) {
                   backgroundColor: color,
                 }}
               >
-                <p>Owned Dogs: {ownDogs}</p>
+                <p>
+                  Owned Dogs:
+                  {ownDogs}
+                </p>
               </Card.Header>
             </Card>
           </div>
 
-          <Achievements user={user} className='user-achievements' />
+          <Achievements user={user} className="user-achievements" />
         </Col>
 
         <Col xs={8}>
@@ -249,9 +273,9 @@ function User(props) {
             <h1>Start playing Pooch Picker to earn dogs to adopt!</h1>
           ) : (
             // (
-            <div className='dogs'>
+            <div className="dogs">
               <Kennel
-                className='user-kennel'
+                className="user-kennel"
                 dogs={dogs}
                 getKennel={getKennel}
                 coins={coins}
@@ -274,9 +298,9 @@ function User(props) {
           )}
         </Col>
       </Row>
-      <Row className='mt-3 mb-5'>
+      <Row className="mt-3 mb-5">
         <Col>
-          <Button variant='danger' onClick={() => setShowModal(true)}>
+          <Button variant="danger" onClick={() => setShowModal(true)}>
             Delete Account
           </Button>
         </Col>
@@ -288,10 +312,10 @@ function User(props) {
         </Modal.Header>
         <Modal.Body>{`By deleting your account, you will lose ${coins} coins and ${ownDogs} dogs. If you are PAW-sitive you want to delete your account, click delete.`}</Modal.Body>
         <Modal.Footer>
-          <Button variant='danger' onClick={deleteUser}>
+          <Button variant="danger" onClick={deleteUser}>
             DELETE
           </Button>
-          <Button variant='primary' onClick={handleCloseModal}>
+          <Button variant="primary" onClick={handleCloseModal}>
             NEVERMIND
           </Button>
         </Modal.Footer>

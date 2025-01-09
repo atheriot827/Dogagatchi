@@ -84,41 +84,33 @@ function Quiz(props) {
     if (value === solutionUrl) {
       axios
         .put(`/user/${_id}`, {
-          dog: {
-            url: solutionUrl,
-          },
+          type: 'CORRECT_ANSWER',
+          coins: 1
         })
         .then((user) => {
-          // put request returns updated user object
-          setAlert({
-            text: `Correct! Keep up the good work! You now have ${user.data.coinCount} coins`,
-            variant: "success",
-          });
-          getDogs().then((dogArray) => {
-            setSolutionDog(dogArray);
-          });
+          setCoins(prevCoins => prevCoins + 1);
+          setMessage('Correct! You earned 1 coin! 🎉');
+          setMessageType('success');
+          setTimeout(() => {
+            setMessage('');
+            loadNewQuestion();
+          }, 2000);
         })
-        .catch((err) => {
-          console.error(
-            "CLIENT ERROR: failed to start new round after correct answer",
-            err
-          );
+        .catch(err => {
+          console.error('Error updating coins:', err);
+          setMessage('Error updating coins');
+          setMessageType('danger');
         });
     } else {
       // if the answer is wrong
-      setAlert({ text: "Nice try! Have another go!", variant: "danger" });
-      getDogs()
-        .then((dogArray) => {
-          setSolutionDog(dogArray);
-        })
-        .catch((err) => {
-          console.error(
-            "CLIENT ERROR: failed to start new round after correct answer",
-            err
-          );
-        });
-    }
-  };
+      setMessage(`Wrong! The correct answer was ${correctAnswer}`);
+      setMessageType('danger');
+      setTimeout(() => {
+        setMessage('');
+        loadNewQuestion();
+    }, 2000);
+  }
+};
 
   useEffect(() => {
     getNewRound();
