@@ -7,48 +7,54 @@ import {ProgressBar} from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-export default function VoiceTraining({dogObj, setDog}) {
+export default function VoiceTraining({dogStateParent, setDogParent, setHealthParent}) {
 
 
-    // Modal pop up functionality
+    // Modal pop up
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [voiceInput, setVoiceInput] = useState(false);
+
+    // Dog stats
     const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
+
+    // Voice input
+    const [voiceInput, setVoiceInput] = useState(false);
     const [error, setError] = useState();
 
     useEffect(() => {
-        if (show && dogObj) {
-            setHealth(dogObj.health);
-            setAttackDmg(dogObj.attackDmg);
+        if (show && dogStateParent) {
+            setHealth(dogStateParent.health);
+            setAttackDmg(dogStateParent.attackDmg);
         }
-    }, [show, dogObj]);
+    }, [show, dogStateParent]);
 
 
     // AXIOS REQEUSTS
     const healDog = () => {
-        axios.put(`/dog/yell/${dogObj._id}`, {
+        axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseHealth: 25,
             }
         }).then((dog) => {
             setHealth(dog.data.health);
-            setDog(dog.data); // update state for parent component
+            setDogParent(dog.data); // update state for parent component
+            setHealthParent(dog.data.health);
         }).catch((err) => {
             console.error('Error increasing dogs health', err);
         });
     };
 
     const yellAtDog = () => {
-        axios.put(`/dog/yell/${dogObj._id}`, {
+        axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 decreaseHealth: 25,
             }
         }).then((dog) => {
             setHealth(dog.data.health);
-            setDog(dog.data); // update state for parent component
+            setDogParent(dog.data); // update state for parent component
+            setHealthParent(dog.data.health);
             console.log('dog health: ', dog.data.health);
             console.log('dog has been updated in db');
         }).catch((err) => {
@@ -57,30 +63,38 @@ export default function VoiceTraining({dogObj, setDog}) {
     };
 
     const powerUpDog = () => {
-        axios.put(`/dog/yell/${dogObj._id}`, {
+        axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseAttackDmg: 5,
             }
         }).then((dog) => {
             setAttackDmg(dog.data.attackDmg);
-            setDog(dog.data); // update state for parent component
+            setDogParent(dog.data); // update state for parent component
         }).catch((err) => {
             console.log('error updating attack value in db', err);
         });
     };
 
     const baller = () => {
-        axios.put(`/dog/yell/${dogObj._id}`, {
+        axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 maxStats: 100,
             }
         }).then((dog) => {
             setAttackDmg(dog.data.attackDmg);
             setHealth(dog.data.health);
-            setDog(dog.data); // update state for parent component
+            setDogParent(dog.data); // update state for parent component
+            setHealthParent(dog.data.health);
         }).catch((err) => {
             console.error('error updating health and attack stats #motherlode', err);
         });
+    };
+
+    // Calculate progress bar variants
+    const getProgressBarVariant = (healthState) => {
+        if (healthState >= 75) return 'success';
+        if (healthState < 75 && healthState > 25) return 'warning';
+        if (healthState <= 25) return 'danger';
     };
 
     /** Very unlikely this webspeech setup will need to be edited ever */
@@ -158,7 +172,7 @@ export default function VoiceTraining({dogObj, setDog}) {
                             <Dropdown.Menu>
                                 <Dropdown.Item href='#/action-1'>Heal</Dropdown.Item>
                                 <Dropdown.Item href='#/action-2'>Power Up</Dropdown.Item>
-                                <Dropdown.Item href='#/action-3'>Yell at {dogObj.name}</Dropdown.Item>
+                                <Dropdown.Item href='#/action-3'>Yell at {dogStateParent.name}</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -166,7 +180,7 @@ export default function VoiceTraining({dogObj, setDog}) {
                         animated={true}
                         striped
                         now={health}
-                        variant={health}
+                        variant={getProgressBarVariant(health)}
                         label='HEALTH'
                         style={{height: '35px'}}
                     />
@@ -176,7 +190,7 @@ export default function VoiceTraining({dogObj, setDog}) {
                         animated={true}
                         striped
                         now={attackDmg}
-                        variant={attackDmg}
+                        variant={getProgressBarVariant(attackDmg)}
                         label='ATTACK DAMAGE'
                         style={{height: '35px'}}
                     />
