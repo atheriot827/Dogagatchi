@@ -1,6 +1,7 @@
 |-- .env
 |-- .eslintrc
 |-- .gitignore
+|-- .prettierrc
 |-- README.md
 |-- _PRESS-RELEASE.md
 |-- client
