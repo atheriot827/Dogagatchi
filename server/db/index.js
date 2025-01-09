@@ -98,7 +98,66 @@ const wordSchema = new mongoose.Schema({
 
 const Word = mongoose.model('Word', wordSchema);
 
+// Schema for Dog Shop
+const dogShopSchema = new mongoose.Schema({
+  breed: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+price: {
+  type: Number,
+  required: true
+},
+description: String,
+available: {
+  type: Boolean,
+  default: true
+},
+animations: {
+  type: [String],
+  default: [
+    'Barking',
+    'Bite',
+    'Dying',
+    'Headbutt',
+    'Jump',
+    'LayingDown',
+    'Running',
+    'Sitting',
+    'Sleeping',
+    'Standing',
+    'Walking'
+  ]
+},
+stats: {
+  baseHealth: {
+    type: Number,
+    default: 100
+  },
+  baseAttack: {
+    type: Number,
+    default: 10
+  },
+  baseDefense: {
+    type: Number,
+    default: 5
+  }
+},
+createdAt: {
+  type: Date,
+  default: Date.now
+}
+});
+
+const DogShop = mongoose.model('DogShop', dogShopSchema);
+
 module.exports = {
+  DogShop,
   Word,
   User,
   Dog,

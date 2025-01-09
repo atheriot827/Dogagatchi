@@ -1,10 +1,8 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from "axios"
-import {
-  Container, AnimatedSprite, useApp, Stage, Sprite,
-} from '@pixi/react';
+import axios from 'axios';
+import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
 import {
   enemy,
@@ -20,7 +18,7 @@ import {
 
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
-  const location = useLocation(); 
+  const location = useLocation();
   const { state: dog } = location;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
@@ -30,12 +28,12 @@ const Map = () => {
   const [overlayTiles, setOverlayTiles] = useState(overlays);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
   // I chose to base these values off of 32 bits per square tile
-  const [enemyX32, setenemyX32] = useState(480); 
+  const [enemyX32, setenemyX32] = useState(480);
   const [enemyY32, setenemyY32] = useState(160);
   // enemy position is based on 32 bits
   const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
   const [itemPosition, setItemPosition] = useState(itemLoc);
-  const [weaponPosition, setWeaponPosition] = useState(weaponLoc)
+  const [weaponPosition, setWeaponPosition] = useState(weaponLoc);
   const [exitPosition, setExitPosition] = useState(exitLoc);
   const [inputVal, setInputVal] = useState('');
   const [dogX32, setdogX32] = useState(0);
@@ -67,11 +65,11 @@ const Map = () => {
   const moveDog = ({ key }) => {
     let x = dogPosition[1];
     let y = dogPosition[0];
-    console.log(dogPosition, 'the dog position')
-    console.log(itemPosition, 'the item Position')
+    console.log(dogPosition, 'the dog position');
+    console.log(itemPosition, 'the item Position');
     switch (key) {
       case 'w':
-        y -= 1; 
+        y -= 1;
         if (!(dogY32 - 32 < 0) && !collisionDetection(x, y)) {
           setdogY32(dogY32 - 32);
           updatePos(0, y);
@@ -87,8 +85,8 @@ const Map = () => {
       case 's':
         y += 1;
         if (
-          !(dogY32 + 32 >= tileSize * mapData.length)
-          && !collisionDetection(x, y)
+          !(dogY32 + 32 >= tileSize * mapData.length) &&
+          !collisionDetection(x, y)
         ) {
           setdogY32(dogY32 + 32);
           updatePos(0, y);
@@ -97,8 +95,8 @@ const Map = () => {
       case 'd':
         x += 1;
         if (
-          !(dogX32 + 32 >= tileSize * mapData[0].length)
-          && !collisionDetection(x, y)
+          !(dogX32 + 32 >= tileSize * mapData[0].length) &&
+          !collisionDetection(x, y)
         ) {
           setdogX32(dogX32 + 32);
           updatePos(1, x);
@@ -116,7 +114,10 @@ const Map = () => {
   };
 
   const checkExit = () => {
-    if (dogPosition[0] === exitPosition[0] && dogPosition[1] === exitPosition[1]) {
+    if (
+      dogPosition[0] === exitPosition[0] &&
+      dogPosition[1] === exitPosition[1]
+    ) {
       console.log(' YOU FIND THE EXIT!');
       window.alert(
         'You have walked your Dog! They will now be a little hungrier but much healthier!'
@@ -137,19 +138,24 @@ const Map = () => {
   };
 
   const foundItem = () => {
-    if (dogPosition[0] === itemPosition[0] && dogPosition[1] === itemPosition[1]) {
+    if (
+      dogPosition[0] === itemPosition[0] &&
+      dogPosition[1] === itemPosition[1]
+    ) {
       console.log(' YOU FIND AN ITEM!');
-      
     }
-    if (dogPosition[0] === weaponPosition[0] && dogPosition[1] === weaponPosition[1]) {
+    if (
+      dogPosition[0] === weaponPosition[0] &&
+      dogPosition[1] === weaponPosition[1]
+    ) {
       console.log(' YOU FIND A WEAPON!');
     }
-  }
+  };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
-    checkExit()
+    checkExit();
     foundItem();
     checkBattle();
     document.addEventListener('keydown', moveDog);
@@ -164,25 +170,29 @@ const Map = () => {
         width={tileSize * mapData[0].length}
         height={tileSize * mapData.length}
       >
-        {mapData.map((row, y) => row.map((tile, x) => (
-          <Sprite
-            key={`${x}-${y}`}
-            image={tileSprites[tile]}
-            x={x * tileSize}
-            y={y * tileSize}
-          />
-        )))}
-        {overlayData.map((row, y) => row.map((tile, x) => (
-          <Sprite
-            key={`${x}-${y}`}
-            image={overlayTiles[tile]}
-            x={x * tileSize}
-            y={y * tileSize}
-          />
-        )))}
+        {mapData.map((row, y) =>
+          row.map((tile, x) => (
+            <Sprite
+              key={`${x}-${y}`}
+              image={tileSprites[tile]}
+              x={x * tileSize}
+              y={y * tileSize}
+            />
+          ))
+        )}
+        {overlayData.map((row, y) =>
+          row.map((tile, x) => (
+            <Sprite
+              key={`${x}-${y}`}
+              image={overlayTiles[tile]}
+              x={x * tileSize}
+              y={y * tileSize}
+            />
+          ))
+        )}
         <Container position={[16, 16]}>
           <AnimatedSprite
-            key="enemyPos"
+            key='enemyPos'
             images={enemyAnimation}
             isPlaying
             initialFrame={0}
@@ -196,7 +206,7 @@ const Map = () => {
         </Container>
         <Container position={[16, 16]}>
           <AnimatedSprite
-            key="dogPos"
+            key='dogPos'
             images={dogAnimation}
             isPlaying
             initialFrame={0}

@@ -457,3 +457,211 @@ body {
   margin-left: 350px;
   margin-bottom: 20px;
 }
+
+/* DOG SHOP *******************************************************************/
+
+/* Dog Shop Styles */
+.dog-shop {
+  padding: 20px;
+}
+
+.dog-preview {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dog-animation {
+  height: 150px;
+  object-fit: contain;
+}
+
+/* Add hover effect */
+.dog-preview:hover .dog-animation {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Kennel Styles ***************************************************/
+.kennel-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.kennel-background {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.current-dog {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.current-dog img {
+  height: 120px;
+  object-fit: contain;
+}
+
+.kennel-controls {
+  position: relative;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 4px solid #333;
+}
+
+.dog-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Interaction Areas *************************************************/
+.sleeping-area,
+.feeding-area,
+.play-area,
+.grooming-area {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.sleeping-area:hover,
+.feeding-area:hover,
+.play-area:hover,
+.grooming-area:hover {
+  transform: scale(1.1);
+}
+
+/* Position the areas */
+.sleeping-area { left: 50px; top: 150px; }
+.feeding-area { left: 250px; top: 300px; }
+.play-area { left: 450px; top: 200px; }
+.grooming-area { left: 650px; top: 250px; }
+
+/* Quiz Styles */
+.quiz-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quiz-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.question-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.question-image img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.question-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.option-button {
+  height: 50px;
+  text-transform: capitalize;
+}
+
+.option-button:hover:not([disabled]) {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* PoochCenter Styles */
+.coin-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Tab Styles */
+.nav-tabs {
+  border-bottom: 2px solid #007bff;
+  margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+  color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.nav-tabs .nav-link.active {
+  color: white;
+  background-color: #007bff;
+}
+
+/* Navigation Styles */
+.navbar {
+  margin-bottom: 20px;
+}
+
+/* Shop Container Styles */
+.shop-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.shop-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.coins-display {
+  color: white;
+  padding: 8px 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  margin-right: 15px;
+}
