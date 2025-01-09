@@ -35,8 +35,8 @@ const Map = () => {
   const [itemXY, setItemXY] = useState(itemLoc);
   const [weaponXY, setWeaponXY] = useState(weaponLoc)
   const [inputVal, setInputVal] = useState('');
-  const [dogX, setDogX] = useState(0);
-  const [dogY, setDogY] = useState(0);
+  const [dogX32, setdogX32] = useState(0);
+  const [dogY32, setdogY32] = useState(0);
   const [dogPosition, setDogPosition] = useState([0, 0]);
 
   const tileSize = 32; // Size of each tile in pixels
@@ -68,35 +68,35 @@ const Map = () => {
     switch (key) {
       case 'w':
         y -= 1;
-        if (!(dogY - 32 < 0) && !collisionDetection(x, y)) {
-          setDogY(dogY - 32);
+        if (!(dogY32 - 32 < 0) && !collisionDetection(x, y)) {
+          setdogY32(dogY32 - 32);
           updatePos(0, y);
         }
         break;
       case 'a':
         x -= 1;
-        if (!(dogX - 32 < 0) && !collisionDetection(x, y)) {
-          setDogX(dogX - 32);
+        if (!(dogX32 - 32 < 0) && !collisionDetection(x, y)) {
+          setdogX32(dogX32 - 32);
           updatePos(1, x);
         }
         break;
       case 's':
         y += 1;
         if (
-          !(dogY + 32 >= tileSize * mapData.length)
+          !(dogY32 + 32 >= tileSize * mapData.length)
           && !collisionDetection(x, y)
         ) {
-          setDogY(dogY + 32);
+          setdogY32(dogY32 + 32);
           updatePos(0, y);
         }
         break;
       case 'd':
         x += 1;
         if (
-          !(dogX + 32 >= tileSize * mapData[0].length)
+          !(dogX32 + 32 >= tileSize * mapData[0].length)
           && !collisionDetection(x, y)
         ) {
-          setDogX(dogX + 32);
+          setdogX32(dogX32 + 32);
           updatePos(1, x);
         }
         break;
@@ -106,7 +106,7 @@ const Map = () => {
   };
 
   const checkBattle = () => {
-    if (dogX === enemyX32 && dogY === enemyY32) {
+    if (dogX32 === enemyX32 && dogY32 === enemyY32) {
       console.log(' YOU MUST FIGHT ');
     }
   };
@@ -114,7 +114,7 @@ const Map = () => {
   const checkExit = () => {
     console.log(dog);
     // window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
-    // if (dogX === exitX && dogY === exitY) {
+    // if (dogX32 === exitX && dogY32 === exitY) {
     //   axios.post('map/exiting')
     //     .then(() => {
     //       window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
@@ -125,10 +125,10 @@ const Map = () => {
   };
 
   const foundItem = () => {
-    if (dogX === weaponX && dogY === weaponY) {
+    if (dogX32 === weaponX && dogY32 === weaponY) {
       console.log(' YOU FIND A WEAPON!');
     }
-    if (dogX === itemX && dogY === itemY) {
+    if (dogX32 === itemX && dogY32 === itemY) {
       console.log(' YOU FIND A WEAPON!');
     }
   }
@@ -141,7 +141,7 @@ const Map = () => {
     return () => {
       document.removeEventListener('keydown', moveDog);
     };
-  }, [dogX, dogY]);
+  }, [dogX32, dogY32]);
   //
   return (
     <div onKeyDown={moveDog}>
@@ -187,8 +187,8 @@ const Map = () => {
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
-            x={dogX}
-            y={dogY}
+            x={dogX32}
+            y={dogY32}
             width={32}
             height={32}
           />
