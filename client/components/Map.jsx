@@ -33,32 +33,38 @@ const Map = () => {
   const moveDog = ({ key }) => {
     let x = dogPosition[1];
     let y = dogPosition[0];
-    
+
     switch (key) {
       case 'w':
         y = y - 1;
-        if (!(dogY - 32 < 0) && !(collisionDetection(x, y))) {
+        if (!(dogY - 32 < 0) && !collisionDetection(x, y)) {
           setDogY(dogY - 32);
           updatePos(0, y);
         }
         break;
       case 'a':
         x = x - 1;
-        if (!(dogX - 32 < 0)  && !(collisionDetection(x, y))) {
+        if (!(dogX - 32 < 0) && !collisionDetection(x, y)) {
           setDogX(dogX - 32);
           updatePos(1, x);
         }
         break;
       case 's':
         y = y + 1;
-        if (!(dogY + 32 >= tileSize * mapData.length) && !(collisionDetection(x, y))) {
+        if (
+          !(dogY + 32 >= tileSize * mapData.length) &&
+          !collisionDetection(x, y)
+        ) {
           setDogY(dogY + 32);
           updatePos(0, y);
         }
         break;
       case 'd':
         x = x + 1;
-        if (!(dogX + 32 >= tileSize * mapData[0].length) && !(collisionDetection(x, y))) {
+        if (
+          !(dogX + 32 >= tileSize * mapData[0].length) &&
+          !collisionDetection(x, y)
+        ) {
           setDogX(dogX + 32);
           updatePos(1, x);
         }
@@ -97,7 +103,6 @@ const Map = () => {
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
-
     checkBattle();
     document.addEventListener('keydown', moveDog);
     return () => {
@@ -158,26 +163,8 @@ const Map = () => {
             width={32}
             height={32}
           />
-        ))
-      ))}
-      <Container position={[10, 20]}>
-      <AnimatedSprite
-      images={dogAnimation}
-      isPlaying={true}
-      initialFrame={0}
-      animationSpeed={0.1}
-      anchor={0.5}
-      x={10}
-      y={20}
-      width={32}
-      height={32}
-      />
-      </Container>
-    </Stage>
-
         </Container>
       </Stage>
-
     </div>
   );
 };
