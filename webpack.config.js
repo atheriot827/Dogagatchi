@@ -11,18 +11,18 @@ module.exports = {
 
   resolve: {
     fallback: {
-      fs: false,
-      os: false,
-      path: false,
-      crypto: false,
+      "fs": false,
+      "os": false,
+      "path": false,
+      "crypto": false
     },
     extensions: [".js", ".jsx", ".json"],
   },
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
-    maxAssetSize: 512000,
-  },
+    maxAssetSize: 512000
+},
   entry: {
     app: path.resolve(SRC_DIR, 'index.jsx'),
   },
@@ -50,6 +50,21 @@ module.exports = {
 
     new Dotenv()
   ],
+  
+  resolve: {
+    fallback: {
+      "fs": false,
+      "os": false,
+      "path": false,
+      "crypto": false
+    },
+    extensions: [".js", ".jsx", ".json"],
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+},
 
   module: {
     rules: [

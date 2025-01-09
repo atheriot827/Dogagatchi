@@ -11,8 +11,10 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
+
 import Dogtionary from './Dogtionary';
 import WordOfTheDay from './WordOfTheDay';
+import VoiceTraining from './VoiceTraining';
 
 const bark = new Audio(barkSound);
 
@@ -541,6 +543,10 @@ function Dog(props) {
                     </Dropdown.Item>
                   </DropdownButton>
                 )}
+
+                <div>
+                  <VoiceTraining dogObj={dogObj} />
+                </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
                 <WordOfTheDay
