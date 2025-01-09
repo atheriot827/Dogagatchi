@@ -14,11 +14,9 @@ import {
   overlayLayout,
 } from './MapFiles';
 
-const Map = (props) => {
-  let location = useLocation();
-  console.log(location, 'the loc')
-  console.log(location.state)
-  console.log(props.location, 'the props')
+const Map = () => {
+  const location = useLocation(); 
+  const { state: dog } = location;
   // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
@@ -108,14 +106,16 @@ const Map = (props) => {
   };
 
   const checkExit = () => {
-    if (dogX === exitX && dogY === exitY) {
-      axios.post('map/exiting')
-        .then(() => {
-          window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
-        }).catch((err) => {
-          console.error('error exiting map');
-        });
-    }
+    console.log(dog);
+    // window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
+    // if (dogX === exitX && dogY === exitY) {
+    //   axios.post('map/exiting')
+    //     .then(() => {
+    //       window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
+    //     }).catch((err) => {
+    //       console.error('error exiting map');
+    //     });
+    // }
   };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';

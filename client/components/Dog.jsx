@@ -565,7 +565,7 @@ const Dog = (props) => {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
-                <Link to="/Map" state={{ data: {dog} }}>
+                <Link to="/Map" state={{ dog }}>{/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
                   <Button>{`Take ${dog.name} For A Walk!`}</Button>
                 </Link>
               </div>
