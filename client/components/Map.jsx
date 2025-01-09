@@ -2,12 +2,19 @@
 import { React, useEffect, useState } from 'react';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout } from './MapFiles';
+import {
+  enemy,
+  overlays,
+  dogwalk,
+  tiles,
+  mapLayout,
+  overlayLayout,
+} from './MapFiles';
 
 const Map = () => {
   // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState(mapLayout);
-  const [overlayData, setOverlayData] = useState(overlayLayout)
+  const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
 
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
@@ -58,20 +65,22 @@ const Map = () => {
     }
   };
 
-  // const collisionDetection = () => {
-  //   // mapData.map((row, y) => {
-  //   //   row.map((tile, x) => {
-  //   //     // Get the array of collidable tiles
-  //   //     let collidableTiles = []
-  //   //     // If the collideableTiles includes a number equal to the current tile
-  //   //     if(collidableTiles.includes(tile)){
-  //   //       return true;
-  //   //     } else {
-  //   //       return false;
-  //   //     }
-  //   // })
-  //   // })
-  // }
+  const collisionDetection = () => {
+    overlayData.map((row, y) => {
+      row.map((tile, x) => {
+        // Get the array of collidable tiles
+        let collidableTiles = [];
+        // If the collideableTiles includes a number equal to the current tile
+        if (collidableTiles.includes(tile)) {
+          console.log('hit');
+          return true;
+        } 
+          console.log('no hit');
+          return false;
+        }
+      });
+    });
+  };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
