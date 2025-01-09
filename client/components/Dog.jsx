@@ -16,10 +16,13 @@ import WordOfTheDay from './WordOfTheDay.jsx';
 import VoiceTraining from './VoiceTraining.jsx';
 const bark = new Audio(barkSound);
 
-function Dog(props) {
+const Dog = (props) => {
  // const location = useLocation();  // Hook allows you to retrieve information about the current location
   const { dogObj, setCoins, coins } = props;
-
+  const testData = {
+    0: dogObj,
+    1: 'hello world',
+  };
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
@@ -567,7 +570,7 @@ function Dog(props) {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
-                <Link to="/Map">
+                <Link to={{ pathname:"/Map", state: {dog}}} >
                   <Button>{`Take ${dog.name} For A Walk!`}</Button>
                 </Link>
               </div>

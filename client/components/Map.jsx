@@ -1,5 +1,6 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Container, AnimatedSprite, useApp, Stage, Sprite,
 } from '@pixi/react';
@@ -14,11 +15,12 @@ import {
 } from './MapFiles';
 
 const Map = () => {
+  const location = useLocation();
+  console.log(location, 'the loc')
   // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
-
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
