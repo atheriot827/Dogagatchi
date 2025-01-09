@@ -15,7 +15,7 @@ export default function VoiceTraining({dogObj, setDog}) {
     const [voiceInput, setVoiceInput] = useState(false);
     const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
-
+    const [error, setError] = useState();
 
     useEffect(() => {
         if (show && dogObj) {
@@ -124,6 +124,9 @@ export default function VoiceTraining({dogObj, setDog}) {
                     console.log('LET IT RAIN!!');
                     baller();
                     break;
+                default:
+                    setError(word);
+                    break;
             }
         };
     };
@@ -172,6 +175,7 @@ export default function VoiceTraining({dogObj, setDog}) {
                 <Button variant='primary' onClick={renderSpeech}>
                     {voiceInput ? 'LISTENING' : 'SPEAK TO THE DOGS'}
                 </Button>
+                <p> {error ? `Last I checked "${[error]}" isn't a command.` : ''}</p>
             </Modal.Footer>
         </Modal>
     </>);
