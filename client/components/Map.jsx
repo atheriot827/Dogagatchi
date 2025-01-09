@@ -1,6 +1,8 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
-import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
+import {
+  Container, AnimatedSprite, useApp, Stage, Sprite,
+} from '@pixi/react';
 import * as PIXI from 'pixi.js';
 import {
   enemy,
@@ -57,34 +59,34 @@ const Map = () => {
 
     switch (key) {
       case 'w':
-        y = y - 1;
+        y -= 1;
         if (!(dogY - 32 < 0) && !collisionDetection(x, y)) {
           setDogY(dogY - 32);
           updatePos(0, y);
         }
         break;
       case 'a':
-        x = x - 1;
+        x -= 1;
         if (!(dogX - 32 < 0) && !collisionDetection(x, y)) {
           setDogX(dogX - 32);
           updatePos(1, x);
         }
         break;
       case 's':
-        y = y + 1;
+        y += 1;
         if (
-          !(dogY + 32 >= tileSize * mapData.length) &&
-          !collisionDetection(x, y)
+          !(dogY + 32 >= tileSize * mapData.length)
+          && !collisionDetection(x, y)
         ) {
           setDogY(dogY + 32);
           updatePos(0, y);
         }
         break;
       case 'd':
-        x = x + 1;
+        x += 1;
         if (
-          !(dogX + 32 >= tileSize * mapData[0].length) &&
-          !collisionDetection(x, y)
+          !(dogX + 32 >= tileSize * mapData[0].length)
+          && !collisionDetection(x, y)
         ) {
           setDogX(dogX + 32);
           updatePos(1, x);
@@ -98,6 +100,17 @@ const Map = () => {
   const checkBattle = () => {
     if (dogX === enemyX && dogY === enemyY) {
       console.log(' YOU MUST FIGHT ');
+    }
+  };
+
+  const checkExit = () => {
+    if (dogX === exitX && dogY === exitY) {
+      axios.post('map/exiting')
+        .then(() => {
+          window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
+        }).catch((err) => {
+          console.error('error exiting map');
+        });
     }
   };
 
@@ -117,31 +130,27 @@ const Map = () => {
         width={tileSize * mapData[0].length}
         height={tileSize * mapData.length}
       >
-        {mapData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={tileSprites[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
-            />
-          ))
-        )}
-        {overlayData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={overlayTiles[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
-            />
-          ))
-        )}
+        {mapData.map((row, y) => row.map((tile, x) => (
+          <Sprite
+            key={`${x}-${y}`}
+            image={tileSprites[tile]}
+            x={x * tileSize}
+            y={y * tileSize}
+          />
+        )))}
+        {overlayData.map((row, y) => row.map((tile, x) => (
+          <Sprite
+            key={`${x}-${y}`}
+            image={overlayTiles[tile]}
+            x={x * tileSize}
+            y={y * tileSize}
+          />
+        )))}
         <Container position={[16, 16]}>
           <AnimatedSprite
-            key={`enemyPos`}
+            key="enemyPos"
             images={enemyAnimation}
-            isPlaying={true}
+            isPlaying
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
@@ -153,9 +162,9 @@ const Map = () => {
         </Container>
         <Container position={[16, 16]}>
           <AnimatedSprite
-            key={`dogPos`}
+            key="dogPos"
             images={dogAnimation}
-            isPlaying={true}
+            isPlaying
             initialFrame={0}
             animationSpeed={0.1}
             anchor={0.5}
