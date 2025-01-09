@@ -14,9 +14,11 @@ import {
   overlayLayout,
 } from './MapFiles';
 
-const Map = () => {
-  const location = useLocation();
+const Map = (props) => {
+  let location = useLocation();
   console.log(location, 'the loc')
+  console.log(location.state)
+  console.log(props.location, 'the props')
   // Example map data, 0: grass, 1: dirt, 2: hill
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
