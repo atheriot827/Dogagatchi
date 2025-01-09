@@ -10,6 +10,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 export default function VoiceTraining({dogStateParent, setDogParent, setHealthParent}) {
 
 
+
     // Modal pop up
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -170,9 +171,10 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
                                 Click To Train
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='#/action-1'>Heal</Dropdown.Item>
-                                <Dropdown.Item href='#/action-2'>Power Up</Dropdown.Item>
-                                <Dropdown.Item href='#/action-3'>Yell at {dogStateParent.name}</Dropdown.Item>
+                                <Dropdown.Item href='#/action-1' onClick={healDog}>Heal</Dropdown.Item>
+                                <Dropdown.Item href='#/action-2' onClick={powerUpDog}>Power Up</Dropdown.Item>
+                                <Dropdown.Item href='#/action-3' onClick={yellAtDog}>Yell
+                                    at {dogStateParent.name}</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
