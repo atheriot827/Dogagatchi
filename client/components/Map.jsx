@@ -14,8 +14,8 @@ const Map = () => {
 
   const [overlayTiles, setOverlayTiles] = useState(overlays);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
-  const [enemyX, setEnemyX] = useState(256);
-  const [enemyY, setEnemyY] = useState(128);
+  const [enemyX, setEnemyX] = useState(480);
+  const [enemyY, setEnemyY] = useState(160);
   const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
