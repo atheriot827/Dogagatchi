@@ -67,7 +67,16 @@ const dogSchema = new mongoose.Schema({
     min: 25,
     max: 100,
   },
-
+  agility: {
+    type: Number,
+    default: 20,
+    min: 1,
+    max: 100,
+  },
+  walksTaken: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Dog = mongoose.model('Dog', dogSchema);
