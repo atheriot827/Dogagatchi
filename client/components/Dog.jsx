@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLocation } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button,
   ProgressBar,
@@ -17,12 +17,7 @@ import VoiceTraining from './VoiceTraining.jsx';
 const bark = new Audio(barkSound);
 
 const Dog = (props) => {
- // const location = useLocation();  // Hook allows you to retrieve information about the current location
   const { dogObj, setCoins, coins } = props;
-  const testData = {
-    0: dogObj,
-    1: 'hello world',
-  };
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
