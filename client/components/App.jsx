@@ -67,7 +67,7 @@ function App() {
               path="/kennel"
               element={
                 <Kennel
-                  dogs={dogs}
+                  dogs={dogs.filter(dog => dog.owner === user._id)}
                   setDogs={setDogs}
                   coins={coins}
                   setCoins={setCoins}
