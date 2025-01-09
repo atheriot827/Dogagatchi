@@ -13,6 +13,7 @@ const userRoutes = require('./routes/userRoutes');
 const dogRoutes = require('./routes/dogRoutes');
 const groomRoutes = require('./routes/groomRoutes');
 const wordRoutes = require('./routes/wordRoutes');
+const mapRoute = require('./routes/mapRoutes');
 
 const app = express();
 const routeHandler = express.Router();
