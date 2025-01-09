@@ -38,6 +38,7 @@ routeHandler.use('/user', userRoutes);
 routeHandler.use('/dog', dogRoutes);
 routeHandler.use('/groom', groomRoutes);
 routeHandler.use('/words', wordRoutes);
+routeHandler.use('/map', mapRoutes);
 
 app.use('/', routeHandler);
 
