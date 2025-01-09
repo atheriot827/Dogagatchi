@@ -1,6 +1,7 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from "axios"
 import {
   Container, AnimatedSprite, useApp, Stage, Sprite,
 } from '@pixi/react';
@@ -117,21 +118,28 @@ const Map = () => {
   const checkExit = () => {
     if (dogPosition[0] === exitPosition[0] && dogPosition[1] === exitPosition[1]) {
       console.log(' YOU FIND THE EXIT!');
+      window.alert(
+        'You have walked your Dog! They will now be a little hungrier but much healthier!'
+      );
+      axios
+        .post('map/exit')
+        .then(() => {
+          window.alert(
+            'You have walked your Dog! They will now be a little hungrier but much healthier!'
+          );
+        })
+        .catch((err) => {
+          console.error('error exiting map');
+        });
     }
-    // window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
     // if (dogX32 === exitX && dogY32 === exitY) {
-    //   axios.post('map/exiting')
-    //     .then(() => {
-    //       window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
-    //     }).catch((err) => {
-    //       console.error('error exiting map');
-    //     });
     // }
   };
 
   const foundItem = () => {
     if (dogPosition[0] === itemPosition[0] && dogPosition[1] === itemPosition[1]) {
       console.log(' YOU FIND AN ITEM!');
+      
     }
     if (dogPosition[0] === weaponPosition[0] && dogPosition[1] === weaponPosition[1]) {
       console.log(' YOU FIND A WEAPON!');
