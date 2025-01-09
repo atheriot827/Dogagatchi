@@ -42,6 +42,8 @@ function Dog(props) {
     const medicineRef = useRef(null);
 
     useEffect(() => {
+        setHealthStatus(dog.health);
+        console.log('wtf dog health is', dog.health);
         getSignedInUserMeals(user._id);
     }, []);
 
@@ -417,14 +419,17 @@ function Dog(props) {
                         >
                             🐕‍🦺
                         </Button>)}
-                        <ProgressBar
-                            animated
-                            striped
-                            variant={healthStatus}
-                            now={medicineTimer}
-                            label='HEALTH'
-                            style={{height: '35px'}}
-                        />
+
+                        {/* This causes me great pain - Colton */}
+                        {/*<ProgressBar*/}
+                        {/*    animated*/}
+                        {/*    striped*/}
+                        {/*    variant={dog.health}*/}
+                        {/*    now={dog.health}*/}
+                        {/*    label='HEALTH'*/}
+                        {/*    style={{height: '35px'}}*/}
+                        {/*/>*/}
+
                         {meals ? (<DropdownButton title='Feed from Pantry!'>
                             {meals.map((meal) => (<Dropdown.Item
                                 key={meal._id}
@@ -456,7 +461,7 @@ function Dog(props) {
                         </DropdownButton>)}
 
                         <div>
-                            <VoiceTraining dogObj={dog} setDog={setDog}/>
+                            <VoiceTraining dogStateParent={dog} setDogParent={setDog}/>
                         </div>
 
                         <Button onClick={fetchAndShowWord}>Speak!</Button>
