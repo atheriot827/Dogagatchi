@@ -5,13 +5,14 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import {ProgressBar} from 'react-bootstrap';
 
-export default function VoiceTraining({dogObj}) {
+export default function VoiceTraining({dogObj, setDog}) {
 
 
     // Modal pop up functionality
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [voiceInput, setVoiceInput] = useState(false);
     const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
 
@@ -32,6 +33,7 @@ export default function VoiceTraining({dogObj}) {
             }
         }).then((dog) => {
             setHealth(dog.data.health);
+            setDog(dog.data); // update state for parent component
         }).catch((err) => {
             console.error('Error increasing dogs health', err);
         });
@@ -44,6 +46,7 @@ export default function VoiceTraining({dogObj}) {
             }
         }).then((dog) => {
             setHealth(dog.data.health);
+            setDog(dog.data); // update state for parent component
             console.log('dog health: ', dog.data.health);
             console.log('dog has been updated in db');
         }).catch((err) => {
@@ -58,6 +61,7 @@ export default function VoiceTraining({dogObj}) {
             }
         }).then((dog) => {
             setAttackDmg(dog.data.attackDmg);
+            setDog(dog.data); // update state for parent component
         }).catch((err) => {
             console.log('error updating attack value in db', err);
         });
@@ -71,6 +75,7 @@ export default function VoiceTraining({dogObj}) {
         }).then((dog) => {
             setAttackDmg(dog.data.attackDmg);
             setHealth(dog.data.health);
+            setDog(dog.data); // update state for parent component
         }).catch((err) => {
             console.error('error updating health and attack stats #motherlode', err);
         });
@@ -94,7 +99,9 @@ export default function VoiceTraining({dogObj}) {
 
     const renderSpeech = () => {
         recognition.start();
+        setVoiceInput(true);
         recognition.onresult = (event) => {
+            setVoiceInput(false);
             let word = event.results[0][0].transcript;
             console.log('This is what webspeech api thinks you said: ', word);
             switch (word) {
@@ -122,7 +129,7 @@ export default function VoiceTraining({dogObj}) {
     };
 
     return (<>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant='primary' onClick={handleShow}>
             Launch modal
         </Button>
 
@@ -163,7 +170,7 @@ export default function VoiceTraining({dogObj}) {
                     Close Modal
                 </Button>
                 <Button variant='primary' onClick={renderSpeech}>
-                    SPEAK TO THE DOGS
+                    {voiceInput ? 'LISTENING' : 'SPEAK TO THE DOGS'}
                 </Button>
             </Modal.Footer>
         </Modal>
