@@ -12,6 +12,8 @@ import {
   tiles,
   mapLayout,
   overlayLayout,
+  itemLoc,
+  weaponLoc,
 } from './MapFiles';
 
 const Map = () => {
@@ -29,7 +31,7 @@ const Map = () => {
   const [enemyX32, setenemyX32] = useState(480); 
   const [enemyY32, setenemyY32] = useState(160);
   // enemy position is based on 32 bits
-  const [enemyPos, setEnemyPos] = useState([enemyX32, enemyY32]);
+  const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
