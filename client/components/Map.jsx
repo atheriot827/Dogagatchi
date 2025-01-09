@@ -116,7 +116,7 @@ const Map = () => {
 
   const checkExit = () => {
     if (dogPosition[0] === exitPosition[0] && dogPosition[1] === exitPosition[1]) {
-      console.log(' YOU FIND A WEAPON!');
+      console.log(' YOU FIND THE EXIT!');
     }
     // window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
     // if (dogX32 === exitX && dogY32 === exitY) {
@@ -141,6 +141,7 @@ const Map = () => {
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
+    checkExit()
     foundItem();
     checkBattle();
     document.addEventListener('keydown', moveDog);
