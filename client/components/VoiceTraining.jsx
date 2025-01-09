@@ -10,7 +10,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 export default function VoiceTraining({dogStateParent, setDogParent, setHealthParent}) {
 
 
-
     // Modal pop up
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -32,8 +31,9 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
     }, [show, dogStateParent]);
 
 
-    // AXIOS REQEUSTS
+    // AXIOS REQUESTS
     const healDog = () => {
+        if (dogStateParent.health >= 100) return setError('maxed out already bruh');
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseHealth: 25,
@@ -48,6 +48,7 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
     };
 
     const yellAtDog = () => {
+        if (dogStateParent.health <= 25) return setError(`take a chill pill man he's stressed`);
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 decreaseHealth: 25,
@@ -64,6 +65,7 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
     };
 
     const powerUpDog = () => {
+        if (dogStateParent.attackDmg >= 100) return setError('this dog already so strong bruh');
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseAttackDmg: 5,
@@ -85,7 +87,6 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
             setAttackDmg(dog.data.attackDmg);
             setHealth(dog.data.health);
             setDogParent(dog.data); // update state for parent component
-            setHealthParent(dog.data.health);
         }).catch((err) => {
             console.error('error updating health and attack stats #motherlode', err);
         });
@@ -142,7 +143,7 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
                     baller();
                     break;
                 default:
-                    setError(word);
+                    setError(`Last I checked, ${word} isn't a command.`);
                     break;
             }
         };
@@ -205,7 +206,7 @@ export default function VoiceTraining({dogStateParent, setDogParent, setHealthPa
                 <Button variant='primary' onClick={renderSpeech}>
                     {voiceInput ? 'LISTENING' : 'Speak To Train'}
                 </Button>
-                <p> {error ? `Last I checked "${[error]}" isn't a command.` : ''}</p>
+                <p> {error ? `${[error]}` : ''}</p>
             </Modal.Footer>
         </Modal>
     </>);
