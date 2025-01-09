@@ -15,6 +15,7 @@ import About from './About';
 import DeletedUser from './DeletedUser';
 import Activity from './Activity';
 import GetWellCenter from './GetWellCenter';
+import PoochCenter from './PoochCenter';
 import Map from './Map';
 
 function App() {
@@ -33,6 +34,15 @@ function App() {
                 </div>
               )}
             />
+            <Route
+              path="/pooch-center"
+              element={(
+                <div>
+                  <NavBar />
+                  <PoochCenter />
+                </div>
+              )}
+              />
             <Route
               path="/quiz"
               element={(

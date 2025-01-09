@@ -1,182 +1,156 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { capitalize, uniq } from "lodash";
+import { Container, Card, Button, ProgressBar, Alert } from 'react-bootstrap';
 
-import { Row, Col, Container, Alert, Image, Button } from "react-bootstrap";
+function Quiz({ onCoinsEarned }) {
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [streak, setStreak] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [coinsEarned, setCoinsEarned] = useState(0);
 
-function Quiz(props) {
-  const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
-  const [solutionUrl, setSolutionUrl] = useState(""); // default to zero, get set in set state; maybe math
-  const [alert, setAlert] = useState({
-    text: "Start earning coins by correctly selecting the breed pictured!",
-    variant: "light",
-  });
+// Fetch new question
+const fetchNewQuestion = async () => {
+  setLoading(true);
+  try {
+    // Get random dog image
+    const { data: dogImages } = await axios.get('/api/quiz');
+    const correctAnswer = dogImages[0].split('/')[4]; // Extract breed from URL
 
-  const parseUrl = (url) => {
-    const noDomain = url.slice(url.indexOf("breeds/") + 7);
-    let breed = capitalize(noDomain.slice(0, noDomain.indexOf("/")));
-    if (breed.includes("-")) {
-      breed = breed
-        .split("-")
-        .map((word) => capitalize(word))
-        .reverse()
-        .join(" ");
-    }
-    return breed;
-  };
+    // Create options array with correct answer and 3 random incorrect ones
+    const allBreeds = await axios.get('https://dog.ceo/api/breeds/list/all');
+    const breeds = Object.keys(allBreeds.data.message)
+      .filter(breed => breed !== correctAnswer)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
 
-  const checkForDuplicateDogs = (urlArray) => {
-    let hasDuplicates = false;
+    breeds.push(correctAnswer);
 
-    const breedArray = urlArray.map((url) => parseUrl(url));
-    const uniqBreedArray = uniq(breedArray);
-
-    if (uniqBreedArray.length < 4) {
-      hasDuplicates = true;
-    }
-
-    return hasDuplicates;
-  };
-
-  const getDogs = () =>
-    new Promise((resolve, reject) => {
-      axios
-        .get("/api/quiz")
-        .then((dogArray) => {
-          // if there are duplicates
-          if (checkForDuplicateDogs(dogArray.data)) {
-            // run getDogs again (until no duplicates)
-            getDogs();
-          }
-          setDogs(dogArray.data);
-          resolve(dogArray.data);
-        })
-        .catch((err) => {
-          console.error("CLIENT ERROR: failed to GET dogs", err);
-          reject(err);
-        });
+    setCurrentQuestion({
+      image: dogImages[0],
+      correctAnswer
     });
 
-  const setSolutionDog = (dogArray) => {
-    const randomIndex = Math.floor(Math.random() * dogs.length);
-
-    axios
-      .get(dogArray[randomIndex])
-      .then(({ status }) => {
-        if(status === 200){
-          setSolutionUrl(dogArray[randomIndex]);
-        }
-      })
-      .catch((err) => {
-        getNewRound()
-      });
-  };
-
-  const getNewRound = () => {
-    getDogs().then((dogs) => setSolutionDog(dogs));
-  };
-
-  const handleAnswerSubmission = (e) => {
-    const { _id } = JSON.parse(sessionStorage.getItem("user")); // unpack session user
-
-    const { value } = e.target; // unpack event
-    // value is a url assigned to the button's value
-    if (value === solutionUrl) {
-      axios
-        .put(`/user/${_id}`, {
-          type: 'CORRECT_ANSWER',
-          coins: 1
-        })
-        .then((user) => {
-          setCoins(prevCoins => prevCoins + 1);
-          setMessage('Correct! You earned 1 coin! 🎉');
-          setMessageType('success');
-          setTimeout(() => {
-            setMessage('');
-            loadNewQuestion();
-          }, 2000);
-        })
-        .catch(err => {
-          console.error('Error updating coins:', err);
-          setMessage('Error updating coins');
-          setMessageType('danger');
-        });
-    } else {
-      // if the answer is wrong
-      setMessage(`Wrong! The correct answer was ${correctAnswer}`);
-      setMessageType('danger');
-      setTimeout(() => {
-        setMessage('');
-        loadNewQuestion();
-    }, 2000);
+    // Shuffle options
+    setOptions(breeds.sort(() => 0.5 - Math.random()));
+    setLoading(false);
+    setShowResult(false);
+  } catch (error) {
+    console.error('Error fetching question:', error);
+    setLoading(false);
   }
 };
 
-  useEffect(() => {
-    getNewRound();
-  }, []);
+useEffect(() => {
+  fetchNewQuestion();
+}, []);
 
-  const dogButtons = dogs.map((url, index) => {
-    const breed = parseUrl(url);
-    return (
-      <Button
-        style={{ width: "250px", margin: "5px" }}
-        value={url}
-        key={index}
-        onClick={handleAnswerSubmission}
-        type="button"
-      >
-        {breed}
-      </Button>
-    );
-  });
+const handleAnswer = async (selectedAnswer) => {
+  const correct = selectedAnswer === currentQuestion.correctAnswer;
+  setIsCorrect(correct);
+  setShowResult(true);
 
-  /*
-  
-  */
+  if (correct) {
+    const newStreak = streak + 1;
+    setStreak(newStreak);
 
-  return (
-    <Container>
-      <Row>
-        <Col
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h1>Pooch Picker</h1>
-          <div
-            style={{
-              height: "480px",
-              width: "480px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              style={{ margin: "auto" }}
-              alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup."
-              className="img-trivia"
-              src={solutionUrl}
-              rounded
+    // Calculate coins earned (base + streak bonus)
+    const baseCoins = 1;
+    const streakBonus = Math.floor(newStreak / 3); // Bonus coin every 3 correct answers
+    const coinsToAdd = baseCoins + streakBonus;
+
+    setCoinsEarned(prev => prev + coinsToAdd);
+
+    // Update user's coins in database
+    try {
+      await axios.put('/api/users/coins', {
+        coinsToAdd
+      });
+      onCoinsEarned(coinsToAdd);
+    } catch (error) {
+      console.error('Error updating coins:', error);
+    }
+  } else {
+    setStreak(0);
+  }
+
+  // Wait 2 seconds before showing next question
+  setTimeout(() => {
+    fetchNewQuestion();
+  }, 2000);
+};
+
+return (
+  <Container className="quiz-container">
+    <Card className="quiz-card">
+      <Card.Header>
+        <h2>Pooch Picker</h2>
+        <div className="quiz-stats">
+          <p>Current Streak: {streak}</p>
+          <p>Coins Earned: {coinsEarned}</p>
+        </div>
+        <ProgressBar
+          variant="success"
+          now={(streak % 3) * 33.33}
+          label={`${3 - (streak % 3)} more for bonus coin!`}
+        />
+      </Card.Header>
+
+      {loading ? (
+        <Card.Body>
+          <div className="text-center">Loading next question...</div>
+        </Card.Body>
+      ) : (
+        <Card.Body>
+          <div className="question-image">
+            <img
+              src={currentQuestion.image}
+              alt="Mystery Dog"
+              className="img-fluid"
             />
           </div>
-          <Alert
-            style={{ fontSize: "24px", margin: "20px" }}
-            variant={alert.variant}
-          >
-            {alert.text}
-          </Alert>
-          <div style={{ display: "grid", gridTemplateColumns: "auto auto" }}>
-            {dogButtons}
+
+          <div className="question-text">
+            <h4>What breed is this dog?</h4>
           </div>
-        </Col>
-      </Row>
-    </Container>
-  );
+
+          <div className="options-grid">
+            {options.map((option, index) => (
+              <Button
+                key={index}
+                variant="outline-primary"
+                className="option-button"
+                onClick={() => handleAnswer(option)}
+                disabled={showResult}
+              >
+                {option.split('_').map(word =>
+                  word.charAt(0).toUpperCase() + word.slice(1)
+                ).join(' ')}
+              </Button>
+            ))}
+          </div>
+
+          {showResult && (
+            <Alert
+              variant={isCorrect ? 'success' : 'danger'}
+              className="mt-3"
+            >
+              {isCorrect
+                ? `Correct! You earned ${1 + Math.floor(streak / 3)} coins!`
+                : `Incorrect! The correct answer was ${currentQuestion.correctAnswer
+                  .split('_')
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')}`
+              }
+            </Alert>
+          )}
+        </Card.Body>
+      )}
+    </Card>
+  </Container>
+);
 }
 
 export default Quiz;
