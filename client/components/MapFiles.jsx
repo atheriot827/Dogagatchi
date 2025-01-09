@@ -48,8 +48,8 @@ const overlayLayout = [
   [0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0],
 ];
 
-const weaponLoc = [21, 1];
-const itemLoc = [19, 5];
+const weaponLoc = [20, 1];
+const itemLoc = [18, 4];
 
 const tiles = {
   0: '../assets/grass.png',

@@ -64,7 +64,8 @@ const Map = () => {
   const moveDog = ({ key }) => {
     let x = dogPosition[1];
     let y = dogPosition[0];
-
+    console.log(dogPosition, 'the dog position')
+    console.log(itemPosition, 'the item Position')
     switch (key) {
       case 'w':
         y -= 1;
@@ -125,10 +126,10 @@ const Map = () => {
   };
 
   const foundItem = () => {
-    if (dogPosition === weaponX && dogY32 === weaponY) {
-      console.log(' YOU FIND A WEAPON!');
+    if (dogPosition[0] === itemPosition[0] && dogPosition[1] === itemPosition[1]) {
+      console.log(' YOU FIND AN ITEM!');
     }
-    if (dogX32 === itemX && dogY32 === itemY) {
+    if (dogPosition[0] === weaponPosition[0] && dogPosition[1] === weaponPosition[1]) {
       console.log(' YOU FIND A WEAPON!');
     }
   }
@@ -136,6 +137,7 @@ const Map = () => {
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
   useEffect(() => {
+    foundItem();
     checkBattle();
     document.addEventListener('keydown', moveDog);
     return () => {
