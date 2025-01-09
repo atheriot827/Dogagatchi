@@ -50,6 +50,7 @@ const overlayLayout = [
 
 const weaponLoc = [20, 1];
 const itemLoc = [18, 4];
+const exitLoc = [21, 21];
 
 const tiles = {
   0: '../assets/grass.png',
@@ -110,5 +111,5 @@ const overlays = [
 ];
 
 export {
-  enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout, weaponLoc, itemLoc
+  enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout, weaponLoc, itemLoc, exitLoc,
 };

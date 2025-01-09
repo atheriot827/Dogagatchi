@@ -14,6 +14,7 @@ import {
   overlayLayout,
   itemLoc,
   weaponLoc,
+  exitLoc,
 } from './MapFiles';
 
 const Map = () => {
@@ -34,6 +35,7 @@ const Map = () => {
   const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
   const [itemPosition, setItemPosition] = useState(itemLoc);
   const [weaponPosition, setWeaponPosition] = useState(weaponLoc)
+  const [exitPosition, setExitPosition] = useState(exitLoc);
   const [inputVal, setInputVal] = useState('');
   const [dogX32, setdogX32] = useState(0);
   const [dogY32, setdogY32] = useState(0);
@@ -68,7 +70,7 @@ const Map = () => {
     console.log(itemPosition, 'the item Position')
     switch (key) {
       case 'w':
-        y -= 1;
+        y -= 1; 
         if (!(dogY32 - 32 < 0) && !collisionDetection(x, y)) {
           setdogY32(dogY32 - 32);
           updatePos(0, y);
@@ -113,7 +115,9 @@ const Map = () => {
   };
 
   const checkExit = () => {
-    console.log(dog);
+    if (dogPosition[0] === exitPosition[0] && dogPosition[1] === exitPosition[1]) {
+      console.log(' YOU FIND A WEAPON!');
+    }
     // window.alert('You have walked your Dog! They will now be a little hungrier but much healthier!');
     // if (dogX32 === exitX && dogY32 === exitY) {
     //   axios.post('map/exiting')
