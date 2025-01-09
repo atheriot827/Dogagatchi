@@ -72,38 +72,40 @@ const dogwalk = [
 ];
 
 const enemy = [
-  `../assets/overlaytiles/enemy1-Photoroom.png`,
-  `../assets/overlaytiles/enemy2-Photoroom.png`,
-  `../assets/overlaytiles/enemy3-Photoroom.png`,
+  '../assets/overlaytiles/enemy1-Photoroom.png',
+  '../assets/overlaytiles/enemy2-Photoroom.png',
+  '../assets/overlaytiles/enemy3-Photoroom.png',
 ];
 
 const overlays = [
-  `../assets/nothing.png`, //0
-  `../assets/overlaytiles/apple-Photoroom.png`, // 1
-  `../assets/overlaytiles/bltree-Photoroom.png`, // 2
-  `../assets/overlaytiles/brtree-Photoroom.png`, // 3
-  `../assets/overlaytiles/fenceDLcorner-Photoroom.png`, //4
-  `../assets/overlaytiles/fenceDRcorner-Photoroom.png`, //5
-  `../assets/overlaytiles/fenceULcorner-Photoroom.png`, //6
-  `../assets/overlaytiles/fenceURcorner-Photoroom.png`, //7
-  `../assets/overlaytiles/fenceVert-Photoroom.png`, //8
-  `../assets/overlaytiles/fenceVertical-Photoroom.png`, //9
-  `../assets/overlaytiles/OLbigrock-Photoroom.png`,  //10
-  `../assets/overlaytiles/OLlog1-Photoroom.png`,  //11
-  `../assets/overlaytiles/OLlogleftside-Photoroom.png`, //12
-  `../assets/overlaytiles/OLlogrightside-Photoroom.png`, //13
-  `../assets/overlaytiles/OLplant1-Photoroom.png`, //14
-  `../assets/overlaytiles/OLplant2-Photoroom.png`, //15
-  `../assets/overlaytiles/OLplant3-Photoroom.png`, //16
-  `../assets/overlaytiles/OLplant4-Photoroom.png`, //17
-  `../assets/overlaytiles/OLrubble-Photoroom.png`, //18
-  `../assets/overlaytiles/OLshrooms-Photoroom.png`, //19
-  `../assets/overlaytiles/OLsmallbush-Photoroom.png`, //20
-  `../assets/overlaytiles/OLsmallrock-Photoroom.png`, //21
-  `../assets/overlaytiles/OLtadpoles-Photoroom.png`, //22
-  `../assets/overlaytiles/tltree-Photoroom.png`, //23
-  `../assets/overlaytiles/trtree-Photoroom.png`, //24
-  `../assets/overlaytiles/weapon-Photoroom.png`, //25
+  '../assets/nothing.png', // 0
+  '../assets/overlaytiles/apple-Photoroom.png', // 1
+  '../assets/overlaytiles/bltree-Photoroom.png', // 2
+  '../assets/overlaytiles/brtree-Photoroom.png', // 3
+  '../assets/overlaytiles/fenceDLcorner-Photoroom.png', // 4
+  '../assets/overlaytiles/fenceDRcorner-Photoroom.png', // 5
+  '../assets/overlaytiles/fenceULcorner-Photoroom.png', // 6
+  '../assets/overlaytiles/fenceURcorner-Photoroom.png', // 7
+  '../assets/overlaytiles/fenceVert-Photoroom.png', // 8
+  '../assets/overlaytiles/fenceVertical-Photoroom.png', // 9
+  '../assets/overlaytiles/OLbigrock-Photoroom.png', // 10
+  '../assets/overlaytiles/OLlog1-Photoroom.png', // 11
+  '../assets/overlaytiles/OLlogleftside-Photoroom.png', // 12
+  '../assets/overlaytiles/OLlogrightside-Photoroom.png', // 13
+  '../assets/overlaytiles/OLplant1-Photoroom.png', // 14
+  '../assets/overlaytiles/OLplant2-Photoroom.png', // 15
+  '../assets/overlaytiles/OLplant3-Photoroom.png', // 16
+  '../assets/overlaytiles/OLplant4-Photoroom.png', // 17
+  '../assets/overlaytiles/OLrubble-Photoroom.png', // 18
+  '../assets/overlaytiles/OLshrooms-Photoroom.png', // 19
+  '../assets/overlaytiles/OLsmallbush-Photoroom.png', // 20
+  '../assets/overlaytiles/OLsmallrock-Photoroom.png', // 21
+  '../assets/overlaytiles/OLtadpoles-Photoroom.png', // 22
+  '../assets/overlaytiles/tltree-Photoroom.png', // 23
+  '../assets/overlaytiles/trtree-Photoroom.png', // 24
+  '../assets/overlaytiles/weapon-Photoroom.png', // 25
 ];
 
-export { enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout };
+export {
+  enemy, overlays, dogwalk, tiles, mapLayout, overlayLayout,
+};
