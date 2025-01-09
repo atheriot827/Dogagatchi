@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from './Context.jsx';
 import axios from 'axios';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Dog from './Dog.jsx';
 
 function Kennel({ dogs, setDogs, coins, setCoins }) {
+  const { user } = useAuth();
   const [currentDog, setCurrentDog] = useState(null);
   const [currentAction, setCurrentAction] = useState(null);
   const [actionPosition, setActionPosition] = useState({ x: 0, y: 0 });
@@ -16,11 +18,14 @@ function Kennel({ dogs, setDogs, coins, setCoins }) {
     groomingArea: { x: 650, y: 250 }
   };
 
+  // Filter dogs to only show owned dogs
+  const ownedDogs = dogs.filter(dog => dog.owner === user._id);
+
   useEffect(() => {
-    if (dogs && dogs.length > 0) {
-      setCurrentDog(dogs[0]);
+    if (ownedDogs && ownedDogs.length > 0) {
+      setCurrentDog(ownedDogs[0]);
     }
-  }, [dogs]);
+  }, [ownedDogs]);
 
   const handleActionClick = (action, position) => {
     setCurrentAction(action);
@@ -101,7 +106,7 @@ function Kennel({ dogs, setDogs, coins, setCoins }) {
           <Col md={4}>
             <h3>Your Dogs</h3>
             <div className="dog-list">
-              {dogs.map(dog => (
+              {ownedDogs.map(dog => (
                 <Button
                   key={dog._id}
                   onClick={() => setCurrentDog(dog)}
