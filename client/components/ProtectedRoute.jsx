@@ -1,13 +1,11 @@
-import React, {useEffect} from "react";
-import { Navigate, Outlet, Route } from "react-router-dom";
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from './Context'
 
-const ProtectedRoute = () => {
-  const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
-  
+function ProtectedRoute() {
+  const { isAuthenticated } = useAuth();
 
-  return (
-    isAuthenticated ? <Outlet/> : <Navigate to='/' />
-  );
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default ProtectedRoute;

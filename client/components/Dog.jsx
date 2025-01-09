@@ -11,9 +11,11 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
-import Dogtionary from './Dogtionary.jsx';
-import WordOfTheDay from './WordOfTheDay.jsx';
-import VoiceTraining from './VoiceTraining.jsx';
+
+import Dogtionary from './Dogtionary';
+import WordOfTheDay from './WordOfTheDay';
+import VoiceTraining from './VoiceTraining';
+
 const bark = new Audio(barkSound);
 
 function Dog(props) {
@@ -129,7 +131,7 @@ function Dog(props) {
       alert('Not enough coins!');
     }
   };
-  /** ********** Subscribe for Groom ********* */
+
 
   // (dogToFeedObj, mealToFeedObj)
   const giveMedicine = (dogToGiveMeds, medsToGiveObj) => {
@@ -377,7 +379,7 @@ function Dog(props) {
             style={{ width: '250px', height: '250px' }}
           >
             <Card.Img
-              src={dog.img}
+              src={`/assets/gifs/${dog.breed}/Standing.gif`}
               alt="Sorry, your dog does not want to be seen with you..."
               className="p-4"
             />
@@ -567,7 +569,7 @@ function Dog(props) {
                   addFavoriteWord={addFavoriteWord}
                 />
                 <Link to="/Map">
-                  <Button>{`Take ${dog.name} For A Walk!`}</Button>
+                  <Button>{`Take ${dog.name} For A Walk! 🐕‍🦺`}</Button>
                 </Link>
               </div>
             </Card.Body>
