@@ -27,7 +27,7 @@ const Map = () => {
   const [inputVal, setInputVal] = useState('');
   const [dogX, setDogX] = useState(0);
   const [dogY, setDogY] = useState(0);
-  const [dogPosition, setDogPosition] = useState([dogX, dogY]);
+  const [dogPosition, setDogPosition] = useState([0, 0]);
 
   const tileSize = 32; // Size of each tile in pixels
   const moveDog = ({ key }) => {
@@ -65,22 +65,18 @@ const Map = () => {
     }
   };
 
-  const collisionDetection = () => {
-    overlayData.map((row, y) => {
-      row.map((tile, x) => {
-        // Get the array of collidable tiles
-        let collidableTiles = [];
-        // If the collideableTiles includes a number equal to the current tile
-        if (collidableTiles.includes(tile)) {
-          console.log('hit');
-          return true;
-        } 
-          console.log('no hit');
-          return false;
-        }
-      });
-    });
-  };
+  const collisionDetection = (x, y) => {
+        const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
+        const mapCollidable = [2, 6]
+      if(mapCollidable.includes(mapLayout[x][y])){
+        return true;
+      }
+      if(overlayCollidable.includes(overlayLayout[x][y])){
+        return true;
+      }
+      return false
+    }
+  
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
