@@ -21,7 +21,7 @@ export default function ToastPopUp({message}) {
 
 
         <Row>
-            <Col md={8} className='mb-2'>
+            <Col md={6} className='mb-4'>
                 <Toast show={showToast} onClose={toggleShowToast} animation={true} delay={4000} autohide>
                     <Toast.Header>
                         <img src='../assets/roman.webp' className='rounded me-2 w-25 h-25'
