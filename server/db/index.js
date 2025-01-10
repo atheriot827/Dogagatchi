@@ -85,9 +85,13 @@ const dogSchema = new mongoose.Schema({
   },
   lvl: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   exp: {
+    type: Number,
+    default: 0,
+  },
+  discipline: {
     type: Number,
     default: 0,
   },

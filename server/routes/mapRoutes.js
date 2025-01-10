@@ -17,7 +17,7 @@ router.post('/exit', (req, res) => {
   // Update dog stats
   Dog.findOneAndUpdate(
     { owner: user._id, name: dog.name },
-    { $inc: { vitality: 5, speed: 1, exp: 25 } },
+    { $inc: { vitality: 5, discipline: 1, exp: 25 } },
     { new: true }
   )
     .then((walkedDog) => {
