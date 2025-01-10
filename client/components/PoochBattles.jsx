@@ -4,7 +4,7 @@ import { Modal, Button, ProgressBar } from 'react-bootstrap';
 // Takes in props for controlling the battle modal and dog data
 function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
-  //Init battle state with useState hook
+  // Init battle state with useState hook
   const [battleState, setBattleState] = useState({
     playerHealth: 100,          // Players dog starting health
     enemyHealth: 100,           // Enemy dog starting health
@@ -32,60 +32,88 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
     if (!battleState.isActive) return;
 
     // Get the selected move's props
+    const move = moves[moveType];
 
     // Set the player's attack animation
-
-    
+    setCurrentAnimation({
+      player: move.animation,
+      enemy: 'Standing'
+    });
 
     // Process the attack after a 1 second delay
+    setTimeout(() => {
+      // Update battle state with new enemy health and battle log
+      setBattleState(prev => ({
+        ...prev,
+        enemyHealth: Math.max(0, prev.enemyHealth - move.damage), // Prevent negative health
+        battleLog: [...prev.battleLog, `${playerDog.name} used ${moveType}!`],
+        currentTurn: 'enemy'
+      }));
 
-    // Update battle state with new enemy health and battle log
+      // Reset the animations back to standing
+      setCurrentAnimation({
+        player: 'Standing',
+        enemy: 'Standing'
+      });
 
-
-
-    // Reset the animations back to standing
-
-
-    // If enemy is still alive, let them take their turn
-
-
-
+      // If enemy is still alive, let them take their turn
+      if (battleState.enemyHealth > 0) {
+        enemyTurn();
+      }
+    }, 1000);
   };
 
   // Function to handle enemy's turn
+  const enemyTurn = () => {
+    // Get array of possible moves
+    const moveTypes = Object.keys(moves);
+    // Select random move
+    const randomMove = moveTypes[Math.floor(Math.random() * moveTypes.length)];
+    const move = moves[randomMove];
 
-      // Get array of possible moves
+    // Add delay before enemy attack
+    setTimeout(() => {
+      // Set enemy attack animation
+      setCurrentAnimation({
+        player: 'Standing',
+        enemy: move.animation
+      });
 
-      // Select random move
+      // Process enemy attack after animation
+      setTimeout(() => {
+        // Update battle state with new player health and battle log
+        setBattleState(prev => ({
+          ...prev,
+          playerHealth: Math.max(0, prev.playerHealth - move.damage),
+          battleLog: [...prev.battleLog, `${enemyDog.name} used ${randomMove}!`],
+          currentTurn: 'player'
+        }));
 
-
-      // Add delay before enemy attack
-
-          // Set enemy attack animation
-
-
-          // Process enemy attack after animation
-
-
-            // Update battle state with new player health and battle log
-
-
-
-            // Reset animations
-
-
+        // Reset animations
+        setCurrentAnimation({
+          player: 'Standing',
+          enemy: 'Standing'
+        });
+      }, 1000);
+    }, 1000);
+  };
 
   // Effect hook to check for battle end conditions
+  useEffect(() => {
+    // Check if either dog's health is at 0
+    if (battleState.playerHealth <= 0 || battleState.enemyHealth <= 0) {
+      // Set battle as inactive
+      setBattleState(prev => ({ ...prev, isActive: false }));
 
-      // Check if either dog's health is at 0
-
-          // Set battle as inactive
-
-
-          // Trigger battle and callback after delay
-
-
-
+      // Trigger battle and callback after delay
+      setTimeout(() => {
+        onBattleEnd({
+          winner: battleState.playerHealth > 0 ? 'player' : 'enemy',
+          playerHealthRemaining: battleState.playerHealth
+        });
+      }, 2000);
+    }
+  }, [battleState.playerHealth, battleState.enemyHealth]);  // Only run when health values change
 
   // Render the battle modal
   return (
