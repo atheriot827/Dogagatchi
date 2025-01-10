@@ -28,9 +28,7 @@ const userSchema = new mongoose.Schema({
       fullTime: String,
     },
   ],
-  activities: [
-    String
-],
+  activities: [String],
   medicines: [
     {
       name: String,
@@ -67,7 +65,23 @@ const dogSchema = new mongoose.Schema({
     min: 25,
     max: 100,
   },
-
+  agility: {
+    // The agility of the dog is updated via walking
+    type: Number,
+    default: 20,
+    min: 1,
+    max: 100,
+  },
+  walksTaken: {
+    // Number of walks the current dog has been taken on.
+    type: Number,
+    default: 0,
+  },
+  vitality: {
+    // The vitality of the current dog.
+    type: Number,
+    default: 0,
+  },
 });
 
 const Dog = mongoose.model('Dog', dogSchema);

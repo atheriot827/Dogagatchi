@@ -18,7 +18,7 @@ import VoiceTraining from './VoiceTraining';
 
 const bark = new Audio(barkSound);
 
-function Dog(props) {
+const Dog = (props) => {
   const { dogObj, setCoins, coins } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
@@ -43,7 +43,6 @@ function Dog(props) {
   const [groom, setGroom] = useState([]);
   const [groomed, setGroomed] = useState(false);
   const user = JSON.parse(sessionStorage.getItem('user'));
-
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
   const medicineRef = useRef(null);
@@ -69,7 +68,9 @@ function Dog(props) {
     axios
       .get(`/user/meals/${userIdParam}`)
       .then(({ data }) => {
-        const sortedMeals = data.meals.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+        const sortedMeals = data.meals.sort((a, b) =>
+          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        );
 
         setMeals(sortedMeals);
       })
@@ -80,7 +81,9 @@ function Dog(props) {
     axios
       .get(`/user/medicines/${userIdParam}`)
       .then(({ data }) => {
-        const sortedMedicines = data.medicines.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+        const sortedMedicines = data.medicines.sort((a, b) =>
+          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        );
 
         setMedicines(sortedMedicines);
       })
@@ -90,10 +93,10 @@ function Dog(props) {
   const feedDog = (dogToFeedObj, mealToFeedObj) => {
     const status = {
       feedDeadline: new Date(
-        new Date(dogToFeedObj.feedDeadline).getTime() + 24 * 60 * 60 * 1000,
+        new Date(dogToFeedObj.feedDeadline).getTime() + 24 * 60 * 60 * 1000
       ),
       walkDeadline: new Date(
-        new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000,
+        new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000
       ),
     };
 
@@ -132,12 +135,11 @@ function Dog(props) {
     }
   };
 
-
   // (dogToFeedObj, mealToFeedObj)
   const giveMedicine = (dogToGiveMeds, medsToGiveObj) => {
     const status = {
       medicineDeadline: new Date(
-        new Date(dogToGiveMeds.medicineDeadline).getTime() + 24 * 60 * 60 * 1000,
+        new Date(dogToGiveMeds.medicineDeadline).getTime() + 24 * 60 * 60 * 1000
       ),
     };
 
@@ -194,7 +196,8 @@ function Dog(props) {
     } else if (e === 'medicine' && coins >= 1) {
       setHealth(false);
       medicineRef.current = health;
-      const medicineDeadline = Date.parse(dog.medicineDeadline) + 12 * 60 * 60 * 1000;
+      const medicineDeadline =
+        Date.parse(dog.medicineDeadline) + 12 * 60 * 60 * 1000;
       status.medicineDeadline = medicineDeadline;
       setMedicineTimer(medicineDeadline);
       axios
@@ -301,7 +304,8 @@ function Dog(props) {
 
       const feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
       const walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
-      const medicineTimer = ((Date.parse(dog.medicineDeadline) - now) / 86400000) * 100;
+      const medicineTimer =
+        ((Date.parse(dog.medicineDeadline) - now) / 86400000) * 100;
 
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
@@ -373,27 +377,27 @@ function Dog(props) {
   return (
     <div>
       {groomed ? (
-        <Card className="d-flex flex-row m-4 card text-white bg-warning mb-3">
+        <Card className='d-flex flex-row m-4 card text-white bg-warning mb-3'>
           <div
-            className="d-flex flex-column justify-content-center align-items-center align-self-center"
+            className='d-flex flex-column justify-content-center align-items-center align-self-center'
             style={{ width: '250px', height: '250px' }}
           >
             <Card.Img
               src={`/assets/gifs/${dog.breed}/Standing.gif`}
-              alt="Sorry, your dog does not want to be seen with you..."
-              className="p-4"
+              alt='Sorry, your dog does not want to be seen with you...'
+              className='p-4'
             />
           </div>
-          <div className="d-flex flex-column justify-content-center align-items-center w-100">
-            <Card.Title className="pt-2">{dog.name}</Card.Title>
-            <Card.Body className="w-100">
-              <div className="dog-status">
+          <div className='d-flex flex-column justify-content-center align-items-center w-100'>
+            <Card.Title className='pt-2'>{dog.name}</Card.Title>
+            <Card.Body className='w-100'>
+              <div className='dog-status'>
                 <ProgressBar
                   animated
                   striped
                   now={100}
-                  variant="warning"
-                  label="FAVORITE"
+                  variant='warning'
+                  label='FAVORITE'
                   style={{ height: '35px' }}
                 />
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
@@ -406,7 +410,7 @@ function Dog(props) {
                   addWordToDogtionary={addWordToDogtionary}
                 />
 
-                <Button variant="primary" onClick={openDogtionary}>
+                <Button variant='primary' onClick={openDogtionary}>
                   {`${dog.name}'s Dogtionary`}
                 </Button>
                 <Dogtionary
@@ -422,47 +426,47 @@ function Dog(props) {
           </div>
         </Card>
       ) : (
-        <Card className="d-flex flex-row m-4">
+        <Card className='d-flex flex-row m-4'>
           <div
-            className="d-flex flex-column justify-content-center align-items-center align-self-center "
+            className='d-flex flex-column justify-content-center align-items-center align-self-center '
             style={{ width: '250px', height: '250px' }}
           >
             <Card.Img
               src={dog.img}
-              alt="Sorry, your dog is in another kennel."
-              className="p-4"
+              alt='Sorry, your dog is in another kennel.'
+              className='p-4'
             />
 
-            <Button variant="warning" onClick={subscribe}>
+            <Button variant='warning' onClick={subscribe}>
               💎 Groom 💎
             </Button>
             <Form.Label>200 Coins!</Form.Label>
           </div>
-          <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
-            <Card.Title className="pt-2">{dog.name}</Card.Title>
-            <Card.Body className="w-100">
-              <div className="dog-status">
+          <div className='d-flex flex-column justify-content-center align-items-center w-100 '>
+            <Card.Title className='pt-2'>{dog.name}</Card.Title>
+            <Card.Body className='w-100'>
+              <div className='dog-status'>
                 <ProgressBar
                   animated
                   striped
                   variant={feedStatus}
                   now={feedTimer}
-                  label="HUNGER"
+                  label='HUNGER'
                   style={{ height: '35px' }}
                 />
                 {hungry ? (
                   <Button
-                    className="w-100 mx-0"
-                    variant="info"
+                    className='w-100 mx-0'
+                    variant='info'
                     onClick={() => handleClick('feed')}
-                    title="pay 3 coins"
+                    title='pay 3 coins'
                   >
                     🍖
                   </Button>
                 ) : (
                   <Button
-                    className="w-100 mx-0"
-                    variant="info"
+                    className='w-100 mx-0'
+                    variant='info'
                     onClick={() => handleClick('bark')}
                   >
                     🦴
@@ -473,22 +477,22 @@ function Dog(props) {
                   striped
                   variant={walkStatus}
                   now={walkTimer}
-                  label="HAPPINESS"
+                  label='HAPPINESS'
                   style={{ height: '35px' }}
                 />
 
                 {happy ? (
                   <Button
-                    className="w-100 mx-0"
-                    variant="info"
+                    className='w-100 mx-0'
+                    variant='info'
                     onClick={() => handleClick('bark')}
                   >
                     🐶
                   </Button>
                 ) : (
                   <Button
-                    className="w-100 mx-0"
-                    variant="info"
+                    className='w-100 mx-0'
+                    variant='info'
                     onClick={() => handleClick('walk')}
                   >
                     🐕‍🦺
@@ -499,11 +503,11 @@ function Dog(props) {
                   striped
                   variant={healthStatus}
                   now={medicineTimer}
-                  label="HEALTH"
+                  label='HEALTH'
                   style={{ height: '35px' }}
                 />
                 {meals ? (
-                  <DropdownButton title="Feed from Pantry!">
+                  <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
                       <Dropdown.Item
                         key={meal._id}
@@ -516,14 +520,14 @@ function Dog(props) {
                     ))}
                   </DropdownButton>
                 ) : (
-                  <DropdownButton title="Feed from Pantry!">
+                  <DropdownButton title='Feed from Pantry!'>
                     <Dropdown.Item>
                       Visit Bone Appétit Café to buy your first meal!
                     </Dropdown.Item>
                   </DropdownButton>
                 )}
                 {medicines ? (
-                  <DropdownButton title="Cure with Meds!">
+                  <DropdownButton title='Cure with Meds!'>
                     {medicines.map((medicine) => (
                       <Dropdown.Item
                         key={medicine._id}
@@ -536,7 +540,7 @@ function Dog(props) {
                     ))}
                   </DropdownButton>
                 ) : (
-                  <DropdownButton title="Feed from Pantry!">
+                  <DropdownButton title='Feed from Pantry!'>
                     <Dropdown.Item>
                       Go to the Get Well Center before ya dog die and become a
                       PACK🚬!
@@ -557,7 +561,7 @@ function Dog(props) {
                   added={added}
                   addWordToDogtionary={addWordToDogtionary}
                 />
-                <Button variant="primary" onClick={openDogtionary}>
+                <Button variant='primary' onClick={openDogtionary}>
                   {`${dog.name}'s Dogtionary`}
                 </Button>
                 <Dogtionary
@@ -568,7 +572,8 @@ function Dog(props) {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
-                <Link to="/Map">
+                <Link to='/Map' state={{ dog, user }}>
+                  {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
                   <Button>{`Take ${dog.name} For A Walk! 🐕‍🦺`}</Button>
                 </Link>
               </div>
@@ -578,6 +583,6 @@ function Dog(props) {
       )}
     </div>
   );
-}
+};
 
 export default Dog;
