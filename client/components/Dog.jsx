@@ -32,7 +32,7 @@ const Dog = (props) => {
   const [healthStatus, setHealthStatus] = useState('');
 
   const [feedTimer, setFeedTimer] = useState(0);
-  const [vitalityTimer, setVitalityTimer] = useState(0); // set timers
+  const [vitalityTimer, mer] = useState(0); // set timers
   const [walkTimer, setWalkTimer] = useState(0);
   const [medicineTimer, setMedicineTimer] = useState(0);
   const [meals, setMeals] = useState([]);
@@ -317,7 +317,7 @@ const Dog = (props) => {
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
       setMedicineTimer(medicineTimer);
-      setVitalityTImer(vitalityTimer);
+      setVitalityTimer(vitalityTimer);
 
       if (feedTimer < 25) {
         setFeedStatus('danger');
@@ -522,23 +522,23 @@ const Dog = (props) => {
                     🐕‍🦺
                   </Button>
                 )}
-                <ProgressBar
-                  animated
-                  striped
-                  variant={healthStatus}
-                  now={medicineTimer}
-                  label='HEALTH'
-                  style={{ height: '35px' }}
-                />
-                <br />
-                <ProgressBar
-                  animated
-                  striped
-                  variant={vitalityStatus}
-                  now={vitalityTimer}
-                  label='VITALITY'
-                  style={{ height: '35px' }}
-                />
+                {/*<ProgressBar*/}
+                {/*  animated*/}
+                {/*  striped*/}
+                {/*  variant={healthStatus}*/}
+                {/*  now={medicineTimer}*/}
+                {/*  label='HEALTH'*/}
+                {/*  style={{ height: '35px' }}*/}
+                {/*/>*/}
+                {/*<br />*/}
+                {/*<ProgressBar*/}
+                {/*  animated*/}
+                {/*  striped*/}
+                {/*  variant={vitalityStatus}*/}
+                {/*  now={vitalityTimer}*/}
+                {/*  label='VITALITY'*/}
+                {/*  style={{ height: '35px' }}*/}
+                {/*/>*/}
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
