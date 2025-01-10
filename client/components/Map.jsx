@@ -142,12 +142,28 @@ const Map = () => {
       dogPosition[1] === itemPosition[1]
     ) {
       console.log(' YOU FIND AN ITEM!');
+      axios
+        .post('map/item', { walkerInfo: dog, user })
+        .then(() => {
+          window.alert('Your dog becomes slightly healthier!');
+        })
+        .catch((err) => {
+          console.error('error picking up item from map');
+        });
     }
     if (
       dogPosition[0] === weaponPosition[0] &&
       dogPosition[1] === weaponPosition[1]
     ) {
       console.log(' YOU FIND A WEAPON!');
+      axios
+        .post('map/item', { walkerInfo: dog, user })
+        .then(() => {
+          window.alert('Your dog becomes slightly stronger!');
+        })
+        .catch((err) => {
+          console.error('error picking up weapon from map');
+        });
     }
   };
 
