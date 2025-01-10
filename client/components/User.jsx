@@ -13,7 +13,6 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from './Navbar';
-import DogShop from './DogShop';
 import Achievements from './Achievements';
 import Kennel from './Kennel';
 import Grooms from './Grooms';
@@ -107,18 +106,6 @@ function User() {
 
   return (
     <Container>
-      <Row>
-        <Col
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <DogShop coins={coins} setCoins={setCoins} />
-        </Col>
-      </Row>
       <Row>
         <Col xs={4}>
           <div className="user-stats">

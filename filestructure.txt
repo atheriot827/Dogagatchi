@@ -28,6 +28,7 @@
         |-- Leaderboard.jsx
         |-- Login.jsx
         |-- Map.jsx
+        |-- MapFiles.jsx
         |-- MapTile.jsx
         |-- Meal.jsx
         |-- Medicine.jsx
@@ -37,6 +38,7 @@
         |-- Quiz.jsx
         |-- Restaurant.jsx
         |-- User.jsx
+        |-- VoiceTraining.jsx
         |-- WordOfTheDay.jsx
         |-- assets
             |-- 7101902.webp
@@ -189,6 +191,7 @@
             |-- grass.png
             |-- grass2.png
             |-- hill.png
+            |-- nothing.png
             |-- overlaytiles
                 |-- OLbigrock-Photoroom.png
                 |-- OLlog1-Photoroom.png

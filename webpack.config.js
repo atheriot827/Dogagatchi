@@ -4,6 +4,7 @@ const WebpackBar = require('webpackbar');
 const path = require('path');
 const Dotenv = require('dotenv-webpack')
 const CopyPlugin = require("copy-webpack-plugin")
+
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
