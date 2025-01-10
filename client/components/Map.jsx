@@ -19,7 +19,7 @@ import {
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
   const location = useLocation();
-  const { state: dog } = location;
+  const { state: dog, user } = location;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
@@ -120,7 +120,7 @@ const Map = () => {
     ) {
       console.log(' YOU FIND THE EXIT!');
       axios
-        .post('map/exit', { dog })
+        .post('map/exit', { walkerInfo: dog, user })
         .then(() => {
           window.alert(
             'You have walked your Dog! They will now be a little hungrier but much healthier!'
