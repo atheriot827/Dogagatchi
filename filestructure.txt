@@ -191,6 +191,8 @@
             |-- grass.png
             |-- grass2.png
             |-- hill.png
+            |-- kennel_scene
+                |-- background.png
             |-- nothing.png
             |-- overlaytiles
                 |-- OLbigrock-Photoroom.png
@@ -225,6 +227,8 @@
             |-- spriteSheet.jsx
             |-- t6Hry.jpg
             |-- water.png
+        |-- styles
+            |-- retro-gaming.css
     |-- index.html
     |-- index.jsx
 |-- package-lock.json
