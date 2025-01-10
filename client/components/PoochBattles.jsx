@@ -20,21 +20,69 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
   });
 
   // Define available moves and their props
-
-
-
+  const moves = {
+    bite: { damage: 20, animation: 'Bite' },          // Strong attack
+    headbutt: { damage: 15, animation: 'Headbutt' },  // Medium attack
+    bark: { damage: 10, animation: 'Barking' }        // Light attack
+  };
 
   // Handler function for when player selects a move
+  const handleMove = (moveType) => {
+    // If battle is not active, don't process the move
+    if (!battleState.isActive) return;
+
+    // Get the selected move's props
+
+    // Set the player's attack animation
+
+    
+
+    // Process the attack after a 1 second delay
+
+    // Update battle state with new enemy health and battle log
 
 
 
+    // Reset the animations back to standing
+
+
+    // If enemy is still alive, let them take their turn
+
+
+
+  };
 
   // Function to handle enemy's turn
 
+      // Get array of possible moves
+
+      // Select random move
+
+
+      // Add delay before enemy attack
+
+          // Set enemy attack animation
+
+
+          // Process enemy attack after animation
+
+
+            // Update battle state with new player health and battle log
+
+
+
+            // Reset animations
 
 
 
   // Effect hook to check for battle end conditions
+
+      // Check if either dog's health is at 0
+
+          // Set battle as inactive
+
+
+          // Trigger battle and callback after delay
 
 
 
