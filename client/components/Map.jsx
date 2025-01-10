@@ -1,6 +1,6 @@
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
@@ -19,6 +19,7 @@ import {
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
   const location = useLocation();
+  const navigate = useNavigate();
   const { state: dog, user } = location;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
@@ -125,6 +126,7 @@ const Map = () => {
           window.alert(
             'You have walked your Dog! They will now be a little hungrier but much healthier!'
           );
+          navigate('/user');
         })
         .catch((err) => {
           console.error('error exiting map');
