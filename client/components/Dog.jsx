@@ -23,13 +23,16 @@ const Dog = (props) => {
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
+  const [vitality, setVitality] = useState(false);
 
   const [health, setHealth] = useState(true);
+  const [vitalityStatus, setVitalityStatus] = useState(''); // set the status
   const [feedStatus, setFeedStatus] = useState('');
   const [walkStatus, setWalkStatus] = useState('');
   const [healthStatus, setHealthStatus] = useState('');
 
   const [feedTimer, setFeedTimer] = useState(0);
+  const [vitalityTimer, setVitalityTimer] = useState(0); // set timers
   const [walkTimer, setWalkTimer] = useState(0);
   const [medicineTimer, setMedicineTimer] = useState(0);
   const [meals, setMeals] = useState([]);
@@ -46,6 +49,7 @@ const Dog = (props) => {
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
   const medicineRef = useRef(null);
+  const vitalityRef = useRef(null);
 
   useEffect(() => {
     getSignedInUserMeals(user._id);
@@ -296,7 +300,7 @@ const Dog = (props) => {
 
   useEffect(() => {
     getDog();
-  }, [happy, hungry, health]);
+  }, [happy, hungry, health, vitality]);
 
   useEffect(() => {
     const x = setInterval(() => {
@@ -304,12 +308,15 @@ const Dog = (props) => {
 
       const feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
       const walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
+      const vitalityTimer =
+        ((Date.parse(dog.vitalityDeadline) - now) / 86400000) * 100;
       const medicineTimer =
         ((Date.parse(dog.medicineDeadline) - now) / 86400000) * 100;
 
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
       setMedicineTimer(medicineTimer);
+      setVitalityTImer(vitalityTimer);
 
       if (feedTimer < 25) {
         setFeedStatus('danger');
@@ -370,9 +377,25 @@ const Dog = (props) => {
           medicineRef.current = health;
         }
       }
+
+      if (vitalityTimer < 25) {
+        setVitalityStatus('danger');
+        setVitality(false);
+        vitalityRef.current = vitality;
+      } else if (vitalityTimer < 50) {
+        setVitalityStatus('warning');
+        setVitality(false);
+        vitalityRef.current = vitality;
+      } else {
+        setVitalityStatus('success');
+        if (vitalityRef.current !== true) {
+          setVitality(true);
+          vitalityRef.current = vitality;
+        }
+      }
     }, 1000);
     return () => clearInterval(x);
-  }, [happy, hungry, health, dog]);
+  }, [happy, hungry, health, dog, vitality]);
 
   return (
     <div>
@@ -475,7 +498,7 @@ const Dog = (props) => {
                 <ProgressBar
                   animated
                   striped
-                  variant={walkStatus}
+                  variant='success'
                   now={walkTimer}
                   label='HAPPINESS'
                   style={{ height: '35px' }}
@@ -504,6 +527,15 @@ const Dog = (props) => {
                   variant={healthStatus}
                   now={medicineTimer}
                   label='HEALTH'
+                  style={{ height: '35px' }}
+                />
+                <br />
+                <ProgressBar
+                  animated
+                  striped
+                  variant={vitalityStatus}
+                  now={vitalityTimer}
+                  label='VITALITY'
                   style={{ height: '35px' }}
                 />
                 {meals ? (

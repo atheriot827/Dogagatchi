@@ -19,7 +19,7 @@ router.post('/exit', (req, res) => {
   )
     .then((walkedDog) => {
       console.log(walkedDog);
-      res.redirect('/user');
+      res.redirect('/home');
     })
     .catch((error) => {
       console.error(error, 'error exiting map');
