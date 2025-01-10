@@ -50,6 +50,7 @@ const dogSchema = new mongoose.Schema({
   feedDeadline: Date, // timers
   walkDeadline: Date, // timers
   medicineDeadline: Date,
+  vitalityDeadline: Date,
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   isGroomed: Boolean,
   activities: [String],
@@ -103,55 +104,55 @@ const dogShopSchema = new mongoose.Schema({
   breed: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
-price: {
-  type: Number,
-  required: true
-},
-description: String,
-available: {
-  type: Boolean,
-  default: true
-},
-animations: {
-  type: [String],
-  default: [
-    'Barking',
-    'Bite',
-    'Dying',
-    'Headbutt',
-    'Jump',
-    'LayingDown',
-    'Running',
-    'Sitting',
-    'Sleeping',
-    'Standing',
-    'Walking'
-  ]
-},
-stats: {
-  baseHealth: {
+  price: {
     type: Number,
-    default: 100
+    required: true,
   },
-  baseAttack: {
-    type: Number,
-    default: 10
+  description: String,
+  available: {
+    type: Boolean,
+    default: true,
   },
-  baseDefense: {
-    type: Number,
-    default: 5
-  }
-},
-createdAt: {
-  type: Date,
-  default: Date.now
-}
+  animations: {
+    type: [String],
+    default: [
+      'Barking',
+      'Bite',
+      'Dying',
+      'Headbutt',
+      'Jump',
+      'LayingDown',
+      'Running',
+      'Sitting',
+      'Sleeping',
+      'Standing',
+      'Walking',
+    ],
+  },
+  stats: {
+    baseHealth: {
+      type: Number,
+      default: 100,
+    },
+    baseAttack: {
+      type: Number,
+      default: 10,
+    },
+    baseDefense: {
+      type: Number,
+      default: 5,
+    },
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const DogShop = mongoose.model('DogShop', dogShopSchema);
