@@ -96,7 +96,9 @@ router.put('/:dogId', (req, res) => {
     });
 });
 
-// ROUTE FOR YELLING AT DOG
+
+// **************** DOG STATS ROUTES ********************
+
 router.put('/stats/:dogId', async (req, res) => {
     const {dogId} = req.params;
     const {status} = req.body;
