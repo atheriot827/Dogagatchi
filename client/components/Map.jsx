@@ -55,12 +55,14 @@ const Map = () => {
     return false;
   };
 
-  const updatePos = (index, newValue) => {
-    setDogPosition((prevPosition) => {
-      const newPos = [...prevPosition];
-      newPos[index] = newValue;
-      return newPos;
-    });
+  const updatePos = (index, newValue, index2, itemOrWeapon) => {
+    if (index2 === undefined) {
+      setDogPosition((prevPosition) => {
+        const newPos = [...prevPosition];
+        newPos[index] = newValue;
+        return newPos;
+      });
+    }
   };
 
   const moveDog = ({ key }) => {
@@ -136,12 +138,27 @@ const Map = () => {
     // }
   };
 
+  // This function unsuccessfully removes the tile
+  const removeOverlayTile = (index, index2) => {
+    const copy = overlayTiles.slice(0);
+    copy[index][index2] = 0;
+    setOverlayTiles(copy);
+    // setOverlayTiles((prevMap) => {
+    //   console.log(prevMap);
+    //   const newMap = [...prevMap];
+    //   newMap[index][index2] = 0;
+    //   return newPos;
+    // });
+  };
+
   const foundItem = () => {
     if (
       dogPosition[0] === itemPosition[0] &&
       dogPosition[1] === itemPosition[1]
     ) {
       console.log(' YOU FIND AN ITEM!');
+      setItemPosition([undefined, undefined]);
+      // removeOverlayTile(dogPosition[0], dogPosition[1]); This is not the best method for removing the tile
       axios
         .post('map/item', { walkerInfo: dog, user })
         .then(() => {
@@ -156,6 +173,8 @@ const Map = () => {
       dogPosition[1] === weaponPosition[1]
     ) {
       console.log(' YOU FIND A WEAPON!');
+      setWeaponPosition([undefined, undefined]);
+      // removeOverlayTile(dogPosition[0], dogPosition[1]);
       axios
         .post('map/item', { walkerInfo: dog, user })
         .then(() => {
@@ -177,7 +196,7 @@ const Map = () => {
     return () => {
       document.removeEventListener('keydown', moveDog);
     };
-  }, [dogX32, dogY32]);
+  }, [dogX32, dogY32, overlayTiles]);
   //
   return (
     <div onKeyDown={moveDog}>

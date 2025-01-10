@@ -5,6 +5,13 @@ const { Dog, User } = require('../db/index');
 router.post('/exit', (req, res) => {
   console.log('post to the exit test');
   const { dog, user } = req.body.walkerInfo;
+  User.findByIdAndUpdate(user._id, { $inc: { coinCount: 3 } }, { new: true })
+    .then((asd) => {
+      console.log('success update to money', asd);
+    })
+    .catch((err) => {
+      console.log(err, 'failed to update coin');
+    });
   Dog.findOneAndUpdate(
     { owner: user._id, name: dog.name },
     { $inc: { health: 10, vitality: 25, speed: 1 } },
