@@ -33,6 +33,7 @@
         |-- Meal.jsx
         |-- Medicine.jsx
         |-- Navbar.jsx
+        |-- PoochBattles.jsx
         |-- PoochCenter.jsx
         |-- ProtectedRoute.jsx
         |-- Quiz.jsx
@@ -227,10 +228,10 @@
             |-- spriteSheet.jsx
             |-- t6Hry.jpg
             |-- water.png
-        |-- styles
-            |-- retro-gaming.css
     |-- index.html
     |-- index.jsx
+    |-- styles
+        |-- PoochBattles.css
 |-- package-lock.json
 |-- package.json
 |-- server
