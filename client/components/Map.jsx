@@ -201,56 +201,60 @@ const Map = () => {
   return (
     <div onKeyDown={moveDog}>
       <Stage
-        width={tileSize * mapData[0].length}
-        height={tileSize * mapData.length}
+        width={window.screen.width / 1.01}
+        height={window.screen.height / 1.3}
       >
-        {mapData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={tileSprites[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
+        <Container
+          position={[window.screen.width / 3, window.screen.height / 15]}
+        >
+          {mapData.map((row, y) =>
+            row.map((tile, x) => (
+              <Sprite
+                key={`${x}-${y}`}
+                image={tileSprites[tile]}
+                x={x * tileSize}
+                y={y * tileSize}
+              />
+            ))
+          )}
+          {overlayData.map((row, y) =>
+            row.map((tile, x) => (
+              <Sprite
+                key={`${x}-${y}`}
+                image={overlayTiles[tile]}
+                x={x * tileSize}
+                y={y * tileSize}
+              />
+            ))
+          )}
+          <Container position={[16, 16]}>
+            <AnimatedSprite
+              key='enemyPos'
+              images={enemyAnimation}
+              isPlaying
+              initialFrame={0}
+              animationSpeed={0.1}
+              anchor={0.5}
+              x={enemyX32}
+              y={enemyY32}
+              width={32}
+              height={32}
             />
-          ))
-        )}
-        {overlayData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={overlayTiles[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
+          </Container>
+          <Container position={[16, 16]}>
+            <AnimatedSprite
+              key='dogPos'
+              images={dogAnimation}
+              isPlaying
+              initialFrame={0}
+              animationSpeed={0.1}
+              anchor={0.5}
+              x={dogX32}
+              y={dogY32}
+              width={32}
+              height={32}
             />
-          ))
-        )}
-        <Container position={[16, 16]}>
-          <AnimatedSprite
-            key='enemyPos'
-            images={enemyAnimation}
-            isPlaying
-            initialFrame={0}
-            animationSpeed={0.1}
-            anchor={0.5}
-            x={enemyX32}
-            y={enemyY32}
-            width={32}
-            height={32}
-          />
-        </Container>
-        <Container position={[16, 16]}>
-          <AnimatedSprite
-            key='dogPos'
-            images={dogAnimation}
-            isPlaying
-            initialFrame={0}
-            animationSpeed={0.1}
-            anchor={0.5}
-            x={dogX32}
-            y={dogY32}
-            width={32}
-            height={32}
-          />
+          </Container>
         </Container>
       </Stage>
     </div>
