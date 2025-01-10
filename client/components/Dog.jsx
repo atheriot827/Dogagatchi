@@ -455,16 +455,25 @@ const Dog = (props) => {
             className='d-flex flex-column justify-content-center align-items-center align-self-center '
             style={{ width: '250px', height: '250px' }}
           >
-            <Card.Title className='d-flex flex-row m-4'>STATS</Card.Title>
-            <Card.Text className='d-flex flex-row m-4'>
-              {`LVL. ${dog.lvl}`}
-            </Card.Text>
-            <Card.Img
-              src={dog.img}
-              alt='Sorry, your dog is in another kennel.'
-              className='p-4'
-            />
-
+            {' '}
+            <Card>
+              <div className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                <Card.Title class='p-3 mb-2 bg-primary text-white'>
+                  {'  '}STATS{'   '}
+                </Card.Title>
+                <Card.Text class='p-3 mb-2 bg-primary text-white'>
+                  {`LVL. ${dog.lvl}`} {'\n'}
+                  {`Vitality: ${dog.vitality}`} {'\n'}
+                  {`Speed: ${dog.speed}`} {'\n'}
+                  {`next lvl: ${100 - dog.exp}`} {'\n'}
+                </Card.Text>
+                <Card.Img
+                  src={dog.img}
+                  alt='Sorry, your dog is in another kennel.'
+                  className='p-4'
+                />
+              </div>
+            </Card>
             <Button variant='warning' onClick={subscribe}>
               💎 Groom 💎
             </Button>
@@ -539,8 +548,8 @@ const Dog = (props) => {
                   animated
                   striped
                   variant={vitalityStatus}
-                  now={dog.vitality}
-                  label={dog.vitality}
+                  now={dog.exp}
+                  label={`Exp.`}
                   style={{ height: '35px' }}
                 />
                 {meals ? (
