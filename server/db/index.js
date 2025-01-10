@@ -83,6 +83,18 @@ const dogSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  lvl: {
+    type: Number,
+    default: 0,
+  },
+  exp: {
+    type: Number,
+    default: 0,
+  },
+  discipline: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Dog = mongoose.model('Dog', dogSchema);
