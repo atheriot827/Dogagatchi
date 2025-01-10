@@ -1,6 +1,7 @@
 |-- .env
 |-- .eslintrc
 |-- .gitignore
+|-- .prettierrc
 |-- README.md
 |-- _PRESS-RELEASE.md
 |-- client
@@ -27,16 +28,33 @@
         |-- Leaderboard.jsx
         |-- Login.jsx
         |-- Map.jsx
+        |-- MapFiles.jsx
+        |-- MapTile.jsx
         |-- Meal.jsx
         |-- Medicine.jsx
         |-- Navbar.jsx
+        |-- PoochCenter.jsx
         |-- ProtectedRoute.jsx
         |-- Quiz.jsx
         |-- Restaurant.jsx
         |-- User.jsx
+        |-- VoiceTraining.jsx
         |-- WordOfTheDay.jsx
         |-- assets
             |-- 7101902.webp
+            |-- animations
+                |-- dogwalk1.png
+                |-- dogwalk2.png
+                |-- dogwalk3.png
+                |-- dogwalk4.png
+                |-- dogwalk5.png
+                |-- dogwalk6.png
+                |-- dogwalk7.png
+                |-- dogwalk8.png
+            |-- character.png
+            |-- dirt.png
+            |-- dogParkMap.png
+            |-- exit.png
             |-- gifs
                 |-- australian_shepherd
                     |-- Barking.gif
@@ -194,6 +212,7 @@
     |-- routes
         |-- dogRoutes.js
         |-- groomRoutes.js
+        |-- mapRoutes.js
         |-- userRoutes.js
         |-- wordRoutes.js
 |-- webpack.config.js

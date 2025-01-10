@@ -11,12 +11,14 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
-import Dogtionary from './Dogtionary.jsx';
-import WordOfTheDay from './WordOfTheDay.jsx';
+
+import Dogtionary from './Dogtionary';
+import WordOfTheDay from './WordOfTheDay';
+import VoiceTraining from './VoiceTraining';
 
 const bark = new Audio(barkSound);
 
-function Dog(props) {
+const Dog = (props) => {
   const { dogObj, setCoins, coins } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
@@ -31,7 +33,7 @@ function Dog(props) {
   const [walkTimer, setWalkTimer] = useState(0);
   const [medicineTimer, setMedicineTimer] = useState(0);
   const [meals, setMeals] = useState([]);
-  const [medicines, setMedicines] = useState([]); //useState hook that updates the medicines array
+  const [medicines, setMedicines] = useState([]); // useState hook that updates the medicines array
   const [word, setWord] = useState({});
   const [isFavWord, setIsFavWord] = useState(false);
   const [showWord, setShowWord] = useState(false);
@@ -41,7 +43,6 @@ function Dog(props) {
   const [groom, setGroom] = useState([]);
   const [groomed, setGroomed] = useState(false);
   const user = JSON.parse(sessionStorage.getItem('user'));
-
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
   const medicineRef = useRef(null);
@@ -83,7 +84,7 @@ function Dog(props) {
         const sortedMedicines = data.medicines.sort((a, b) =>
           a.name > b.name ? 1 : b.name > a.name ? -1 : 0
         );
-        
+
         setMedicines(sortedMedicines);
       })
       .catch((err) => console.error('get signed in user ERROR', err));
@@ -115,7 +116,7 @@ function Dog(props) {
       .catch((err) => console.error('feed dog meal ERROR:', err));
   };
 
-  /************ Subscribe for Groom **********/
+  /** ********** Subscribe for Groom ********* */
   const subscribe = () => {
     console.log(user);
     if (coins >= 200) {
@@ -133,7 +134,6 @@ function Dog(props) {
       alert('Not enough coins!');
     }
   };
-  /************ Subscribe for Groom **********/
 
   // (dogToFeedObj, mealToFeedObj)
   const giveMedicine = (dogToGiveMeds, medsToGiveObj) => {
@@ -217,7 +217,7 @@ function Dog(props) {
   const fetchAndShowWord = () => {
     // request to /words/:dogId
     axios
-      .get(`/words/randomWord`)
+      .get('/words/randomWord')
       .then(({ data }) => {
         // add dog id to word object
         data.dog = dog._id;
@@ -383,7 +383,7 @@ function Dog(props) {
             style={{ width: '250px', height: '250px' }}
           >
             <Card.Img
-              src={dog.img}
+              src={`/assets/gifs/${dog.breed}/Standing.gif`}
               alt='Sorry, your dog does not want to be seen with you...'
               className='p-4'
             />
@@ -393,7 +393,7 @@ function Dog(props) {
             <Card.Body className='w-100'>
               <div className='dog-status'>
                 <ProgressBar
-                  animated={true}
+                  animated
                   striped
                   now={100}
                   variant='warning'
@@ -409,7 +409,7 @@ function Dog(props) {
                   added={added}
                   addWordToDogtionary={addWordToDogtionary}
                 />
-                
+
                 <Button variant='primary' onClick={openDogtionary}>
                   {`${dog.name}'s Dogtionary`}
                 </Button>
@@ -447,7 +447,7 @@ function Dog(props) {
             <Card.Body className='w-100'>
               <div className='dog-status'>
                 <ProgressBar
-                  animated={true}
+                  animated
                   striped
                   variant={feedStatus}
                   now={feedTimer}
@@ -459,7 +459,7 @@ function Dog(props) {
                     className='w-100 mx-0'
                     variant='info'
                     onClick={() => handleClick('feed')}
-                    title={'pay 3 coins'}
+                    title='pay 3 coins'
                   >
                     🍖
                   </Button>
@@ -473,7 +473,7 @@ function Dog(props) {
                   </Button>
                 )}
                 <ProgressBar
-                  animated={true}
+                  animated
                   striped
                   variant={walkStatus}
                   now={walkTimer}
@@ -499,7 +499,7 @@ function Dog(props) {
                   </Button>
                 )}
                 <ProgressBar
-                  animated={true}
+                  animated
                   striped
                   variant={healthStatus}
                   now={medicineTimer}
@@ -548,6 +548,10 @@ function Dog(props) {
                   </DropdownButton>
                 )}
 
+                <div>
+                  <VoiceTraining dogObj={dogObj} />
+                </div>
+
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
                 <WordOfTheDay
                   dog={dog}
@@ -568,8 +572,9 @@ function Dog(props) {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
-                <Link to='/Map'>
-                <Button>{`Take ${dog.name} For A Walk!`}</Button>
+                <Link to='/Map' state={{ dog, user }}>
+                  {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
+                  <Button>{`Take ${dog.name} For A Walk! 🐕‍🦺`}</Button>
                 </Link>
               </div>
             </Card.Body>
@@ -578,6 +583,6 @@ function Dog(props) {
       )}
     </div>
   );
-}
+};
 
 export default Dog;
