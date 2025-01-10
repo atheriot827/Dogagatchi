@@ -9,6 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 // import Row from 'react-bootstrap/Row';
 // import Toast from 'react-bootstrap/Toast';
 import ToastPopUp from './ToastPopUp.jsx';
+import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 
 export default function VoiceTraining({dogStateParent, setDogParent}) {
 
@@ -37,7 +39,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
 
     // AXIOS REQUESTS
     const healDog = () => {
-        if (dogStateParent.health >= 100) return setError('maxed out already bruh');
+        if (dogStateParent.health >= 100) return setError(`TOP SHAPE ALREADY, COUSIN, NOW LET'S GO BOWLING!`);
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseHealth: 25,
@@ -51,7 +53,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     };
 
     const yellAtDog = () => {
-        if (dogStateParent.health <= 25) return setError(`take a chill pill man he's stressed`);
+        if (dogStateParent.health <= 25) return setError(`BE KIND TO DOG, COUSIN, LIKE I AM TO MY BOWLING PINS!`);
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 decreaseHealth: 25,
@@ -67,7 +69,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     };
 
     const powerUpDog = () => {
-        if (dogStateParent.attackDmg >= 100) return setError('this dog already so strong bruh');
+        if (dogStateParent.attackDmg >= 100) return setError('IMPOSSIBLE TO IMPROVE, COUSIN, LIKE MY BOWLING SKILLS!');
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 increaseAttackDmg: 5,
@@ -81,6 +83,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     };
 
     const baller = () => {
+        setError(`COUSIN, YOU MADE THIS DOG MORE PERFECT THAN MY BOWLING SCORES!`);
         axios.put(`/dog/stats/${dogStateParent._id}`, {
             status: {
                 maxStats: 100,
@@ -126,26 +129,19 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
             console.log('This is what webspeech api thinks you said: ', word);
             switch (word) {
                 case 'healing magic drop the beat fix this dog from head to feet':
-                    // invoke heal function
-                    console.log('WE GONNA HEAL THAT DOG FASHO!');
                     healDog();
                     break;
                 case 'power surging through this pup strength and speed now level up':
-                    // invoke power up function
-                    console.log('WE GONNA GIVE THAT DOG SOME POWERS MAN!');
                     powerUpDog();
                     break;
                 case 'stupid dog':
-                    // transfer dog to another user in db
-                    console.log('You have lost ownership of your Dog. Be better next time.');
                     yellAtDog();
                     break;
                 case 'baller':
-                    console.log('LET IT RAIN!!');
                     baller();
                     break;
                 default:
-                    setError(`Last I checked, ${word} isn't a command.`);
+                    setError(`${word} MAKES NO SENSE, COUSIN, LIKE REFUSING TO GO BOWLING!`);
                     break;
             }
         };
@@ -153,7 +149,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
 
     return (<>
         <Button variant='primary' onClick={handleShow}>
-            Launch modal
+            Train {dogStateParent.name}
         </Button>
 
         <Modal show={show} onHide={handleClose}>
@@ -161,49 +157,73 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                 <Modal.Title>Chat with your stinky dog</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <div className='position-absolute top-0 end-0 me-3 mb-3'>
+
+
+                    <Dropdown>
+                        <Dropdown.Toggle variant='success'>
+                            Click To Train
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item href='#/action-1' onClick={healDog}>Heal</Dropdown.Item>
+                            <Dropdown.Item href='#/action-2' onClick={powerUpDog}>Power Up</Dropdown.Item>
+                            <Dropdown.Item href='#/action-3' onClick={yellAtDog}>Yell
+                                at {dogStateParent.name}</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
 
                 {error ? <ToastPopUp message={error}/> : ''}
 
+                <div style={{minHeight: '150px'}}>
 
-                <h4>Commands</h4>
-                <p> Heal Command: healing magic drop the beat fix this dog from head to feet</p>
-                <p> Power Up Command: power surging through this pup strength and speed now level up</p>
-                <p> bad dog: stupid dog</p>
-                <p> Health: {health} </p>
-                <p> Attack Dmg: {attackDmg}</p>
-                <div>
-                    <div>
-                        <Dropdown>
-                            <Dropdown.Toggle variant='success'>
-                                Click To Train
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item href='#/action-1' onClick={healDog}>Heal</Dropdown.Item>
-                                <Dropdown.Item href='#/action-2' onClick={powerUpDog}>Power Up</Dropdown.Item>
-                                <Dropdown.Item href='#/action-3' onClick={yellAtDog}>Yell
-                                    at {dogStateParent.name}</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                    <div id='badge-subheader-wrapper'>
+                        <h4>
+                            <Badge className='mb-1'>
+                                Heal
+                            </Badge>
+                        </h4>
+                        <Card body style={{width: '400px'}} className='mb-2'>
+                            healing magic drop the beat fix this dog from head to feet
+                        </Card>
+
+                        <h4>
+                            <Badge className='mb-1'>
+                                Increase Attack Damage
+                            </Badge>
+                        </h4>
+
+
+                        <Card body style={{width: '400px'}} className='mb-2'>
+                            power surging through this pup strength and speed now level up </Card>
                     </div>
-                    <ProgressBar
-                        animated={true}
-                        striped
-                        now={health}
-                        variant={getProgressBarVariant(health)}
-                        label='HEALTH'
-                        style={{height: '35px'}}
-                    />
+
                 </div>
-                <div>
-                    <ProgressBar
-                        animated={true}
-                        striped
-                        now={attackDmg}
-                        variant={getProgressBarVariant(attackDmg)}
-                        label='ATTACK DAMAGE'
-                        style={{height: '35px'}}
-                    />
+                <div className='mt-2'>
+                    <div>
+                        <ProgressBar className='mb-2'
+                                     animated={true}
+                                     striped
+                                     now={health}
+                                     variant={getProgressBarVariant(health)}
+                                     label='HEALTH'
+                                     style={{height: '35px'}}
+                        />
+                    </div>
+                    <div>
+                        <ProgressBar
+                            animated={true}
+                            striped
+                            now={attackDmg}
+                            variant={getProgressBarVariant(attackDmg)}
+                            label='ATTACK DAMAGE'
+                            style={{height: '35px'}}
+                        />
+                    </div>
+
+
                 </div>
+
             </Modal.Body>
             <Modal.Footer>
                 <Button variant='secondary' onClick={handleClose}>
@@ -212,7 +232,6 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                 <Button variant='primary' onClick={renderSpeech}>
                     {voiceInput ? 'LISTENING' : 'Speak To Train'}
                 </Button>
-                <p> {error ? `${[error]}` : ''}</p>
             </Modal.Footer>
         </Modal>
     </>);
