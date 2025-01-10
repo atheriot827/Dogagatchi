@@ -128,7 +128,7 @@ const Map = () => {
           window.alert(
             'You have walked your Dog! They will now be a little hungrier but much healthier!'
           );
-          navigate('/user');
+          navigate('/home');
         })
         .catch((err) => {
           console.error('error exiting map');
