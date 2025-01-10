@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
-import { sendContext } from './Context.jsx';
 import { Button, Form, Row, Col, Container, Image } from 'react-bootstrap';
+import { useAuth } from './Context';
 
-const Login = () => {
-    //const [userData, setUserData] = useState({username: ''})
+function Login() {
+    // const [userData, setUserData] = useState({username: ''})
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState([])
-    const { setUserContext } = sendContext()
+    const { setUserContext } = useAuth();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -107,12 +107,9 @@ const Login = () => {
         }
     }
 
- 
-
-
     return (
         <Row style={{ height: '100vh', }} className=''>
-            <Col xs={3}></Col>
+            <Col xs={3} />
             <Col xs={6} className='d-flex flex-column justify-content-center'>
                 <Image className='align-self-center m-5' src='https://i.ibb.co/B6bJ359/1699386580-trimmy-sweeticon-removebg-preview-1.png' />
                 <Form onSubmit={submit} style={{ backgroundImage: 'linear-gradient(#182950, #274282)', }} className='d-flex flex-column align-self-center justify-content-center align-items-center p-2 border border-3 border-white rounded'>
@@ -144,7 +141,7 @@ const Login = () => {
 
 
             </Col>
-            <Col xs={3}></Col>
+            <Col xs={3} />
         </Row>
     )
 }

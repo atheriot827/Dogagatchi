@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { useAuth } from './Context';
 
 function Home() {
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    setUser(user.username);
-  }, []);
+  const { user } = useAuth();
 
   return (
     <div className="home">
       <h1>DOGAGATCHI</h1>
-      <img src="https://i.ibb.co/B6bJ359/1699386580-trimmy-sweeticon-removebg-preview-1.png" />
-      <h1>{`Welcome, ${user}!`}</h1>
+      <img src="https://i.ibb.co/B6bJ359/1699386580-trimmy-sweeticon-removebg-preview-1.png" alt="Dogagatchi Logo" />
+      <h1>{`Welcome, ${user?.username}!`}</h1>
       <span>
         <Link to="/user">
           <Button className="boot-button">My Kennel 🦴</Button>
         </Link>
         <Link to="/quiz">
-          <Button className="boot-button">Pooch Picker 🤔</Button>
+          <Button className="boot-button">Quiz 🤔</Button>
         </Link>
         <Link to="/activity">
           <Button className="boot-button">Activities ✨</Button>
