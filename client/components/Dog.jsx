@@ -450,10 +450,15 @@ const Dog = (props) => {
         </Card>
       ) : (
         <Card className='d-flex flex-row m-4'>
+          <ProgressBar now={60} />
           <div
             className='d-flex flex-column justify-content-center align-items-center align-self-center '
             style={{ width: '250px', height: '250px' }}
           >
+            <Card.Title className='d-flex flex-row m-4'>STATS</Card.Title>
+            <Card.Text className='d-flex flex-row m-4'>
+              {`LVL. ${dog.lvl}`}
+            </Card.Text>
             <Card.Img
               src={dog.img}
               alt='Sorry, your dog is in another kennel.'
@@ -534,8 +539,8 @@ const Dog = (props) => {
                   animated
                   striped
                   variant={vitalityStatus}
-                  now={vitalityTimer}
-                  label='VITALITY'
+                  now={dog.vitality}
+                  label={dog.vitality}
                   style={{ height: '35px' }}
                 />
                 {meals ? (
