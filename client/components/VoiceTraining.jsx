@@ -28,6 +28,10 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     const [attackDmg, setAttackDmg] = useState();
     const [health, setHealth] = useState();
 
+    // Change command inputs
+    const [editingActive, setEditingActive] = useState(false); // is in edit mode
+    const [currentEdit, setCurrentEdit] = useState(false); // is currently editing
+
 
     useEffect(() => {
         if (show && dogStateParent) {
@@ -183,7 +187,13 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                                 Heal
                             </Badge>
                         </h4>
-                        <Card body style={{width: '400px'}} className='mb-2'>
+                        <Card
+                            onDoubleClick={(e) => {
+                                setEditingActive(true);
+                                setCurrentEdit(e.target.id);
+                            }}
+                            id='heal' body style={{width: '400px'}}
+                            className='mb-2'>
                             healing magic drop the beat fix this dog from head to feet
                         </Card>
 
