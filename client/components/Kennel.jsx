@@ -38,12 +38,16 @@ function Kennel({ dogs, setDogs, coins, setCoins }) {
     });
     console.log('and me!');
     setDogPositions(newPositions);
-  }, [ownedDogs, currentDog]);
+  }, []); // [ownedDogs, currentDog];
+  // Reason: Infinite render with those dependencies.
+  // Temp Fix: Switched to using no dependencies
+  // Positions will be placed once ?
 
   // Animation loop for background dogs
   useEffect(() => {
-    const moveInterval = setInterval(() => {
-      // Backup Plan: SetTimeout
+    //           switched to setTimeout
+    //  const moveInterval = setinterval(() => {
+    const moveInterval = setTimeout(() => {
       setDogPositions((prevPositions) => {
         const newPositions = { ...prevPositions };
 
@@ -68,14 +72,12 @@ function Kennel({ dogs, setDogs, coins, setCoins }) {
       });
     }, 100);
 
-    console.log('called me');
-    return () => clearInterval(moveInterval); // stops the timer from running
-  }, []); /* Using an empty dependency array 
-   ^ We don't rely on any value in the Kennel component's state to update.
-    setTimeout will continuously update `dogPositions`, 
-    we need to ensure we do not include it as a dependency so it will not create new setTimeOuts every 100 ms.
-     
-*/
+    console.log('called me! {Kennel dog animation}');
+    return () => clearInterval(moveInterval);
+  }, [dogPositions]); /* was [currentDog] 
+  currentDog was not triggering setTimeout to make a new position
+  */
+
   useEffect(() => {
     if (ownedDogs && ownedDogs.length > 0) {
       setCurrentDog(ownedDogs[0]);
