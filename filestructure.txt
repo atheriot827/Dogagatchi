@@ -244,6 +244,7 @@
     |-- routes
         |-- dogRoutes.js
         |-- groomRoutes.js
+        |-- mapRoutes.js
         |-- userRoutes.js
         |-- wordRoutes.js
 |-- webpack.config.js
