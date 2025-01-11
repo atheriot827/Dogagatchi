@@ -72,7 +72,7 @@ function Kennel({ dogs, setDogs, coins, setCoins }) {
       });
     }, 100);
 
-    console.log('called me! {Kennel dog animation}');
+    // console.log('called me! {Kennel dog animation}');
     return () => clearInterval(moveInterval);
   }, [dogPositions]); /* was [currentDog] 
   currentDog was not triggering setTimeout to make a new position

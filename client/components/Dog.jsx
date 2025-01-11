@@ -528,15 +528,15 @@ const Dog = (props) => {
                     🐕‍🦺
                   </Button>
                 )}
-                <ProgressBar
-                  animated
-                  striped
-                  variant={healthStatus}
-                  now={medicineTimer}
-                  label='HEALTH'
-                  style={{ height: '35px' }}
-                />
-                <br />
+                {/*<ProgressBar*/}
+                {/*  animated*/}
+                {/*  striped*/}
+                {/*  variant={healthStatus}*/}
+                {/*  now={medicineTimer}*/}
+                {/*  label='HEALTH'*/}
+                {/*  style={{ height: '35px' }}*/}
+                {/*/>*/}
+                {/*<br />*/}
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
@@ -579,9 +579,9 @@ const Dog = (props) => {
                   </DropdownButton>
                 )}
 
-                <div>
-                  <VoiceTraining dogObj={dogObj} />
-                </div>
+                        <div>
+                            <VoiceTraining dogStateParent={dog} setDogParent={setDog}/>
+                        </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
                 <WordOfTheDay
