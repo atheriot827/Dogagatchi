@@ -138,22 +138,41 @@ const Map = () => {
 
       try {
         // Calculate level based on dog's stats
-        const dogLevel = Math.floor((dog.walksTaken || 0) / 5) + 1; // Example: Level up every 5 walks
+        const dogLevel = Math.floor((dog?.walksTaken || 0) / 5) + 1; // Example: Level up every 5 walks
         // Or you could use vitality or other stats to determine level
         // const dogLevel = Math.floor(dog.vitality / 20) + 1;
 
-        // Get random enemy from backend, scaled to dogs level
-        const response = await axios.get(`/enemy/random/${dogLevel}`);
-        const enemyData = response.data;
+        // Create default enemy data in case the API call fails
+      const defaultEnemy = {
+        name: "Wild Dog",
+        type: "wild_dog",
+        breed: "doberman",
+        sprite: "/assets/gifs/doberman/Standing.gif",
+        health: 100,
+        baseAttack: 15,
+        rewards: {
+          coins: 10,
+          experience: 5
+        }
+      };
 
-        setEnemyDog(enemyData);
-        setShowBattle(true);
-        setBattleActive(true);
+      try {
+        // Get random enemy from backend
+        const response = await axios.get(`/enemy/random/${dogLevel}`);
+        setEnemyDog(response.data);
       } catch (error) {
         console.error("Error fetching enemy:", error);
+        // Use default enemy if API fails
+        setEnemyDog(defaultEnemy);
       }
+
+      setShowBattle(true);
+      setBattleActive(true);
+    } catch (error) {
+      console.error("Error in battle initialization:", error);
     }
-  };
+  }
+};
 
   // Battle end handler
   const handleBattleEnd = async (result) => {
