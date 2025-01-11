@@ -165,6 +165,8 @@
     cursor: not-allowed;
 }
 
+sdsd
+
 /* Health bar styling */
 .progress {
     height: 25px;
@@ -175,11 +177,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/*.progress-bar {*/
-/*    transition: width 0.5s ease-in-out;*/
-/*    background: linear-gradient(90deg, #ff3d00 0%, #ff6b00 100%);*/
-/*}*/
+.battle-modal .progress-bar {
+    transition: width 0.5s ease-in-out;
+    background: linear-gradient(90deg, #ff3d00 0%, #ff6b00 100%);
+}
 
-/*.progress-bar.bg-success {*/
-/*    background: linear-gradient(90deg, #00c853 0%, #69f0ae 100%);*/
-/*}*/
+.battle-modal .progress-bar.bg-success {
+    background: linear-gradient(90deg, #00c853 0%, #69f0ae 100%);
+}
