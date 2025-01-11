@@ -82,7 +82,7 @@ const dogSchema = new mongoose.Schema({
     // The vitality of the current dog.
     type: Number,
     default: 0,
-  },
+  }, commands: [String]
 });
 
 const Dog = mongoose.model('Dog', dogSchema);
