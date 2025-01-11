@@ -60,6 +60,15 @@ const dogSchema = new mongoose.Schema({
     min: 25,
     max: 100,
   },
+  level: {
+    type: Number,
+    default: 1,
+    min: 1
+  },
+  experience: {
+    type: Number,
+    default: 0
+  },
   attackDmg: {
     type: Number,
     default: 25,
@@ -84,6 +93,12 @@ const dogSchema = new mongoose.Schema({
     default: 0,
   },
 });
+
+// Method to calculate level based on experience
+dogSchema.methods.calculateLevel = function() {
+  // Example: Level up every 100 experience points
+  return Math.floor(this.experience / 100) + 1;
+};
 
 const Dog = mongoose.model('Dog', dogSchema);
 
