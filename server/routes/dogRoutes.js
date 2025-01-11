@@ -149,6 +149,42 @@ router.put('/stats/:dogId', async (req, res) => {
 });
 
 
+// **************** DOG COMMANDS ROUTES ********************
+router.put('/commands/:dogId', async (req, res) => {
+    const newCommand = status.newCommand;
+    const commandType = status.commandType;
+
+    if (newCommand && commandType === 'heal') {
+        try {
+            const updatedDog = await Dog.findByIdAndUpdate(dogId, {
+                $push: {
+                    commands: {
+                        $each: [newCommand], $position: 0
+                    }
+                }
+            });
+            res.status(200).send(updatedDog);
+        } catch (error) {
+            console.error('Error updating command', error);
+        }
+    }
+
+    if (newCommand && commandType === 'increaseAttack') {
+        try {
+            const updatedDog = await Dog.findByIdAndUpdate(dogId, {
+                $push: {
+                    commands: {
+                        $each: [newCommand], $position: 1
+                    }
+                }
+            });
+            res.status(200).send(updatedDog);
+        } catch (error) {
+            console.error('Error updating command', error);
+        }
+    }
+});
+
 
 // **************** DELETE ROUTES ********************
 
