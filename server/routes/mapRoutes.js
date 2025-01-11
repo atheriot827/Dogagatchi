@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const { Dog, User } = require('../db/index');
 
@@ -62,6 +63,68 @@ router.post('/item', (req, res) => {
       console.error(error, 'error exiting map');
       res.sendStatus(500);
     });
+});
+
+// Handle battle victory
+router.post('/battle-victory', async (req, res) => {
+  const { dogId, userId, rewards, healthRemaining } = req.body;
+
+  try {
+    // Update dog stats
+    const updatedDog = await Dog.findByIdAndUpdate(
+      dogId,
+      {
+        $inc: {
+          health: Math.min(100, healthRemaining), // Cap health at 100
+          attackDmg: 1, // Slight attack increase after victory
+          vitality: 10
+        }
+      },
+      { new: true }
+    );
+
+    // Update user coins
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          coinCount: rewards.coins
+        }
+      },
+      { new: true }
+    );
+
+    res.status(200).send({
+      updatedDog,
+      updatedUser
+    });
+  } catch (error) {
+    console.error('Error processing battle victory', error);
+    res.sendStatus(500);
+  }
+});
+
+// Handle battle defeat
+router.post('/battle-defeat', async (req, res) => {
+  const { dogId, userId } = req.body;
+
+  try {
+    // Update dog stats after defeat
+    const updatedDog = await Dog.findByIdAndUpdate(
+      dogId,
+      {
+        $set: {
+          health: 50  // Set health to 50% after defeat
+        }
+      },
+      { new: true }
+    );
+
+    res.status(200).send({ updatedDog });
+  } catch (error) {
+    console.error('Error processing battle defeat:', error);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
