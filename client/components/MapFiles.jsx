@@ -111,6 +111,8 @@ const allMaps = {
       '../assets/overlaytiles/trtree-Photoroom.png', // 24
       '../assets/overlaytiles/weapon-Photoroom.png', // 25
     ],
+    overlayCollidableTiles: [24, 23, 13, 12, 10, 8, 9],
+    mapCollidableTiles: [2, 6],
   },
 };
 export { allMaps };

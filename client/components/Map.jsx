@@ -24,6 +24,8 @@ const Map = () => {
     dogwalk,
     enemy,
     overlays,
+    overlayCollidableTiles,
+    mapCollidableTiles,
   } = gameMap;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
@@ -31,6 +33,10 @@ const Map = () => {
   const [tileSprites, setTileSprites] = useState(tiles);
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
   const [overlayTiles, setOverlayTiles] = useState(overlays);
+  const [overlayCollidable, setOverlayCollidable] = useState(
+    overlayCollidableTiles
+  );
+  const [mapCollidable, setMapCollidable] = useState(mapCollidableTiles);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
   // X & Y starting position values based on 32px
   const [dogX32, setdogX32] = useState(0);
@@ -48,8 +54,6 @@ const Map = () => {
   const tileSize = 32; // Size of each tile in pixels
 
   const collisionDetection = (x, y) => {
-    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
-    const mapCollidable = [2, 6];
     if (mapCollidable.includes(mapLayout[y][x])) {
       return true;
     }
