@@ -4,7 +4,7 @@ const router = express.Router();
 const { Dog, User } = require('../db/index');
 
 router.post('/exit', (req, res) => {
-  console.log('post to the exit test');
+  // console.log('post to the exit test');
   const { dog, user } = req.body.walkerInfo;
 
   // Give user some coins
@@ -101,6 +101,7 @@ router.post('/battle-victory', async (req, res) => {
       },
       { new: true }
     );
+
 
     // Calculate new level based on experience
     const newLevel = Math.floor(updatedDog.experience / 100) + 1;

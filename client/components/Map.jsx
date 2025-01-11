@@ -180,7 +180,7 @@ const Map = () => {
     setBattleActive(false);
 
     // Add checks for dog and user
-    if (!dog || !user) {
+    if (!dog || !user) { // temporarily removing a !user check here as it is always undefined when passed from child component
       console.error('Missing dog or user data');
       navigate('/home');
       return;
