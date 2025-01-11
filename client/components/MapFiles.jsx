@@ -114,7 +114,7 @@ const allMaps = {
     overlayCollidableTiles: [24, 23, 13, 12, 10, 8, 9],
     mapCollidableTiles: [2, 6],
     dogStartingPosition: [0, 0],
-    enemyStartingPosition: [0, 0],
+    enemyStartingPosition: [5, 15],
   },
 };
 export { allMaps };

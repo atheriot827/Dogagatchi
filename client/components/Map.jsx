@@ -26,6 +26,8 @@ const Map = () => {
     overlays,
     overlayCollidableTiles,
     mapCollidableTiles,
+    dogStartingPosition,
+    enemyStartingPosition,
   } = gameMap;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
@@ -39,10 +41,10 @@ const Map = () => {
   const [mapCollidable, setMapCollidable] = useState(mapCollidableTiles);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
   // X & Y starting position values based on 32px
-  const [dogX32, setdogX32] = useState(0);
-  const [dogY32, setdogY32] = useState(0);
-  const [enemyX32, setenemyX32] = useState(480);
-  const [enemyY32, setenemyY32] = useState(160);
+  const [dogX32, setdogX32] = useState(dogStartingPosition[1] * 32);
+  const [dogY32, setdogY32] = useState(dogStartingPosition[0] * 32);
+  const [enemyX32, setenemyX32] = useState(enemyStartingPosition[1] * 32);
+  const [enemyY32, setenemyY32] = useState(enemyStartingPosition[0] * 32);
   // Positions are based on coordinates in 2D array; meaning: [y, x]
   const [enemyPos, setEnemyPos] = useState([enemyY32 / 32, enemyX32 / 32]);
   const [dogPosition, setDogPosition] = useState([dogY32 / 32, dogX32 / 32]);
