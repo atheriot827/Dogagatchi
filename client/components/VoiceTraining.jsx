@@ -5,9 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import {ProgressBar} from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
-// import Toast from 'react-bootstrap/Toast';
 import ToastPopUp from './ToastPopUp.jsx';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
@@ -39,11 +36,11 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         const newCommand = editCommands;
 
         if (currentEdit === 'heal') {
-            console.log('adding new command for heal');
             changeHealCommand(newCommand);
         }
 
         if (currentEdit === 'incDmg') {
+            console.log('Adding attack command');
             changeAttackCommand(newCommand);
         }
     };
@@ -58,6 +55,21 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         }
     }, [show, dogStateParent]);
 
+
+    const changeAttackCommand = (newCommand) => {
+        axios.put(`/dog/commands/${dogStateParent._id}`, {
+            status: {
+                newCommand: newCommand, commandType: 'increaseAttack',
+            }
+        }).then((updatedDog) => {
+            console.log('returning this from change: ', updatedDog.data);
+            setEditingActive(false);
+            setCurrentEdit(false);
+            setEditCommands('');
+            setDogParent(updatedDog.data);
+
+        });
+    };
 
     const changeHealCommand = (newCommand) => {
         axios.put(`/dog/commands/${dogStateParent._id}`, {
@@ -247,7 +259,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                                 </Button>
 
                             </Form> : <Card
-                            onDoubleClick={(e) => {
+                                onClick={(e) => {
                                 setEditingActive(true);
                                 setCurrentEdit(e.currentTarget.id);
                                 console.log(e.currentTarget);
@@ -272,10 +284,52 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                         </h4>
                     </div>
 
-                    <div>
 
-                        <Card body style={{width: '400px'}} className='mb-2'>
-                            power surging through this pup strength and speed now level up </Card>
+                    <div id='incDmg'>
+
+                        {editingActive && currentEdit === 'incDmg' ?
+
+
+                            <Form
+                                onSubmit={handleSubmit}
+                            >
+                                <Form.Group className='mb-3'>
+                                    <Form.Label>Increase Attack Damage Input Command:</Form.Label>
+                                    <Form.Control
+                                        value={editCommands}
+                                        onChange={(e) => {
+                                            setEditCommands(e.target.value);
+                                        }}
+                                        type='text' placeholder='input your own command'/>
+                                    <Form.Text className='text-muted'>
+                                        Here's some muted text idiot
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Button variant='primary' type='submit'>
+                                    Submit
+                                </Button>
+
+                            </Form>
+
+
+                            :
+
+
+                            <Card
+                                onClick={(e) => {
+                                    setEditingActive(true);
+                                    setCurrentEdit(e.currentTarget.id);
+                                    console.log(e.currentTarget);
+                                    console.log(e.currentTarget.id);
+                                    console.log('double clicked!');
+                                    console.log('this is editingActive: ', editingActive);
+                                    console.log('this is currentEdit: ', currentEdit);
+                                }}
+                                id='incDmg' body style={{width: '400px'}}
+                                className='mb-2'>
+                                {dogStateParent.commands[1]}
+                            </Card>}
                     </div>
 
                 </div>
