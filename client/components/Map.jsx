@@ -118,13 +118,13 @@ const Map = () => {
     }
   };
 
-  // Modified to integrate with PoochBattles
+  // Modified to integrate with PoochBattles and backend
   const checkBattle = async () => {
     if (dogX32 === enemyX32 && dogY32 === enemyY32 && !battleActive) {
       console.log(' YOU MUST FIGHT ');
 
       try {
-        // Get random enemy scaled to player's level
+        // Get random enemy from backend, scaled to player's level
         const response = await axios.get(`/enemy/random/${dog.level || 1}`);
         const enemyData = response.data;
 
@@ -136,6 +136,82 @@ const Map = () => {
       }
     }
   };
+
+  // Battle end handler
+  const handleBattleEnd = async (result) => {
+    setShowBattle(false);
+    setBattleActive(false);
+
+    try {
+      if (result.winner === 'player') {
+        // Process victory and rewards
+        const response = await axios.post('/map/battle-victory', {
+          dogId: dog._id,
+          userId: user._id,
+          rewards: result.rewards,
+          healthRemaining: result.playerHealthRemaining
+        });
+
+        // Update dog stats
+        if (response.data.updatedDog) {
+          // Update local dog state
+          console.log('Dog stats updated:', response.data.updatedDog);
+        }
+
+        // Remove enemy from current position
+        setenemyX32(-100); // Move enemy off map
+        setenemyY32(-100);
+        setEnemyPos([-1, -1]);
+
+        // Show victory message
+        window.alert(`Victory! Earned ${result.rewards.coins} coins and ${result.rewards.experience} experience!`);
+      } else {
+        // Handle defeat
+        await axios.post('/map/battle-defeat', {
+          dogId. dog._id,
+          userId: user._id
+        });
+
+        window.alert('Your dog needs rest after that battle!');
+        navigate('/home');
+      }
+    } catch (error) {
+      console.error("Error processing battle result:", error);
+    }
+  };
+
+  // Modified enemy spawn logic
+  const spawnEnemy = async () => {
+    if (battleActive) return; // Don't spawn during battle
+
+    const spawnPoints = [];
+
+    // Check each map tile for valid spawn location
+    mapData.forEach((row, y) => {
+      row.forEach((x, index) => {
+        if (!collisionDetection(index, y) &&
+            Math.abs(index - dogPosition[1]) > 3 &&
+            Math.abs(y - dogPosition[0]) > 3) {
+          spawnPoints.push({ x: index * tileSize, y: y * tileSize });
+        }
+      });
+    });
+
+    if (spawnPoints.length > 0) {
+      const spawn = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+      setenemyX32(spawn.x);
+      setenemyY32(spawn.y);
+      setEnemyPos([spawn.x / tileSize, spawn.y / tileSize]);
+    }
+  };
+
+// Add enemy spawn interval
+useEffect(() => {
+  if (!battleActive) {
+    const spawnTimer = setInterval(spawnEnemy, 30000); // Spawn every 30 seconds
+    return () => clearInterval(spawnTimer);
+  }
+}, [battleActive]);
 
   const checkExit = () => {
     if (
@@ -152,7 +228,7 @@ const Map = () => {
           navigate('/home');
         })
         .catch((err) => {
-          console.error('error exiting map');
+          console.error('error exiting map', err);
         });
     }
     // if (dogX32 === exitX && dogY32 === exitY) {
@@ -186,7 +262,7 @@ const Map = () => {
           window.alert('Your dog becomes slightly healthier!');
         })
         .catch((err) => {
-          console.error('error picking up item from map');
+          console.error('error picking up item from map', err);
         });
     }
     if (
@@ -202,25 +278,29 @@ const Map = () => {
           window.alert('Your dog becomes slightly stronger!');
         })
         .catch((err) => {
-          console.error('error picking up weapon from map');
+          console.error('error picking up weapon from map', err);
         });
     }
   };
 
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
+  // Modify to include battle checking
   useEffect(() => {
-    checkExit();
-    foundItem();
-    checkBattle();
-    document.addEventListener('keydown', moveDog);
-    return () => {
+    if (!battleActive) {
+      checkExit();
+      foundItem();
+      checkBattle();
+      document.addEventListener('keydown', moveDog);
+      return () => {
       document.removeEventListener('keydown', moveDog);
     };
-  }, [dogX32, dogY32, overlayTiles]);
+  }
+}, [dogX32, dogY32, overlayTiles, battleActive]);
+
   //
   return (
-    <div onKeyDown={moveDog}>
+    <div onKeyDown={!battleActive ? moveDog : null}>
       <Stage
         width={window.screen.width / 1.01}
         height={window.screen.height / 1.3}
@@ -278,6 +358,15 @@ const Map = () => {
           </Container>
         </Container>
       </Stage>
+
+      {/* Battle Modal */}
+      <PoochBattles
+        show={showBattle}
+        onHide={() => setShowBattle(false)}
+        playerDog={dog}
+        enemyDog={enemyDog}
+        onBattleEnd={handleBattleEnd}
+      />
     </div>
   );
 };
