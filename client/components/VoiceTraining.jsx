@@ -11,6 +11,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ToastPopUp from './ToastPopUp.jsx';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
+import Form from 'react-bootstrap/Form';
+
 
 export default function VoiceTraining({dogStateParent, setDogParent}) {
 
@@ -130,7 +132,6 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         recognition.onresult = (event) => {
             setVoiceInput(false);
             let word = event.results[0][0].transcript;
-            console.log('This is what webspeech api thinks you said: ', word);
             switch (word) {
                 case 'healing magic drop the beat fix this dog from head to feet':
                     healDog();
@@ -145,7 +146,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                     baller();
                     break;
                 default:
-                    setError(`${word} MAKES NO SENSE, COUSIN, LIKE REFUSING TO GO BOWLING!`);
+                    setError(`"${word.toUpperCase()}" MAKES NO SENSE, COUSIN, LIKE REFUSING TO GO BOWLING!`);
                     break;
             }
         };
@@ -158,7 +159,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Chat with your stinky dog</Modal.Title>
+                <Modal.Title>Training 101</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className='position-absolute top-0 end-0 me-3 mb-3'>
@@ -181,28 +182,59 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
 
                 <div style={{minHeight: '150px'}}>
 
-                    <div id='badge-subheader-wrapper'>
+                    <div>
                         <h4>
                             <Badge className='mb-1'>
                                 Heal
                             </Badge>
                         </h4>
-                        <Card
+                    </div>
+
+                    <div id='heal'>
+
+                        {editingActive && currentEdit === 'heal' ?
+
+
+                            <Form>
+                                <Form.Group className='mb-3'>
+                                    <Form.Label>Health Input Command:</Form.Label>
+                                    <Form.Control type='text' placeholder='input your own command'/>
+                                    <Form.Text className='text-muted'>
+                                        Here's some muted text idiot
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Button variant='primary' type='submit'>
+                                    Submit
+                                </Button>
+
+                            </Form> : <Card
                             onDoubleClick={(e) => {
                                 setEditingActive(true);
-                                setCurrentEdit(e.target.id);
+                                setCurrentEdit(e.currentTarget.id);
+                                console.log(e.currentTarget);
+                                console.log(e.currentTarget.id);
+                                console.log('double clicked!');
+                                console.log('this is editingActive: ', editingActive);
+                                console.log('this is currentEdit: ', currentEdit);
                             }}
                             id='heal' body style={{width: '400px'}}
                             className='mb-2'>
                             healing magic drop the beat fix this dog from head to feet
-                        </Card>
+                            </Card>}
 
+                    </div>
+
+
+                    <div>
                         <h4>
                             <Badge className='mb-1'>
                                 Increase Attack Damage
                             </Badge>
                         </h4>
+                    </div>
 
+                    <div>
 
                         <Card body style={{width: '400px'}} className='mb-2'>
                             power surging through this pup strength and speed now level up </Card>
