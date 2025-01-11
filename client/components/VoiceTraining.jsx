@@ -61,7 +61,11 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
             status: {
                 newCommand: newCommand, commandType: 'heal',
             }
-        }).then((newCommand) => {
+        }).then((updatedDog) => {
+            setEditingActive(false);
+            setCurrentEdit(false);
+            setEditCommands('');
+            setDogParent(updatedDog.data);
 
         });
     };
@@ -218,7 +222,9 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                         {editingActive && currentEdit === 'heal' ?
 
 
-                            <Form>
+                            <Form
+                                onSubmit={handleSubmit}
+                            >
                                 <Form.Group className='mb-3'>
                                     <Form.Label>Health Input Command:</Form.Label>
                                     <Form.Control

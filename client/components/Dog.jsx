@@ -317,7 +317,7 @@ const Dog = (props) => {
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
       setMedicineTimer(medicineTimer);
-      setVitalityTimer(vitalityTimer);
+      // setVitalityTimer(vitalityTimer);
 
       if (feedTimer < 25) {
         setFeedStatus('danger');
