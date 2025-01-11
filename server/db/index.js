@@ -87,17 +87,6 @@ const dogSchema = new mongoose.Schema({
 
 const Dog = mongoose.model('Dog', dogSchema);
 
-const wordSchema = new mongoose.Schema({
-  word: String,
-  phonetic: String,
-  meanings: [{ partOfSpeech: String, definitions: [String] }],
-  dogtionary: Boolean,
-  favorite: Boolean,
-  used: Boolean,
-  dog: { type: mongoose.Schema.Types.ObjectId, ref: 'Dog' },
-});
-
-const Word = mongoose.model('Word', wordSchema);
 
 // Schema for Enemies
 const enemySchema = new mongoose.Schema({
@@ -211,6 +200,18 @@ const dogShopSchema = new mongoose.Schema({
 });
 
 const DogShop = mongoose.model('DogShop', dogShopSchema);
+
+const wordSchema = new mongoose.Schema({
+  word: String,
+  phonetic: String,
+  meanings: [{ partOfSpeech: String, definitions: [String] }],
+  dogtionary: Boolean,
+  favorite: Boolean,
+  used: Boolean,
+  dog: { type: mongoose.Schema.Types.ObjectId, ref: 'Dog' },
+});
+
+const Word = mongoose.model('Word', wordSchema);
 
 module.exports = {
   DogShop,
