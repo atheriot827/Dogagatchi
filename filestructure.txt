@@ -244,6 +244,7 @@
     |-- index.js
     |-- routes
         |-- dogRoutes.js
+        |-- enemyRoutes.js
         |-- groomRoutes.js
         |-- mapRoutes.js
         |-- userRoutes.js
