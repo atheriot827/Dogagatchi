@@ -151,13 +151,15 @@ router.put('/stats/:dogId', async (req, res) => {
 
 // **************** DOG COMMANDS ROUTES ********************
 router.put('/commands/:dogId', async (req, res) => {
+    const {dogId} = req.params;
+    const {status} = req.body;
+
     const newCommand = status.newCommand;
     const commandType = status.commandType;
-
     if (newCommand && commandType === 'heal') {
         try {
             const updatedDog = await Dog.findByIdAndUpdate(dogId, {
-                $push: {
+                $set: {
                     commands: {
                         $each: [newCommand], $position: 0
                     }
