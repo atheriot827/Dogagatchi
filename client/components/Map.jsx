@@ -124,8 +124,13 @@ const Map = () => {
       console.log(' YOU MUST FIGHT ');
 
       try {
-        // Get random enemy from backend, scaled to player's level
-        const response = await axios.get(`/enemy/random/${dog.level || 1}`);
+        // Calculate level based on dog's stats
+        const dogLevel = Math.floor((dog.walksTaken || 0) / 5) + 1; // Example: Level up every 5 walks
+        // Or you could use vitality or other stats to determine level
+        // const dogLevel = Math.floor(dog.vitality / 20) + 1;
+
+        // Get random enemy from backend, scaled to dogs level
+        const response = await axios.get(`/enemy/random/${dogLevel}`);
         const enemyData = response.data;
 
         setEnemyDog(enemyData);
@@ -154,21 +159,25 @@ const Map = () => {
 
         // Update dog stats
         if (response.data.updatedDog) {
-          // Update local dog state
-          console.log('Dog stats updated:', response.data.updatedDog);
+          // Show level up message
+        if (response.data.levelUp) {
+          window.alert(`Your dog reached level ${response.data.updatedDog.level}!`);
         }
+
+        // Show victory message
+        window.alert(
+          `Victory! Earned ${result.rewards.coins} coins and ${result.rewards.experience} experience!`
+        );
+      }
 
         // Remove enemy from current position
         setenemyX32(-100); // Move enemy off map
         setenemyY32(-100);
         setEnemyPos([-1, -1]);
-
-        // Show victory message
-        window.alert(`Victory! Earned ${result.rewards.coins} coins and ${result.rewards.experience} experience!`);
       } else {
         // Handle defeat
         await axios.post('/map/battle-defeat', {
-          dogId. dog._id,
+          dogId: dog._id,
           userId: user._id
         });
 
