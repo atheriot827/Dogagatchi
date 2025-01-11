@@ -50,24 +50,24 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         if (show && dogStateParent) {
             setHealth(dogStateParent.health);
             setAttackDmg(dogStateParent.attackDmg);
-            console.log('THIS IS OUR DOG NOW:', dogStateParent);
-            console.log('why is nothing here: ', dogStateParent.commands);
+            console.log('useEffect executing command[1] = ', dogStateParent.commands[1]);
+            console.log('useEffect executing this is dogStateParent: ', dogStateParent);
         }
     }, [show, dogStateParent]);
 
 
     const changeAttackCommand = (newCommand) => {
+        console.log('Axios put request starting with command: ', newCommand);
         axios.put(`/dog/commands/${dogStateParent._id}`, {
             status: {
                 newCommand: newCommand, commandType: 'increaseAttack',
             }
         }).then((updatedDog) => {
-            console.log('returning this from change: ', updatedDog.data);
+            console.log('Updated Dog with new command[1]', updatedDog.data);
             setEditingActive(false);
             setCurrentEdit(false);
             setEditCommands('');
             setDogParent(updatedDog.data);
-
         });
     };
 
@@ -262,11 +262,6 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                                 onClick={(e) => {
                                 setEditingActive(true);
                                 setCurrentEdit(e.currentTarget.id);
-                                console.log(e.currentTarget);
-                                console.log(e.currentTarget.id);
-                                console.log('double clicked!');
-                                console.log('this is editingActive: ', editingActive);
-                                console.log('this is currentEdit: ', currentEdit);
                             }}
                             id='heal' body style={{width: '400px'}}
                             className='mb-2'>
