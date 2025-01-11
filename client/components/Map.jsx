@@ -5,55 +5,58 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import {
-  enemy,
-  overlays,
-  dogwalk,
-  tiles,
-  mapLayout,
-  overlayLayout,
-  itemLoc,
-  weaponLoc,
-  exitLoc,
-} from './MapFiles';
-import PoochBattles from './PoochBattles';
+import { allMaps } from './MapFiles';
 
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
   const location = useLocation();
   const navigate = useNavigate();
+  // We gain access to an exact copy of the dog & user through react hook useLocation's state
   const { state: dog, user } = location;
-
-  // State for battle system
-  const [showBattle, setShowBattle] = useState(false);
-  const [enemyDog, setEnemyDog] = useState(null);
-  const [battleActive, setBattleActive] = useState(false);
-
+  const { selectedMap } = location.state;
+  const [gameMap, setGameMap] = useState(allMaps[selectedMap]);
+  const {
+    mapLayout,
+    overlayLayout,
+    weaponLoc,
+    itemLoc,
+    exitLoc,
+    tiles,
+    dogwalk,
+    enemy,
+    overlays,
+    overlayCollidableTiles,
+    mapCollidableTiles,
+    dogStartingPosition,
+    enemyStartingPosition,
+  } = gameMap;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
   const [overlayTiles, setOverlayTiles] = useState(overlays);
+  const [overlayCollidable, setOverlayCollidable] = useState(
+    overlayCollidableTiles
+  );
+  const [mapCollidable, setMapCollidable] = useState(mapCollidableTiles);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
-  // I chose to base these values off of 32 bits per square tile
-  const [enemyX32, setenemyX32] = useState(480);
-  const [enemyY32, setenemyY32] = useState(160);
-  // enemy position is based on 32 bits
-  const [enemyPos, setEnemyPos] = useState([enemyX32 / 32, enemyY32 / 32]); // The enemy position is based on  coordinates in map
+  // X & Y starting position values based on 32px
+  const [dogX32, setdogX32] = useState(dogStartingPosition[1] * 32);
+  const [dogY32, setdogY32] = useState(dogStartingPosition[0] * 32);
+  const [enemyX32, setenemyX32] = useState(enemyStartingPosition[1] * 32);
+  const [enemyY32, setenemyY32] = useState(enemyStartingPosition[0] * 32);
+  // Positions are based on coordinates in 2D array; meaning: [y, x]
+  const [enemyPos, setEnemyPos] = useState([enemyY32 / 32, enemyX32 / 32]);
+  const [dogPosition, setDogPosition] = useState([dogY32 / 32, dogX32 / 32]);
   const [itemPosition, setItemPosition] = useState(itemLoc);
   const [weaponPosition, setWeaponPosition] = useState(weaponLoc);
   const [exitPosition, setExitPosition] = useState(exitLoc);
   const [inputVal, setInputVal] = useState('');
-  const [dogX32, setdogX32] = useState(0);
-  const [dogY32, setdogY32] = useState(0);
-  const [dogPosition, setDogPosition] = useState([0, 0]);
 
   const tileSize = 32; // Size of each tile in pixels
 
   const collisionDetection = (x, y) => {
-    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
-    const mapCollidable = [2, 6];
     if (mapCollidable.includes(mapLayout[y][x])) {
       return true;
     }
@@ -73,14 +76,17 @@ const Map = () => {
     }
   };
 
+  // Controls for the dog. Utilizes collision detection.
   const moveDog = ({ key }) => {
+    // Get the current dog's position (before movement)
     let x = dogPosition[1];
     let y = dogPosition[0];
-    console.log(dogPosition, 'the dog position');
-    console.log(itemPosition, 'the item Position');
+
+    // Handles input
     switch (key) {
       case 'w':
         y -= 1;
+        // Movement is allowed if and only if within map and there will be no collision detected
         if (!(dogY32 - 32 < 0) && !collisionDetection(x, y)) {
           setdogY32(dogY32 - 32);
           updatePos(0, y);
