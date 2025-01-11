@@ -89,7 +89,8 @@ const dogSchema = new mongoose.Schema({
   },
 
   commands: {
-    type: [String], default: [],
+    type: [String],
+    default: ['healing magic drop the beat fix this dog from head to feet', 'power surging through this pup strength and speed now level up', 'stupid dog', 'baller',],
   }, lvl: {
     type: Number, default: 0,
   }, exp: {
