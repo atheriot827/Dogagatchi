@@ -117,6 +117,22 @@
                     |-- Sleeping.gif
                     |-- Standing.gif
                     |-- Walking.gif
+                |-- enemies
+                    |-- dog_catcher
+                        |-- blue_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
+                        |-- brown_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
                 |-- german_shepherd
                     |-- Barking.gif
                     |-- Bite.gif
