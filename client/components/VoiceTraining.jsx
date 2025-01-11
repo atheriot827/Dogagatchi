@@ -39,6 +39,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         const newCommand = editCommands;
 
         if (currentEdit === 'heal') {
+            console.log('adding new command for heal');
             changeHealCommand(newCommand);
         }
 
@@ -52,6 +53,8 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         if (show && dogStateParent) {
             setHealth(dogStateParent.health);
             setAttackDmg(dogStateParent.attackDmg);
+            console.log('THIS IS OUR DOG NOW:', dogStateParent);
+            console.log('why is nothing here: ', dogStateParent.commands);
         }
     }, [show, dogStateParent]);
 
@@ -62,6 +65,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                 newCommand: newCommand, commandType: 'heal',
             }
         }).then((updatedDog) => {
+            console.log('returning this from change: ', updatedDog.data);
             setEditingActive(false);
             setCurrentEdit(false);
             setEditCommands('');
@@ -254,7 +258,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                             }}
                             id='heal' body style={{width: '400px'}}
                             className='mb-2'>
-                            healing magic drop the beat fix this dog from head to feet
+                                {dogStateParent.commands[0]}
                             </Card>}
 
                     </div>
