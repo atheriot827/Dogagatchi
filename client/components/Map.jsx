@@ -119,19 +119,21 @@ const Map = () => {
   };
 
   // Modified to integrate with PoochBattles
-  const checkBattle = () => {
+  const checkBattle = async () => {
     if (dogX32 === enemyX32 && dogY32 === enemyY32 && !battleActive) {
       console.log(' YOU MUST FIGHT ');
 
-      // Create enemy dog data
-      const enemyDogData = {
-        name: 
+      try {
+        // Get random enemy scaled to player's level
+        const response = await axios.get(`/enemy/random/${dog.level || 1}`);
+        const enemyData = response.data;
+
+        setEnemyDog(enemyData);
+        setShowBattle(true);
+        setBattleActive(true);
+      } catch (error) {
+        console.error("Error fetching enemy:", error);
       }
-
-
-
-
-
     }
   };
 
