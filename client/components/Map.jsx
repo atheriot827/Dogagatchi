@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
 import { allMaps } from './MapFiles';
+import PoochBattles from './PoochBattles';
 
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
@@ -41,6 +42,12 @@ const Map = () => {
   );
   const [mapCollidable, setMapCollidable] = useState(mapCollidableTiles);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
+
+  // State for battle system
+  const [showBattle, setShowBattle] = useState(false);
+  const [enemyDog, setEnemyDog] = useState(null);
+  const [battleActive, setBattleActive] = useState(false);
+
   // X & Y starting position values based on 32px
   const [dogX32, setdogX32] = useState(dogStartingPosition[1] * 32);
   const [dogY32, setdogY32] = useState(dogStartingPosition[0] * 32);
