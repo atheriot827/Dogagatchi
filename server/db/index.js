@@ -99,6 +99,61 @@ const wordSchema = new mongoose.Schema({
 
 const Word = mongoose.model('Word', wordSchema);
 
+// Schema for Enemies
+const enemySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    enum: ['wild_dog', 'dog_catcher', 'stray_cat', 'rival_trainer'],
+    required: true
+  },
+  baseHealth: {
+    type: Number,
+    default: 100,
+    min: 50,
+    max: 200
+  },
+  baseAttack: {
+    type: Number,
+    default: 10,
+    min: 5,
+    max: 50
+  },
+  // For wild dogs
+  breed: {
+    type: String,
+    required() { return this.type === 'wild_dog'; }
+  },
+  sprite: {
+    type: String,
+    required: true
+  },
+  // Not sure about these yet
+  animations: {
+    type: [String],
+    default: ['Standing', 'Attack', 'Hurt', 'Defeat']
+  },
+  specialMoves: [{
+    name: String,
+    damage: Number,
+    animation: String,
+    description: String
+  }],
+  levelRange: {
+    min: { type: Number, default: 1 },
+    max: { type: Number, default: 5 }
+  },
+  rewards: {
+    coins: { type: Number, default: 10 },
+    experience: { type: Number, default: 5 }
+  }
+});
+
+const Enemy = mongoose.model('Enemy', enemySchema);
+
 // Schema for Dog Shop
 const dogShopSchema = new mongoose.Schema({
   breed: {
@@ -162,4 +217,5 @@ module.exports = {
   Word,
   User,
   Dog,
+  Enemy
 };
