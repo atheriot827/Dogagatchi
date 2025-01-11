@@ -7,14 +7,20 @@ const initialEnemies = [
     breed: "doberman",
     baseHealth: 100,
     baseAttack: 15,
-    sprite: "/assets/gifs/doberman/Bite.gif",
-    animations: ["Standing", "Attack", "Hurt", "Defeat"],
+    sprite: "/assets/gifs/doberman/Standing.gif",
+    animations: ["Standing", "Bite", "Headbutt", "Barking"],
     specialMoves: [
       {
         name: "Fierce Bite",
         damage: 20,
-        animation: "Attack",
+        animation: "Bite",
         description: "A powerful bite attack"
+      },
+      {
+        name: "Intimidating Bark",
+        damage: 15,
+        animation: "Barking",
+        description: "A loud bark that weakens defenses"
       }
     ],
     levelRange: { min: 1, max: 3 },
@@ -25,17 +31,47 @@ const initialEnemies = [
     type: "dog_catcher",
     baseHealth: 150,
     baseAttack: 12,
-    sprite: "/assets/gifs/enemies/dog_catcher/blue_uniform/catch.gif",
+    sprite: "/assets/gifs/enemies/dog_catcher/blue_uniform/idle.gif",
+    animations: [
+      "idle",
+      "catch",
+      "walking",
+      "running"
+    ],
     specialMoves: [
       {
         name: "Net Throw",
         damage: 15,
-        animation: "Attack",
+        animation: "catch",
         description: "Throws a capture net"
       }
     ],
-    levelRange: { min: 2, max: 5 },
+    levelRange: { min: 1, max: 4 },
     rewards: { coins: 20, experience: 10 }
+  },
+  {
+    name: "Wild Husky",
+    type: "wild_dog",
+    breed: "siberian_husky",
+    baseHealth: 120,
+    baseAttack: 18,
+    sprite: "/assets/gifs/siberian_husky/Standing.gif",
+    animations: [
+      "Standing",
+      "Bite",
+      "Headbutt",
+      "Barking"
+    ],
+    specialMoves: [
+      {
+        name: "Snow Rush",
+        damage: 25,
+        animation: "Running",
+        description: "A swift attack through the snow"
+      }
+    ],
+    levelRange: { min: 1, max: 5 },
+    rewards: { coins: 15, experience: 8 }
   }
   // Add more enemies as needed
 ];

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "build-dev": "webpack --mode=development --watch",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "seed-enemies": "node server/scripts/seedEnemies.js"
   },
   "repository": {
     "type": "git",
