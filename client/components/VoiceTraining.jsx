@@ -50,20 +50,16 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
             setHealth(dogStateParent.health);
             setAttackDmg(dogStateParent.attackDmg);
             setCurrentCommands(dogStateParent.commands);
-            console.log('useEffect executing command[1] = ', dogStateParent.commands[1]);
-            console.log('useEffect executing this is dogStateParent: ', dogStateParent);
         }
     }, [show, dogStateParent]);
 
 
     const changeAttackCommand = (newCommand) => {
-        console.log('Axios put request starting with command: ', newCommand);
         axios.put(`/dog/commands/${dogStateParent._id}`, {
             status: {
                 newCommand: newCommand, commandType: 'increaseAttack',
             }
         }).then((updatedDog) => {
-            console.log('Updated Dog with new command[1]', updatedDog.data);
             setEditingActive(false);
             setCurrentEdit(false);
             setEditCommands('');
@@ -77,7 +73,6 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                 newCommand: newCommand, commandType: 'heal',
             }
         }).then((updatedDog) => {
-            console.log('returning this from change: ', updatedDog.data);
             setEditingActive(false);
             setCurrentEdit(false);
             setEditCommands('');
@@ -110,10 +105,8 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         }).then((dog) => {
             setHealth(dog.data.health);
             setDogParent(dog.data); // update state for parent component
-            console.log('dog health: ', dog.data.health);
-            console.log('dog has been updated in db');
         }).catch((err) => {
-            console.log('error updating health value in db', err);
+            console.error('error updating health value in db', err);
         });
     };
 
@@ -127,7 +120,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
             setAttackDmg(dog.data.attackDmg);
             setDogParent(dog.data); // update state for parent component
         }).catch((err) => {
-            console.log('error updating attack value in db', err);
+            console.error('error updating attack value in db', err);
         });
     };
 
@@ -315,11 +308,6 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                                 onClick={(e) => {
                                     setEditingActive(true);
                                     setCurrentEdit(e.currentTarget.id);
-                                    console.log(e.currentTarget);
-                                    console.log(e.currentTarget.id);
-                                    console.log('double clicked!');
-                                    console.log('this is editingActive: ', editingActive);
-                                    console.log('this is currentEdit: ', currentEdit);
                                 }}
                                 id='incDmg' body style={{width: '400px'}}
                                 className='mb-2'>
