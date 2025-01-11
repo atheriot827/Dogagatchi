@@ -70,18 +70,29 @@ router.post('/battle-victory', async (req, res) => {
   const { dogId, userId, rewards, healthRemaining } = req.body;
 
   try {
-    // Update dog stats
+    // Update dog stats and exp
     const updatedDog = await Dog.findByIdAndUpdate(
       dogId,
       {
         $inc: {
           health: Math.min(100, healthRemaining), // Cap health at 100
           attackDmg: 1, // Slight attack increase after victory
-          vitality: 10
+          vitality: 10,
+          experience: rewards.experience, // Add experience from battle
+          walksTaken: 1 // Increment walks taken
         }
       },
       { new: true }
     );
+
+    // Calculate new level based on experience
+    const newLevel = Math.floor(updatedDog.experience / 100) + 1;
+
+    // If level changed, update it
+    if (newLevel !== updatedDog.level) {
+      updatedDog.level = newLevel;
+      await updatedDog.save();
+    }
 
     // Update user coins
     const updatedUser = await User.findByIdAndUpdate(
@@ -96,7 +107,8 @@ router.post('/battle-victory', async (req, res) => {
 
     res.status(200).send({
       updatedDog,
-      updatedUser
+      updatedUser,
+      levelUp: newLevel !== updatedDog.level
     });
   } catch (error) {
     console.error('Error processing battle victory', error);
