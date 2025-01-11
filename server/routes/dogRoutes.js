@@ -178,10 +178,8 @@ router.put('/commands/:dogId', async (req, res) => {
     if (newCommand && commandType === 'increaseAttack') {
         try {
             const updatedDog = await Dog.findByIdAndUpdate(dogId, {
-                $push: {
-                    commands: {
-                        $each: [newCommand], $position: 1
-                    }
+                $set: {
+                    'commands.1': newCommand
                 }
             });
             res.status(200).send(updatedDog);
