@@ -4,6 +4,7 @@ const WebpackBar = require('webpackbar');
 const path = require('path');
 const Dotenv = require('dotenv-webpack')
 const CopyPlugin = require("copy-webpack-plugin")
+
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
@@ -51,21 +52,6 @@ module.exports = {
     new Dotenv()
   ],
   
-  resolve: {
-    fallback: {
-      "fs": false,
-      "os": false,
-      "path": false,
-      "crypto": false
-    },
-    extensions: [".js", ".jsx", ".json"],
-  },
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-},
-
   module: {
     rules: [
       {

@@ -28,15 +28,18 @@
         |-- Leaderboard.jsx
         |-- Login.jsx
         |-- Map.jsx
+        |-- MapFiles.jsx
         |-- MapTile.jsx
         |-- Meal.jsx
         |-- Medicine.jsx
         |-- Navbar.jsx
+        |-- PoochBattles.jsx
         |-- PoochCenter.jsx
         |-- ProtectedRoute.jsx
         |-- Quiz.jsx
         |-- Restaurant.jsx
         |-- User.jsx
+        |-- VoiceTraining.jsx
         |-- WordOfTheDay.jsx
         |-- assets
             |-- 7101902.webp
@@ -114,6 +117,22 @@
                     |-- Sleeping.gif
                     |-- Standing.gif
                     |-- Walking.gif
+                |-- enemies
+                    |-- dog_catcher
+                        |-- blue_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
+                        |-- brown_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
                 |-- german_shepherd
                     |-- Barking.gif
                     |-- Bite.gif
@@ -189,6 +208,9 @@
             |-- grass.png
             |-- grass2.png
             |-- hill.png
+            |-- kennel_scene
+                |-- background.png
+            |-- nothing.png
             |-- overlaytiles
                 |-- OLbigrock-Photoroom.png
                 |-- OLlog1-Photoroom.png
@@ -224,6 +246,8 @@
             |-- water.png
     |-- index.html
     |-- index.jsx
+    |-- styles
+        |-- PoochBattles.css
 |-- package-lock.json
 |-- package.json
 |-- server
@@ -236,7 +260,11 @@
     |-- index.js
     |-- routes
         |-- dogRoutes.js
+        |-- enemyRoutes.js
         |-- groomRoutes.js
+        |-- mapRoutes.js
         |-- userRoutes.js
         |-- wordRoutes.js
+    |-- scripts
+        |-- seedEnemies.js
 |-- webpack.config.js

@@ -1,90 +1,69 @@
+/* eslint-disable react/function-component-definition */
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import {
-  enemy,
-  overlays,
-  dogwalk,
-  tiles,
-  mapLayout,
-  overlayLayout,
-} from './MapFiles';
+import { allMaps } from './MapFiles';
+import PoochBattles from './PoochBattles';
 
 const Map = () => {
-  // Example map data, 0: grass, 1: dirt, 2: hill
+  // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
+  const location = useLocation();
+  const navigate = useNavigate();
+  // We gain access to an exact copy of the dog & user through react hook useLocation's state
+  const { state: dog, user } = location;
+  const { selectedMap } = location.state;
+  const [gameMap, setGameMap] = useState(allMaps[selectedMap]);
+  const {
+    mapLayout,
+    overlayLayout,
+    weaponLoc,
+    itemLoc,
+    exitLoc,
+    tiles,
+    dogwalk,
+    enemy,
+    overlays,
+    overlayCollidableTiles,
+    mapCollidableTiles,
+    dogStartingPosition,
+    enemyStartingPosition,
+  } = gameMap;
+  // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
-
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
-
   const [overlayTiles, setOverlayTiles] = useState(overlays);
+  const [overlayCollidable, setOverlayCollidable] = useState(
+    overlayCollidableTiles
+  );
+  const [mapCollidable, setMapCollidable] = useState(mapCollidableTiles);
   const [enemyAnimation, setEnemyAnimation] = useState(enemy);
-  const [enemyX, setEnemyX] = useState(480);
-  const [enemyY, setEnemyY] = useState(160);
-  const [enemyPos, setEnemyPos] = useState([enemyX, enemyY]);
+
+  // State for battle system
+  const [showBattle, setShowBattle] = useState(false);
+  const [enemyDog, setEnemyDog] = useState(null);
+  const [battleActive, setBattleActive] = useState(false);
+
+  // X & Y starting position values based on 32px
+  const [dogX32, setdogX32] = useState(dogStartingPosition[1] * 32);
+  const [dogY32, setdogY32] = useState(dogStartingPosition[0] * 32);
+  const [enemyX32, setenemyX32] = useState(enemyStartingPosition[1] * 32);
+  const [enemyY32, setenemyY32] = useState(enemyStartingPosition[0] * 32);
+  // Positions are based on coordinates in 2D array; meaning: [y, x]
+  const [enemyPos, setEnemyPos] = useState([enemyY32 / 32, enemyX32 / 32]);
+  const [dogPosition, setDogPosition] = useState([dogY32 / 32, dogX32 / 32]);
+  const [itemPosition, setItemPosition] = useState(itemLoc);
+  const [weaponPosition, setWeaponPosition] = useState(weaponLoc);
+  const [exitPosition, setExitPosition] = useState(exitLoc);
   const [inputVal, setInputVal] = useState('');
-  const [dogX, setDogX] = useState(0);
-  const [dogY, setDogY] = useState(0);
-  const [dogPosition, setDogPosition] = useState([0, 0]);
 
   const tileSize = 32; // Size of each tile in pixels
-  const moveDog = ({ key }) => {
-    let x = dogPosition[1];
-    let y = dogPosition[0];
-    
-    switch (key) {
-      case 'w':
-        y = y - 1;
-        if (!(dogY - 32 < 0) && !(collisionDetection(x, y))) {
-          setDogY(dogY - 32);
-          updatePos(0, y);
-        }
-        break;
-      case 'a':
-        x = x - 1;
-        if (!(dogX - 32 < 0)  && !(collisionDetection(x, y))) {
-          setDogX(dogX - 32);
-          updatePos(1, x);
-        }
-        break;
-      case 's':
-        y = y + 1;
-        if (!(dogY + 32 >= tileSize * mapData.length) && !(collisionDetection(x, y))) {
-          setDogY(dogY + 32);
-          updatePos(0, y);
-        }
-        break;
-      case 'd':
-        x = x + 1;
-        if (!(dogX + 32 >= tileSize * mapData[0].length) && !(collisionDetection(x, y))) {
-          setDogX(dogX + 32);
-          updatePos(1, x);
-        }
-        break;
-      default:
-        console.log('PLEASE USE "WASD" CONTROLS');
-    }
-  };
-
-  const checkBattle = () => {
-    if (dogX === enemyX && dogY === enemyY) {
-      console.log(' YOU MUST FIGHT ');
-    }
-  };
-
-  const updatePos = (index, newValue) => {
-    setDogPosition((prevPosition) => {
-      const newPos = [...prevPosition];
-      newPos[index] = newValue;
-      return newPos;
-    });
-  };
 
   const collisionDetection = (x, y) => {
-    const overlayCollidable = [24, 23, 13, 12, 10, 8, 9];
-    const mapCollidable = [2, 6];
     if (mapCollidable.includes(mapLayout[y][x])) {
       return true;
     }
@@ -94,90 +73,351 @@ const Map = () => {
     return false;
   };
 
+  const updatePos = (index, newValue, index2, itemOrWeapon) => {
+    if (index2 === undefined) {
+      setDogPosition((prevPosition) => {
+        const newPos = [...prevPosition];
+        newPos[index] = newValue;
+        return newPos;
+      });
+    }
+  };
+
+  // Controls for the dog. Utilizes collision detection.
+  const moveDog = ({ key }) => {
+    // Get the current dog's position (before movement)
+    let x = dogPosition[1];
+    let y = dogPosition[0];
+
+    // Handles input
+    switch (key) {
+      case 'w':
+        y -= 1;
+        // Movement is allowed if and only if within map and there will be no collision detected
+        if (!(dogY32 - 32 < 0) && !collisionDetection(x, y)) {
+          setdogY32(dogY32 - 32);
+          updatePos(0, y);
+        }
+        break;
+      case 'a':
+        x -= 1;
+        if (!(dogX32 - 32 < 0) && !collisionDetection(x, y)) {
+          setdogX32(dogX32 - 32);
+          updatePos(1, x);
+        }
+        break;
+      case 's':
+        y += 1;
+        if (
+          !(dogY32 + 32 >= tileSize * mapData.length) &&
+          !collisionDetection(x, y)
+        ) {
+          setdogY32(dogY32 + 32);
+          updatePos(0, y);
+        }
+        break;
+      case 'd':
+        x += 1;
+        if (
+          !(dogX32 + 32 >= tileSize * mapData[0].length) &&
+          !collisionDetection(x, y)
+        ) {
+          setdogX32(dogX32 + 32);
+          updatePos(1, x);
+        }
+        break;
+      default:
+        console.log('PLEASE USE "WASD" CONTROLS');
+    }
+  };
+
+  // Modified to integrate with PoochBattles and backend
+  const checkBattle = async () => {
+    if (dogX32 === enemyX32 && dogY32 === enemyY32 && !battleActive) {
+      console.log(' YOU MUST FIGHT ');
+
+      try {
+        // Calculate level based on dog's stats
+        const dogLevel = Math.floor((dog?.walksTaken || 0) / 5) + 1; // Example: Level up every 5 walks
+        // Or you could use vitality or other stats to determine level
+        // const dogLevel = Math.floor(dog.vitality / 20) + 1;
+
+        // Create default enemy data in case the API call fails
+      const defaultEnemy = {
+        name: "Wild Dog",
+        type: "wild_dog",
+        breed: "doberman",
+        sprite: "/assets/gifs/doberman/Standing.gif",
+        health: 100,
+        baseAttack: 15,
+        rewards: {
+          coins: 10,
+          experience: 5
+        }
+      };
+
+      try {
+        // Get random enemy from backend
+        const response = await axios.get(`/enemy/random/${dogLevel}`);
+        setEnemyDog(response.data);
+      } catch (error) {
+        console.error("Error fetching enemy:", error);
+        // Use default enemy if API fails
+        setEnemyDog(defaultEnemy);
+      }
+
+      setShowBattle(true);
+      setBattleActive(true);
+    } catch (error) {
+      console.error("Error in battle initialization:", error);
+    }
+  }
+};
+
+  // Battle end handler
+  const handleBattleEnd = async (result) => {
+    setShowBattle(false);
+    setBattleActive(false);
+
+    // Add checks for dog and user
+    if (!dog || !user) {
+      console.error('Missing dog or user data');
+      navigate('/home');
+      return;
+    }
+
+    try {
+      if (result.winner === 'player') {
+        // Process victory and rewards
+        const response = await axios.post('/map/battle-victory', {
+          dogId: dog._id,
+          userId: user._id,
+          rewards: result.rewards,
+          healthRemaining: result.playerHealthRemaining
+        });
+
+        // Update dog stats
+        if (response.data.updatedDog) {
+          // Show level up message
+        if (response.data.levelUp) {
+          window.alert(`Your dog reached level ${response.data.updatedDog.level}!`);
+        }
+
+        // Show victory message
+        window.alert(
+          `Victory! Earned ${result.rewards.coins} coins and ${result.rewards.experience} experience!`
+        );
+      }
+
+        // Remove enemy from current position
+        setenemyX32(-100); // Move enemy off map
+        setenemyY32(-100);
+        setEnemyPos([-1, -1]);
+      } else {
+        // Handle defeat
+        await axios.post('/map/battle-defeat', {
+          dogId: dog._id,
+          userId: user._id
+        });
+
+        window.alert('Your dog needs rest after that battle!');
+        navigate('/home');
+      }
+    } catch (error) {
+      console.error("Error processing battle result:", error);
+      console.log('Dog data:', dog);
+      console.log('User data:', user);
+      console.log('Result data:', result);
+    }
+  };
+
+  // Modified enemy spawn logic
+  const spawnEnemy = async () => {
+    if (battleActive) return; // Don't spawn during battle
+
+    const spawnPoints = [];
+
+    // Check each map tile for valid spawn location
+    mapData.forEach((row, y) => {
+      row.forEach((x, index) => {
+        if (!collisionDetection(index, y) &&
+            Math.abs(index - dogPosition[1]) > 3 &&
+            Math.abs(y - dogPosition[0]) > 3) {
+          spawnPoints.push({ x: index * tileSize, y: y * tileSize });
+        }
+      });
+    });
+
+    if (spawnPoints.length > 0) {
+      const spawn = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+      setenemyX32(spawn.x);
+      setenemyY32(spawn.y);
+      setEnemyPos([spawn.x / tileSize, spawn.y / tileSize]);
+    }
+  };
+
+// Add enemy spawn interval
+useEffect(() => {
+  if (!battleActive) {
+    const spawnTimer = setInterval(spawnEnemy, 30000); // Spawn every 30 seconds
+    return () => clearInterval(spawnTimer);
+  }
+}, [battleActive]);
+
+  const checkExit = () => {
+    if (
+      dogPosition[0] === exitPosition[0] &&
+      dogPosition[1] === exitPosition[1]
+    ) {
+      console.log(' YOU FIND THE EXIT!');
+      axios
+        .post('map/exit', { walkerInfo: dog, user })
+        .then(() => {
+          window.alert(
+            'You have walked your Dog! They will now be a little hungrier but much healthier!'
+          );
+          navigate('/home');
+        })
+        .catch((err) => {
+          console.error('error exiting map', err);
+        });
+    }
+    // if (dogX32 === exitX && dogY32 === exitY) {
+    // }
+  };
+
+  // This function unsuccessfully removes the tile
+  const removeOverlayTile = (index, index2) => {
+    const copy = overlayTiles.slice(0);
+    copy[index][index2] = 0;
+    setOverlayTiles(copy);
+    // setOverlayTiles((prevMap) => {
+    //   console.log(prevMap);
+    //   const newMap = [...prevMap];
+    //   newMap[index][index2] = 0;
+    //   return newPos;
+    // });
+  };
+
+  const foundItem = () => {
+    if (
+      dogPosition[0] === itemPosition[0] &&
+      dogPosition[1] === itemPosition[1]
+    ) {
+      console.log(' YOU FIND AN ITEM!');
+      setItemPosition([undefined, undefined]);
+      // removeOverlayTile(dogPosition[0], dogPosition[1]); This is not the best method for removing the tile
+      axios
+        .post('map/item', { walkerInfo: dog, user })
+        .then(() => {
+          window.alert('Your dog becomes slightly healthier!');
+        })
+        .catch((err) => {
+          console.error('error picking up item from map', err);
+        });
+    }
+    if (
+      dogPosition[0] === weaponPosition[0] &&
+      dogPosition[1] === weaponPosition[1]
+    ) {
+      console.log(' YOU FIND A WEAPON!');
+      setWeaponPosition([undefined, undefined]);
+      // removeOverlayTile(dogPosition[0], dogPosition[1]);
+      axios
+        .post('map/item', { walkerInfo: dog, user })
+        .then(() => {
+          window.alert('Your dog becomes slightly stronger!');
+        })
+        .catch((err) => {
+          console.error('error picking up weapon from map', err);
+        });
+    }
+  };
+
   const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
 
+  // Modify to include battle checking
   useEffect(() => {
-
-    checkBattle();
-    document.addEventListener('keydown', moveDog);
-    return () => {
+    if (!battleActive) {
+      checkExit();
+      foundItem();
+      checkBattle();
+      document.addEventListener('keydown', moveDog);
+      return () => {
       document.removeEventListener('keydown', moveDog);
     };
-  }, [dogX, dogY]);
+  }
+}, [dogX32, dogY32, overlayTiles, battleActive]);
+
   //
   return (
-    <div onKeyDown={moveDog}>
+    <div onKeyDown={!battleActive ? moveDog : null}>
       <Stage
-        width={tileSize * mapData[0].length}
-        height={tileSize * mapData.length}
+        width={window.screen.width / 1.01}
+        height={window.screen.height / 1.3}
       >
-        {mapData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={tileSprites[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
+        <Container
+          position={[window.screen.width / 3, window.screen.height / 15]}
+        >
+          {mapData.map((row, y) =>
+            row.map((tile, x) => (
+              <Sprite
+                key={`${x}-${y}`}
+                image={tileSprites[tile]}
+                x={x * tileSize}
+                y={y * tileSize}
+              />
+            ))
+          )}
+          {overlayData.map((row, y) =>
+            row.map((tile, x) => (
+              <Sprite
+                key={`${x}-${y}`}
+                image={overlayTiles[tile]}
+                x={x * tileSize}
+                y={y * tileSize}
+              />
+            ))
+          )}
+          <Container position={[16, 16]}>
+            <AnimatedSprite
+              key='enemyPos'
+              images={enemyAnimation}
+              isPlaying
+              initialFrame={0}
+              animationSpeed={0.1}
+              anchor={0.5}
+              x={enemyX32}
+              y={enemyY32}
+              width={32}
+              height={32}
             />
-          ))
-        )}
-        {overlayData.map((row, y) =>
-          row.map((tile, x) => (
-            <Sprite
-              key={`${x}-${y}`}
-              image={overlayTiles[tile]}
-              x={x * tileSize}
-              y={y * tileSize}
+          </Container>
+          <Container position={[16, 16]}>
+            <AnimatedSprite
+              key='dogPos'
+              images={dogAnimation}
+              isPlaying
+              initialFrame={0}
+              animationSpeed={0.1}
+              anchor={0.5}
+              x={dogX32}
+              y={dogY32}
+              width={32}
+              height={32}
             />
-          ))
-        )}
-        <Container position={[16, 16]}>
-          <AnimatedSprite
-            key={`enemyPos`}
-            images={enemyAnimation}
-            isPlaying={true}
-            initialFrame={0}
-            animationSpeed={0.1}
-            anchor={0.5}
-            x={enemyX}
-            y={enemyY}
-            width={32}
-            height={32}
-          />
-        </Container>
-        <Container position={[16, 16]}>
-          <AnimatedSprite
-            key={`dogPos`}
-            images={dogAnimation}
-            isPlaying={true}
-            initialFrame={0}
-            animationSpeed={0.1}
-            anchor={0.5}
-            x={dogX}
-            y={dogY}
-            width={32}
-            height={32}
-          />
-        ))
-      ))}
-      <Container position={[10, 20]}>
-      <AnimatedSprite
-      images={dogAnimation}
-      isPlaying={true}
-      initialFrame={0}
-      animationSpeed={0.1}
-      anchor={0.5}
-      x={10}
-      y={20}
-      width={32}
-      height={32}
-      />
-      </Container>
-    </Stage>
-
+          </Container>
         </Container>
       </Stage>
 
+      {/* Battle Modal */}
+      <PoochBattles
+        show={showBattle}
+        onHide={() => setShowBattle(false)}
+        playerDog={dog}
+        enemyDog={enemyDog}
+        onBattleEnd={handleBattleEnd}
+      />
     </div>
   );
 };

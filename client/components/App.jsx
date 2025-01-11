@@ -28,17 +28,18 @@ function App() {
   useEffect(() => {
     if (user && user._id) {
       // Fetch user's dogs
-      axios.get(`/dog/users/${user._id}`)
-        .then(response => {
+      axios
+        .get(`/dog/users/${user._id}`)
+        .then((response) => {
           setDogs(response.data.dogsArr);
           // Fetch user's coins
           return axios.get(`/user/${user._id}`);
         })
-        .then(userData => {
+        .then((userData) => {
           setCoins(userData.data[0].coinCount);
           setLoading(false);
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error fetching user data:', err);
           setLoading(false);
         });
@@ -46,28 +47,28 @@ function App() {
   }, [user]);
 
   if (!user && window.location.pathname !== '/') {
-    return <Navigate to="/" />;
+    return <Navigate to='/' />;
   }
 
   return (
-      <div>
-       {user && <NavBar coins={coins} />}
-       {loading && user ? (
-          <div>Loading...</div>
-        ) : (
-          <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/deleted" element={<DeletedUser />} />
+    <div>
+      {user && <NavBar coins={coins} />}
+      {loading && user ? (
+        <div>Loading...</div>
+      ) : (
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/deleted' element={<DeletedUser />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/leaderBoard" element={<LeaderBoard />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/leaderBoard' element={<LeaderBoard />} />
             <Route
-              path="/kennel"
+              path='/kennel'
               element={
                 <Kennel
-                  dogs={dogs}
+                  dogs={dogs.filter((dog) => dog.owner === user._id)}
                   setDogs={setDogs}
                   coins={coins}
                   setCoins={setCoins}
@@ -75,22 +76,18 @@ function App() {
               }
             />
             <Route
-              path="/shop"
+              path='/shop'
               element={
-                <DogShop
-                  coins={coins}
-                  setCoins={setCoins}
-                  setDogs={setDogs}
-                />
+                <DogShop coins={coins} setCoins={setCoins} setDogs={setDogs} />
               }
             />
-            <Route path="/pooch-center" element={<PoochCenter />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/user" element={<User />} />
-            <Route path="/restaurant" element={<Restaurant />} />
-            <Route path="/getwellcenter" element={<GetWellCenter />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/map" element={<Map />} />
+            <Route path='/pooch-center' element={<PoochCenter />} />
+            <Route path='/quiz' element={<Quiz />} />
+            <Route path='/user' element={<User />} />
+            <Route path='/restaurant' element={<Restaurant />} />
+            <Route path='/getwellcenter' element={<GetWellCenter />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/Map' element={<Map />} />
           </Route>
         </Routes>
       )}
