@@ -10,11 +10,32 @@ router.get('/random/:dogLevel', async (req, res) => {
 
     // Get all possible enemies for this level
     const enemies = await Enemy.find({
-      'levelRange.min': { $lte: dogLevel},
-      'levelRange.max': { $gte: dogLevel }
+      'levelRange.min': { $lte: Number(dogLevel) },
+      'levelRange.max': { $gte: Number(dogLevel) }
     });
 
     if (!enemies.length) {
+      // If no enemies found, return a default enemy
+      const defaultEnemy = {
+        name: "Training Dummy",
+        type: "wild_dog",
+        breed: "doberman",
+        health: 100,
+        attack: 10,
+        sprite: "/assets/gifs/doberman/Standing.gif",
+        animations: ["Standing", "Bite"],
+        specialMoves: [
+          {
+            name: "Basic Attack",
+            damage: 10,
+            animation: "Bite"
+          }
+        ],
+        rewards: {
+          coins: 5,
+          experience: 3
+        }
+      };
       return res.status(404).send('No suitable enemies found.');
     }
 
