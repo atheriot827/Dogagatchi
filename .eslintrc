@@ -1,14 +1,18 @@
 {
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "plugin:react/recommended",
     "prettier"
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
     "sourceType": "module",
+    "ecmaVersion": 2021,
     "ecmaFeatures": {
       "jsx": true
     },
@@ -16,11 +20,6 @@
     "babelOptions": {
       "presets": ["@babel/preset-react"]
     }
-  },
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
   },
   "settings": {
     "react": {
@@ -32,9 +31,15 @@
       }
     }
   },
+
+  "plugins": [
+    "react-hooks"
+  ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
     "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
     "import/extensions": [
       "error",
       "ignorePackages",
