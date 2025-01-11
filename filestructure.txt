@@ -33,6 +33,7 @@
         |-- Meal.jsx
         |-- Medicine.jsx
         |-- Navbar.jsx
+        |-- PoochBattles.jsx
         |-- PoochCenter.jsx
         |-- ProtectedRoute.jsx
         |-- Quiz.jsx
@@ -116,6 +117,22 @@
                     |-- Sleeping.gif
                     |-- Standing.gif
                     |-- Walking.gif
+                |-- enemies
+                    |-- dog_catcher
+                        |-- blue_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
+                        |-- brown_uniform
+                            |-- catch.gif
+                            |-- die.gif
+                            |-- idle.gif
+                            |-- jumping.gif
+                            |-- running.gif
+                            |-- walking.gif
                 |-- german_shepherd
                     |-- Barking.gif
                     |-- Bite.gif
@@ -227,10 +244,10 @@
             |-- spriteSheet.jsx
             |-- t6Hry.jpg
             |-- water.png
-        |-- styles
-            |-- retro-gaming.css
     |-- index.html
     |-- index.jsx
+    |-- styles
+        |-- PoochBattles.css
 |-- package-lock.json
 |-- package.json
 |-- server
@@ -243,8 +260,11 @@
     |-- index.js
     |-- routes
         |-- dogRoutes.js
+        |-- enemyRoutes.js
         |-- groomRoutes.js
         |-- mapRoutes.js
         |-- userRoutes.js
         |-- wordRoutes.js
+    |-- scripts
+        |-- seedEnemies.js
 |-- webpack.config.js

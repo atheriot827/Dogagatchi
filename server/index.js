@@ -14,6 +14,7 @@ const dogRoutes = require('./routes/dogRoutes');
 const groomRoutes = require('./routes/groomRoutes');
 const wordRoutes = require('./routes/wordRoutes');
 const mapRoutes = require('./routes/mapRoutes');
+const enemyRoutes = require('./routes/enemyRoutes');
 
 const app = express();
 const routeHandler = express.Router();
@@ -40,6 +41,7 @@ routeHandler.use('/dog', dogRoutes);
 routeHandler.use('/groom', groomRoutes);
 routeHandler.use('/words', wordRoutes);
 routeHandler.use('/map', mapRoutes);
+routeHandler.use('/enemy', enemyRoutes);
 
 app.use('/', routeHandler);
 
@@ -104,7 +106,7 @@ app.post(
     failureFlash: true,
   }),
   (req, res) => {
-    const user = req.user;
+    const {user} = req;
     res.json({ message: 'success', user });
   }
 );
