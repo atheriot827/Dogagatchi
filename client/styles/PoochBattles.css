@@ -1,8 +1,7 @@
 /* Style for the battle modal's content area */
 .battle-modal .modal-content {
-  background-color: #000;
-  border: 4px solid #39ff14;
-  color: #39ff14;
+  background-color: #343a40;
+  border: 2px solid #ffc107;
 }
 
 /* Container for the battle arena - holds both dogs */
@@ -55,5 +54,51 @@
   margin: 10px 0;
 }
 
+.battle-sprite {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
 
+.player-dog .battle-sprite {
+  transform: scaleX(1);
+}
 
+.enemy-dog .battle-sprite {
+  transform: scaleX(-1);
+}
+
+.battle-vs {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.battle-controls .move-button {
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.battle-controls .move-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.battle-log {
+  max-height: 100px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.battle-log p {
+  font-family: monospace;
+  margin: 0;
+  padding: 2px 0;
+}
+
+.progress {
+  height: 25px;
+}
+
+.progress-bar {
+  transition: width 0.3s ease;
+}
