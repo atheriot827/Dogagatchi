@@ -49,7 +49,7 @@ router.post('/weapon', (req, res) => {
   const { dog, user } = req.body.walkerInfo;
   Dog.findOneAndUpdate(
     { owner: user._id, name: dog.name },
-    { $inc: { attackDmg: 15 } },
+    { $inc: { attackDmg: 15, exp: 30 } },
     { new: true }
   )
     .then((walkedDog) => {
@@ -68,7 +68,7 @@ router.post('/item', (req, res) => {
   console.log(dog, 'the dog');
   Dog.findOneAndUpdate(
     { owner: user._id, name: dog.name },
-    { $inc: { health: 10, vitality: 5 } },
+    { $inc: { health: 10, vitality: 5, exp: 10 } },
     { new: true }
   )
     .then((walkedDog) => {
