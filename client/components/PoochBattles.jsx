@@ -123,10 +123,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Effect hook to check for battle end conditions
   useEffect(() => {
-    console.log('this is battleState playerhealth', battleState.playerHealth);
 
-    console.log('this is dog: ', playerDog.dog);
-    console.log('this is attack dmg', playerDog.dog.attackDmg);
     // Check if either dog's health is at 0
     if (battleState.playerHealth <= 0 || battleState.enemyHealth <= 0) {
       // Set battle as inactive
