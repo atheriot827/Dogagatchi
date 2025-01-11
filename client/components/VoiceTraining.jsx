@@ -33,6 +33,19 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     // Change command inputs
     const [editingActive, setEditingActive] = useState(false); // is in edit mode
     const [currentEdit, setCurrentEdit] = useState(false); // is currently editing
+    const [editCommands, setEditCommands] = useState('');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newCommand = editCommands;
+
+        if (currentEdit === 'heal') {
+            changeHealCommand(newCommand);
+        }
+
+        if (currentEdit === 'incDmg') {
+            changeAttackCommand(newCommand);
+        }
+    };
 
 
     useEffect(() => {
@@ -42,6 +55,16 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         }
     }, [show, dogStateParent]);
 
+
+    const changeHealCommand = (newCommand) => {
+        axios.put(`/dog/commands/${dogStateParent._id}`, {
+            status: {
+                newCommand: newCommand, commandType: 'heal',
+            }
+        }).then((newCommand) => {
+
+        });
+    };
 
     // AXIOS REQUESTS
     const healDog = () => {
@@ -198,7 +221,12 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
                             <Form>
                                 <Form.Group className='mb-3'>
                                     <Form.Label>Health Input Command:</Form.Label>
-                                    <Form.Control type='text' placeholder='input your own command'/>
+                                    <Form.Control
+                                        value={editCommands}
+                                        onChange={(e) => {
+                                            setEditCommands(e.target.value);
+                                        }}
+                                        type='text' placeholder='input your own command'/>
                                     <Form.Text className='text-muted'>
                                         Here's some muted text idiot
                                     </Form.Text>
