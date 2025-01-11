@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 // import './Map.css';
 import { React, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,12 +16,19 @@ import {
   weaponLoc,
   exitLoc,
 } from './MapFiles';
+import PoochBattles from './PoochBattles';
 
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
   const location = useLocation();
   const navigate = useNavigate();
   const { state: dog, user } = location;
+
+  // State for battle system
+  const [showBattle, setShowBattle] = useState(false);
+  const [enemyDog, setEnemyDog] = useState(null);
+  const [battleActive, setBattleActive] = useState(false);
+
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
@@ -110,9 +118,20 @@ const Map = () => {
     }
   };
 
+  // Modified to integrate with PoochBattles
   const checkBattle = () => {
-    if (dogX32 === enemyX32 && dogY32 === enemyY32) {
+    if (dogX32 === enemyX32 && dogY32 === enemyY32 && !battleActive) {
       console.log(' YOU MUST FIGHT ');
+
+      // Create enemy dog data
+      const enemyDogData = {
+        name: 
+      }
+
+
+
+
+
     }
   };
 
