@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useAuth } from './Context';
-import Dog from './Dog.jsx';
+import Dog from './Dog';
 import kennelBackground from './assets/kennel_scene/background.png';
 
 function Kennel({ dogs, setDogs, coins, setCoins }) {

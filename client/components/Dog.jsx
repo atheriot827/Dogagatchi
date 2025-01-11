@@ -23,16 +23,13 @@ const Dog = (props) => {
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
-  const [vitality, setVitality] = useState(false);
 
   const [health, setHealth] = useState(true);
-  const [vitalityStatus, setVitalityStatus] = useState(''); // set the status
   const [feedStatus, setFeedStatus] = useState('');
   const [walkStatus, setWalkStatus] = useState('');
   const [healthStatus, setHealthStatus] = useState('');
 
   const [feedTimer, setFeedTimer] = useState(0);
-  const [vitalityTimer, mer] = useState(0); // set timers
   const [walkTimer, setWalkTimer] = useState(0);
   const [medicineTimer, setMedicineTimer] = useState(0);
   const [meals, setMeals] = useState([]);
@@ -49,12 +46,10 @@ const Dog = (props) => {
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
   const medicineRef = useRef(null);
-  const vitalityRef = useRef(null);
 
-    useEffect(() => {
-        setHealthStatus(dog.health);
-        getSignedInUserMeals(user._id);
-    }, []);
+  useEffect(() => {
+    getSignedInUserMeals(user._id);
+  }, []);
 
   useEffect(() => {
     getSignedInUserMedicines(user._id);
@@ -301,7 +296,7 @@ const Dog = (props) => {
 
   useEffect(() => {
     getDog();
-  }, [happy, hungry, health, vitality]);
+  }, [happy, hungry, health]);
 
   useEffect(() => {
     const x = setInterval(() => {
@@ -309,15 +304,12 @@ const Dog = (props) => {
 
       const feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
       const walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
-      const vitalityTimer =
-        ((Date.parse(dog.vitalityDeadline) - now) / 86400000) * 100;
       const medicineTimer =
         ((Date.parse(dog.medicineDeadline) - now) / 86400000) * 100;
 
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
       setMedicineTimer(medicineTimer);
-      // setVitalityTimer(vitalityTimer);
 
       if (feedTimer < 25) {
         setFeedStatus('danger');
@@ -378,25 +370,9 @@ const Dog = (props) => {
           medicineRef.current = health;
         }
       }
-
-      if (vitalityTimer < 25) {
-        setVitalityStatus('danger');
-        setVitality(false);
-        vitalityRef.current = vitality;
-      } else if (vitalityTimer < 50) {
-        setVitalityStatus('warning');
-        setVitality(false);
-        vitalityRef.current = vitality;
-      } else {
-        setVitalityStatus('success');
-        if (vitalityRef.current !== true) {
-          setVitality(true);
-          vitalityRef.current = vitality;
-        }
-      }
     }, 1000);
     return () => clearInterval(x);
-  }, [happy, hungry, health, dog, vitality]);
+  }, [happy, hungry, health, dog]);
 
   return (
     <div>
@@ -455,12 +431,42 @@ const Dog = (props) => {
             className='d-flex flex-column justify-content-center align-items-center align-self-center '
             style={{ width: '250px', height: '250px' }}
           >
-            <Card.Img
-              src={dog.img}
-              alt='Sorry, your dog is in another kennel.'
-              className='p-4'
-            />
-
+            {' '}
+            <Card>
+              <div className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                <Card.Title class='p-3 mb-2 bg-primary text-white'>
+                  {'  '}STATS{'   '}
+                </Card.Title>
+                <Card.Text class='p-3 mb-2 bg-primary text-white'>
+                  <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                    {`Level: ${dog.lvl}           `} {'\n'}
+                  </h6>
+                  <h6>
+                    {`Vitality: ${dog.vitality} `} {'\n'}
+                  </h6>
+                  <h6>
+                    {`Discipline: ${dog.discipline}       `} {'\n'}
+                  </h6>
+                  <h6>
+                    {`next lvl: ${100 - dog.exp}`} {'\n'}
+                  </h6>
+                </Card.Text>
+                <Card.Body className='w-100'>
+                  <ProgressBar
+                    animated
+                    striped
+                    now={dog.exp}
+                    label={`Exp.`}
+                    style={{ height: '35px', min_width: '100px' }}
+                  />
+                </Card.Body>
+                <Card.Img
+                  src={dog.img}
+                  alt='Sorry, your dog is in another kennel.'
+                  className='p-4'
+                />
+              </div>
+            </Card>
             <Button variant='warning' onClick={subscribe}>
               💎 Groom 💎
             </Button>
@@ -531,14 +537,6 @@ const Dog = (props) => {
                 {/*  style={{ height: '35px' }}*/}
                 {/*/>*/}
                 {/*<br />*/}
-                {/*<ProgressBar*/}
-                {/*  animated*/}
-                {/*  striped*/}
-                {/*  variant={vitalityStatus}*/}
-                {/*  now={vitalityTimer}*/}
-                {/*  label='VITALITY'*/}
-                {/*  style={{ height: '35px' }}*/}
-                {/*/>*/}
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
@@ -605,10 +603,26 @@ const Dog = (props) => {
                   removeWordFromDogtionary={removeWordFromDogtionary}
                   addFavoriteWord={addFavoriteWord}
                 />
-                <Link to='/Map' state={{ dog, user }}>
-                  {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
-                  <Button>{`Take ${dog.name} For A Walk! 🐕‍🦺`}</Button>
-                </Link>
+                <DropdownButton title={`Take ${dog.name} For A Walk! 🐕‍🦺`}>
+                  <Dropdown.Item>
+                    <Link
+                      to='/Map'
+                      state={{ dog, user, selectedMap: 'map_DogPark' }}
+                    >
+                      {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
+                      <Button>{`Dog Park`}</Button>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link
+                      to='/Map'
+                      state={{ dog, user, selectedMap: 'map_MiddleOfNowhere' }}
+                    >
+                      {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
+                      <Button>{`Middle Of Nowhere!`}</Button>
+                    </Link>
+                  </Dropdown.Item>
+                </DropdownButton>
               </div>
             </Card.Body>
           </div>
