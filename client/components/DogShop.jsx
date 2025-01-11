@@ -47,9 +47,10 @@ function DogShop({ coins, setCoins }) {
   const handlePurchase = (dog) => {
     if (coins >= dog.price) {
       const userObj = JSON.parse(sessionStorage.getItem('user'));
+      console.log('What is this', userObj);
 
       // Create new dog in database
-      axios.post('/api/dogs', {
+      axios.post('/dog', {
         breed: dog.breed,
         name: `New ${dog.breed.split('_').map(w =>
           w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
@@ -58,11 +59,12 @@ function DogShop({ coins, setCoins }) {
       })
       .then((response) => {
         // Update dogs list
-        setDogs(prev => [...prev, response.data]);
+        console.log('what is response: ', response.data);
+        // setDogs(prev => [...prev, response.data]); //
 
         // Update coins
-        return axios.put(`/api/users/${userObj._id}/coins`, {
-          coins: coins - dog.price
+        return axios.put(`/user/coins/${userObj._id}`, {
+          coinCount: -dog.price
         });
       })
       .then(() => {

@@ -193,10 +193,11 @@ router.put("/activities/:userId", (req, res) => {
 // UPDATE COINS BY ID
 router.put('/coins/:userId', (req, res) => {
     const { userId } = req.params;
+    const {coinCount} = req.body;
     // const { coinCount } = req.body;
 
     User.findByIdAndUpdate(userId, {
-        $inc: {coinCount: 1}
+        $inc: {coinCount: coinCount}
     }, { returnDocument: 'after'})
         .then(updatedUser => {
             if (updatedUser) {
