@@ -31,6 +31,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     const [editingActive, setEditingActive] = useState(false); // is in edit mode
     const [currentEdit, setCurrentEdit] = useState(false); // is currently editing
     const [editCommands, setEditCommands] = useState('');
+    const [currentCommands, setCurrentCommands] = useState([]);
     const handleSubmit = (e) => {
         e.preventDefault();
         const newCommand = editCommands;
@@ -38,9 +39,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         if (currentEdit === 'heal') {
             changeHealCommand(newCommand);
         }
-
         if (currentEdit === 'incDmg') {
-            console.log('Adding attack command');
             changeAttackCommand(newCommand);
         }
     };
@@ -50,6 +49,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
         if (show && dogStateParent) {
             setHealth(dogStateParent.health);
             setAttackDmg(dogStateParent.attackDmg);
+            setCurrentCommands(dogStateParent.commands);
             console.log('useEffect executing command[1] = ', dogStateParent.commands[1]);
             console.log('useEffect executing this is dogStateParent: ', dogStateParent);
         }
@@ -156,7 +156,7 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
     /** Very unlikely this webspeech setup will need to be edited ever */
     const speechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Speech recognition constructor (standard and webkit version for Safari compatability)
     let SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList; // Grammar list constructor - used to define words/phrases to recognize
-    let commands = ['healing magic drop the beat fix this dog from head to feet', 'power surging through this pup strength and speed now level up', 'stupid dog', 'baller',]; // Commands we want the Grammar List to recognize
+    let commands = [...currentCommands]; // Commands we want the Grammar List to recognize
     // JSGF - Java Speech Grammar Format: Essentially, we're telling the webspeech engine to 'listen' for any one of our commands in the variable above
     let grammar = '#JSGF V1.0; grammar commands; public <commands> = ' + commands.join(' | ') + ';';
     const recognition = new speechRecognition();  // Create instance for speech recognition object
@@ -176,10 +176,10 @@ export default function VoiceTraining({dogStateParent, setDogParent}) {
             setVoiceInput(false);
             let word = event.results[0][0].transcript;
             switch (word) {
-                case 'healing magic drop the beat fix this dog from head to feet':
+                case currentCommands[0]:
                     healDog();
                     break;
-                case 'power surging through this pup strength and speed now level up':
+                case currentCommands[1]:
                     powerUpDog();
                     break;
                 case 'stupid dog':
