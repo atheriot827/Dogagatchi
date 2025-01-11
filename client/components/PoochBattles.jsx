@@ -5,10 +5,15 @@ import '../styles/PoochBattles.css';
 // Takes in props for controlling the battle modal and dog data
 function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
+  // Add early return if dogs aren't loaded
+  if (!show || !playerDog || !enemyDog) {
+    return null;
+  }
+
   // Init battle state with useState hook
   const [battleState, setBattleState] = useState({
-    playerHealth: playerDog.health || 100,          // Players dog starting health
-    enemyHealth: enemyDog.health || 100,            // Enemy dog starting health
+    playerHealth: playerDog?.health || 100,          // Players dog starting health
+    enemyHealth: enemyDog?.health || 100,            // Enemy dog starting health
     currentTurn: 'player',                          // Who's turn it is
     battleLog: [],                                  // Array to store battle actions
     isActive: true                                  // Whether the battle is ongoing
@@ -23,15 +28,15 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
   // Dynamic moves based on player dogs's stats
   const moves = {
     bite: {
-      damage: Math.floor(20 * (playerDog.attackDmg / 100)),   // Strong attack
+      damage: Math.floor(20 * (playerDog?.attackDmg / 100)),   // Strong attack
       animation: 'Bite'
     },
     headbutt: {
-      damage: Math.floor(15 * (playerDog.attackDmg / 100)),   // Medium attack
+      damage: Math.floor(15 * (playerDog?.attackDmg / 100)),   // Medium attack
       animation: 'Headbutt'
     },
     bark: {
-      damage: Math.floor(10 * (playerDog.attackDmg / 100)),   // Light attack
+      damage: Math.floor(10 * (playerDog?.attackDmg / 100)),   // Light attack
       animation: 'Barking'
     }
   };
@@ -148,7 +153,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
       className="battle-modal"
     >
       <Modal.Header className="bg-dark text-light">
-        <Modal.Title>Battle vs {enemyDog.name}!</Modal.Title>
+        <Modal.Title>Battle vs {enemyDog?.name || 'Unknown Enemy'}!</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className="bg-secondary">
@@ -156,8 +161,8 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
         {/* Player Dog Side */}
         <div className="player-dog text-center">
         <img
-            src={`/assets/gifs/${playerDog.breed}/${currentAnimation.player}.gif`}
-            alt={playerDog.name}
+            src={`/assets/gifs/${playerDog?.breed || 'doberman'}/${currentAnimation.player}.gif`}
+            alt={playerDog?.name || 'Player Dog'}
             className="battle-sprite"
           />
           <ProgressBar
@@ -166,8 +171,8 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
             className="my-2"
             label={`${battleState.playerHealth}%`}
           />
-          <h4 className="text-light">{playerDog.name}</h4>
-          <small className="text-light">Level {playerDog.level || 1}</small>
+          <h4 className="text-light">{playerDog?.name || 'Your Dog'}</h4>
+          <small className="text-light">Level {playerDog?.level || 1}</small>
         </div>
 
         {/* VS Symbol */}
@@ -178,8 +183,8 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
         {/* Enemy Dog Side */}
         <div className="enemy-dog text-center">
           <img
-            src={enemyDog.sprite}
-            alt={enemyDog.name}
+            src={enemyDog?.sprite}
+            alt={enemyDog?.name || 'Unknown Enemy'}
             className="battle-sprite"
           />
           <ProgressBar
@@ -188,7 +193,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
             className="my-2"
             label={`${battleState.enemyHealth}%`}
           />
-          <h4 className="text-light">{enemyDog.name}</h4>
+          <h4 className="text-light">{enemyDog?.name || 'Unknown Enemy'}</h4>
           <small className="text-light">
             {enemyDog.type?.split('_').map(word =>
               word.charAt(0).toUpperCase() + word.slice(1)
