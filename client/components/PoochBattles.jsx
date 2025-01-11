@@ -61,7 +61,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
       setBattleState(prev => ({
         ...prev,
         enemyHealth: Math.max(0, prev.enemyHealth - move.damage), // Prevent negative health
-        battleLog: [...prev.battleLog, `${playerDog.name} used ${moveType}!`],
+        battleLog: [...prev.battleLog, `${playerDog.dog.name} used ${moveType}!`],
         currentTurn: 'enemy'
       }));
 
@@ -123,6 +123,8 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Effect hook to check for battle end conditions
   useEffect(() => {
+    console.log('this is battleState playerhealth', battleState.playerHealth);
+
     console.log('this is dog: ', playerDog.dog);
     console.log('this is attack dmg', playerDog.dog.attackDmg);
     // Check if either dog's health is at 0
@@ -165,7 +167,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
         <div className="player-dog text-center">
         <img
             src={`/assets/gifs/${playerDog?.breed || 'doberman'}/${currentAnimation.player}.gif`}
-            alt={playerDog?.name || 'Player Dog'}
+            alt={playerDog?.dog.name || 'Player Dog'}
             className="battle-sprite"
           />
           <ProgressBar
@@ -174,7 +176,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
             className="my-2"
             label={`${battleState.playerHealth}%`}
           />
-          <h4 className="text-light">{playerDog?.name || 'Your Dog'}</h4>
+          <h4 className='text-light'>{playerDog?.dog.name || 'Your Dog'}</h4>
           <small className="text-light">Level {playerDog?.level || 1}</small>
         </div>
 
@@ -228,7 +230,7 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
       {battleState.battleLog.slice(-3).map((log, index) => (
         <p
           key={index}
-          className={`mb-1 ${log.includes(playerDog.name) ? 'text-primary' : 'text-danger'}`}
+          className={`mb-1 ${log.includes(playerDog.dog.name) ? 'text-primary' : 'text-danger'}`}
         >
           {log}
         </p>
