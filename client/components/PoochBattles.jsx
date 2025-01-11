@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, ProgressBar } from 'react-bootstrap';
+import '../styles/PoochBattles.css';
 
 // Takes in props for controlling the battle modal and dog data
 function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
@@ -138,34 +139,96 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Render the battle modal
   return (
-    <Modal>
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      centered
+      backdrop="static"
+      className="battle-modal"
+    >
+      <Modal.Header className="bg-dark text-light">
+        <Modal.Title>Battle vs {enemyDog.name}!</Modal.Title>
+      </Modal.Header>
 
-    {/* Title* /}
+      <Modal.Body className="bg-secondary">
+      <div className="battle-arena d-flex justify-content-between align-items-center p-3">
+        {/* Player Dog Side */}
+        <div className="player-dog text-center">
+        <img
+            src={`/assets/gifs/${playerDog.breed}/${currentAnimation.player}.gif`}
+            alt={playerDog.name}
+            className="battle-sprite"
+          />
+          <ProgressBar
+            now={battleState.playerHealth}
+            variant={battleState.playerHealth > 50 ? "success" : "danger"}
+            className="my-2"
+            label={`${battleState.playerHealth}%`}
+          />
+          <h4 className="text-light">{playerDog.name}</h4>
+          <small className="text-light">Level {playerDog.level || 1}</small>
+        </div>
 
-    {/* Battle Arena with both dogs */}
+        {/* VS Symbol */}
+        <div className="battle-vs">
+          <h1 className="text-warning">VS</h1>
+        </div>
 
-    {/* Player's dog section */}
+        {/* Enemy Dog Side */}
+        <div className="enemy-dog text-center">
+          <img
+            src={enemyDog.sprite}
+            alt={enemyDog.name}
+            className="battle-sprite"
+          />
+          <ProgressBar
+            now={battleState.enemyHealth}
+            variant={battleState.enemyHealth > 50 ? "success" : "danger"}
+            className="my-2"
+            label={`${battleState.enemyHealth}%`}
+          />
+          <h4 className="text-light">{enemyDog.name}</h4>
+          <small className="text-light">
+            {enemyDog.type?.split('_').map(word =>
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ')}
+          </small>
+        </div>
+      </div>
 
-
-
-
-    {/* Enemy's dog section */}
-
-
-
-
-
-    {/* Battle controls (move buttons) */}
-
-
+    {/* Battle controls */}
+    <div className="battle-controls d-flex justify-content-center gap-3 my-3">
+      {Object.keys(moves).map(move => (
+        <Button
+          key={move}
+          onClick={() => handleMove(move)}
+          disabled={!battleState.isActive || battleState.currentTurn !== 'player'}
+          variant={battleState.currentTurn === 'player' ? "primary" : "secondary"}
+          className="move-button text-capitalize"
+        >
+          {move}
+          <small className="d-block text-warning">
+            DMG: {moves[move].damage}
+          </small>
+        </Button>
+      ))}
+    </div>
 
     {/* Battle log showing last 3 actions */}
-
-
-
-
-    </Modal>
-  );
+    <div className="battle-log bg-dark text-light p-3 rounded">
+      {battleState.battleLog.slice(-3).map((log, index) => (
+        <p
+          key={index}
+          className={`mb-1 ${log.includes(playerDog.name) ? 'text-primary' : 'text-danger'}`}
+        >
+          {log}
+        </p>
+      ))}
+    </div>
+  </Modal.Body>
+</Modal>
+);
 }
 
 export default PoochBattles;
