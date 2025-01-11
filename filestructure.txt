@@ -249,4 +249,6 @@
         |-- mapRoutes.js
         |-- userRoutes.js
         |-- wordRoutes.js
+    |-- scripts
+        |-- seedEnemies.js
 |-- webpack.config.js
