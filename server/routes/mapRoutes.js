@@ -4,7 +4,7 @@ const router = express.Router();
 const { Dog, User } = require('../db/index');
 
 router.post('/exit', (req, res) => {
-  console.log('post to the exit test');
+  // console.log('post to the exit test');
   const { dog, user } = req.body.walkerInfo;
 
   // Give user some coins
@@ -85,9 +85,6 @@ router.post('/item', (req, res) => {
 // Handle battle victory
 router.post('/battle-victory', async (req, res) => {
   const { dogId, userId, rewards, healthRemaining } = req.body;
-  console.log('wtf is this req body: ', req.body);
-
-  console.log('this is healthRemaining: ', healthRemaining);
 
   try {
     // Update dog stats and exp
