@@ -6,11 +6,11 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Init battle state with useState hook
   const [battleState, setBattleState] = useState({
-    playerHealth: 100,          // Players dog starting health
-    enemyHealth: 100,           // Enemy dog starting health
-    currentTurn: 'player',      // Who's turn it is
-    battleLog: [],              // Array to store battle actions
-    isActive: true              // Whether the battle is ongoing
+    playerHealth: playerDog.health || 100,          // Players dog starting health
+    enemyHealth: enemyDog.health || 100,            // Enemy dog starting health
+    currentTurn: 'player',                          // Who's turn it is
+    battleLog: [],                                  // Array to store battle actions
+    isActive: true                                  // Whether the battle is ongoing
   });
 
   // State to manage the current animation being shown for each dog
@@ -19,11 +19,20 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
     enemy: 'Standing'           // Default animation for enemy dog
   });
 
-  // Define available moves and their props
+  // Dynamic moves based on player dogs's stats
   const moves = {
-    bite: { damage: 20, animation: 'Bite' },          // Strong attack
-    headbutt: { damage: 15, animation: 'Headbutt' },  // Medium attack
-    bark: { damage: 10, animation: 'Barking' }        // Light attack
+    bite: {
+      damage: Math.floor(20 * (playerDog.attackDmg / 100)),   // Strong attack
+      animation: 'Bite'
+    },
+    headbutt: {
+      damage: Math.floor(15 * (playerDog.attackDmg / 100)),   // Medium attack
+      animation: 'Headbutt'
+    },
+    bark: {
+      damage: Math.floor(10 * (playerDog.attackDmg / 100)),   // Light attack
+      animation: 'Barking'
+    }
   };
 
   // Handler function for when player selects a move
@@ -65,18 +74,26 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Function to handle enemy's turn
   const enemyTurn = () => {
-    // Get array of possible moves
-    const moveTypes = Object.keys(moves);
-    // Select random move
-    const randomMove = moveTypes[Math.floor(Math.random() * moveTypes.length)];
-    const move = moves[randomMove];
+    let availableMoves;
+
+    // Check if enemy has special moves from backend
+    if (enemyDog.specialMoves && enemyDog.specialMoves.length > 0) {
+      availableMoves = enemyDog.specialMoves;
+    } else {
+      // Fallback to default moves
+      availableMoves = [
+        { name: 'attack', damage: enemyDog.baseAttack, animation: 'Attack' }
+      ];
+    }
+
+    const randomMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
 
     // Add delay before enemy attack
     setTimeout(() => {
       // Set enemy attack animation
       setCurrentAnimation({
         player: 'Standing',
-        enemy: move.animation
+        enemy: randomMove.animation || 'Attack'
       });
 
       // Process enemy attack after animation
@@ -84,8 +101,8 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
         // Update battle state with new player health and battle log
         setBattleState(prev => ({
           ...prev,
-          playerHealth: Math.max(0, prev.playerHealth - move.damage),
-          battleLog: [...prev.battleLog, `${enemyDog.name} used ${randomMove}!`],
+          playerHealth: Math.max(0, prev.playerHealth - randomMove.damage),
+          battleLog: [...prev.battleLog, `${enemyDog.name} used ${randomMove.name}!`],
           currentTurn: 'player'
         }));
 
@@ -107,10 +124,14 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
       // Trigger battle and callback after delay
       setTimeout(() => {
-        onBattleEnd({
+        const result = {
           winner: battleState.playerHealth > 0 ? 'player' : 'enemy',
-          playerHealthRemaining: battleState.playerHealth
-        });
+          playerHealthRemaining: battleState.playerHealth,
+          // Include enemy rewards in battle results
+          rewards: battleState.playerHealth > 0 ? enemyDog.rewards : null
+        };
+
+        onBattleEnd(result);
       }, 2000);
     }
   }, [battleState.playerHealth, battleState.enemyHealth]);  // Only run when health values change
