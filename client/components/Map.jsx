@@ -179,6 +179,13 @@ const Map = () => {
     setShowBattle(false);
     setBattleActive(false);
 
+    // Add checks for dog and user
+    if (!dog || !user) {
+      console.error('Missing dog or user data');
+      navigate('/home');
+      return;
+    }
+
     try {
       if (result.winner === 'player') {
         // Process victory and rewards
@@ -218,6 +225,9 @@ const Map = () => {
       }
     } catch (error) {
       console.error("Error processing battle result:", error);
+      console.log('Dog data:', dog);
+      console.log('User data:', user);
+      console.log('Result data:', result);
     }
   };
 

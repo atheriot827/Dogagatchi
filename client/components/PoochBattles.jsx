@@ -12,11 +12,11 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
 
   // Init battle state with useState hook
   const [battleState, setBattleState] = useState({
-    playerHealth: playerDog?.health || 100,          // Players dog starting health
-    enemyHealth: enemyDog?.health || 100,            // Enemy dog starting health
-    currentTurn: 'player',                          // Who's turn it is
-    battleLog: [],                                  // Array to store battle actions
-    isActive: true                                  // Whether the battle is ongoing
+    playerHealth: Number(playerDog?.health || 100),          // Players dog starting health
+    enemyHealth: Number(enemyDog?.health || 100),            // Enemy dog starting health
+    currentTurn: 'player',                                   // Who's turn it is
+    battleLog: [],                                           // Array to store battle actions
+    isActive: true                                           // Whether the battle is ongoing
   });
 
   // State to manage the current animation being shown for each dog
@@ -28,15 +28,15 @@ function PoochBattles({ show, onHide, playerDog, enemyDog, onBattleEnd }) {
   // Dynamic moves based on player dogs's stats
   const moves = {
     bite: {
-      damage: Math.floor(20 * (playerDog?.attackDmg / 100)),   // Strong attack
+      damage: Math.floor(20 * ((Number(playerDog?.attackDmg) || 100) / 100)),   // Strong attack
       animation: 'Bite'
     },
     headbutt: {
-      damage: Math.floor(15 * (playerDog?.attackDmg / 100)),   // Medium attack
+      damage: Math.floor(15 * ((Number(playerDog?.attackDmg) || 100) / 100)),   // Medium attack
       animation: 'Headbutt'
     },
     bark: {
-      damage: Math.floor(10 * (playerDog?.attackDmg / 100)),   // Light attack
+      damage: Math.floor(10 * ((Number(playerDog?.attackDmg) || 100) / 100)),   // Light attack
       animation: 'Barking'
     }
   };
