@@ -613,6 +613,15 @@ const Dog = (props) => {
                       <Button>{`Dog Park`}</Button>
                     </Link>
                   </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link
+                      to='/Map'
+                      state={{ dog, user, selectedMap: 'map_MiddleOfNowhere' }}
+                    >
+                      {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
+                      <Button>{`Middle Of Nowhere!`}</Button>
+                    </Link>
+                  </Dropdown.Item>
                 </DropdownButton>
               </div>
             </Card.Body>
