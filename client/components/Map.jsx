@@ -4,17 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, AnimatedSprite, useApp, Stage, Sprite } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import {
-  enemy,
-  overlays,
-  dogwalk,
-  tiles,
-  mapLayout,
-  overlayLayout,
-  itemLoc,
-  weaponLoc,
-  exitLoc,
-} from './MapFiles';
+import { allMaps } from './MapFiles';
 
 const Map = () => {
   // Get the object that correlates to the current dog being walked with react-router-dom useLocation's state property, which I set earlier in dog.
@@ -22,6 +12,19 @@ const Map = () => {
   const navigate = useNavigate();
   // We gain access to an exact copy of the dog & user through react hook useLocation's state
   const { state: dog, user } = location;
+  const { selectedMap } = location.state;
+  const [gameMap, setGameMap] = useState(allMaps[selectedMap]);
+  const {
+    mapLayout,
+    overlayLayout,
+    weaponLoc,
+    itemLoc,
+    exitLoc,
+    tiles,
+    dogwalk,
+    enemy,
+    overlays,
+  } = gameMap;
   // Setting up map information
   const [mapData, setMapData] = useState(mapLayout);
   const [overlayData, setOverlayData] = useState(overlayLayout);
