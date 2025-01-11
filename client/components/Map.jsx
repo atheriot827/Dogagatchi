@@ -178,9 +178,6 @@ const Map = () => {
   const handleBattleEnd = async (result) => {
     setShowBattle(false);
     setBattleActive(false);
-    console.log('handlebattlend started with result: ', result);
-    console.log('dog : ', dog);
-    console.log('user', user);
 
     // Add checks for dog and user
     if (!dog || !user) { // temporarily removing a !user check here as it is always undefined when passed from child component
