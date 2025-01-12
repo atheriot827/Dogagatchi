@@ -59,10 +59,15 @@ const dogSchema = new mongoose.Schema({
     default: 100,
     min: 25,
     max: 100,
-  }, level: {
-    type: Number, default: 1, min: 1
-  }, experience: {
-    type: Number, default: 0
+  },
+  level: {
+    type: Number,
+    default: 1,
+    min: 1,
+  },
+  experience: {
+    type: Number,
+    default: 0,
   },
   attackDmg: {
     type: Number,
@@ -102,40 +107,68 @@ const dogSchema = new mongoose.Schema({
 
 // Method to calculate level based on experience
 dogSchema.methods.calculateLevel = function () {
+dogSchema.methods.calculateLevel = function () {
   // Example: Level up every 100 experience points
   return Math.floor(this.experience / 100) + 1;
 };
 
 const Dog = mongoose.model('Dog', dogSchema);
 
-
 // Schema for Enemies
 const enemySchema = new mongoose.Schema({
   name: {
-    type: String, required: true
-  }, type: {
-    type: String, enum: ['wild_dog', 'dog_catcher', 'stray_cat', 'rival_trainer'], required: true
-  }, baseHealth: {
-    type: Number, default: 100, min: 50, max: 200
-  }, baseAttack: {
-    type: Number, default: 10, min: 5, max: 50
-  }, // For wild dogs
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ['wild_dog', 'dog_catcher', 'stray_cat', 'rival_trainer'],
+    required: true,
+  },
+  baseHealth: {
+    type: Number,
+    default: 100,
+    min: 50,
+    max: 200,
+  },
+  baseAttack: {
+    type: Number,
+    default: 10,
+    min: 5,
+    max: 50,
+  },
+  // For wild dogs
   breed: {
-    type: String, required() {
+    type: String,
+    required() {
       return this.type === 'wild_dog';
-    }
-  }, sprite: {
-    type: String, required: true
-  }, // Not sure about these yet
+    },
+  },
+  sprite: {
+    type: String,
+    required: true,
+  },
+  // Not sure about these yet
   animations: {
-    type: [String], default: ['Standing', 'Attack', 'Hurt', 'Defeat']
-  }, specialMoves: [{
-    name: String, damage: Number, animation: String, description: String
-  }], levelRange: {
-    min: {type: Number, default: 1}, max: {type: Number, default: 5}
-  }, rewards: {
-    coins: {type: Number, default: 10}, experience: {type: Number, default: 5}
-  }
+    type: [String],
+    default: ['Standing', 'Attack', 'Hurt', 'Defeat'],
+  },
+  specialMoves: [
+    {
+      name: String,
+      damage: Number,
+      animation: String,
+      description: String,
+    },
+  ],
+  levelRange: {
+    min: { type: Number, default: 1 },
+    max: { type: Number, default: 5 },
+  },
+  rewards: {
+    coins: { type: Number, default: 10 },
+    experience: { type: Number, default: 5 },
+  },
 });
 
 const Enemy = mongoose.model('Enemy', enemySchema);
@@ -214,5 +247,6 @@ module.exports = {
   DogShop,
   Word,
   User,
-  Dog, Enemy
+  Dog,
+  Enemy,
 };

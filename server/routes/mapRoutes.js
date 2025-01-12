@@ -4,9 +4,7 @@ const router = express.Router();
 const { Dog, User } = require('../db/index');
 
 router.post('/exit', (req, res) => {
-  // console.log('post to the exit test');
-  const { dog, user } = req.body.walkerInfo;
-
+  const { dog, user } = req.body;
   // Give user some coins
   User.findByIdAndUpdate(user._id, { $inc: { coinCount: 3 } }, { new: true })
     .then((asd) => {
@@ -96,12 +94,11 @@ router.post('/battle-victory', async (req, res) => {
           attackDmg: 1, // Slight attack increase after victory
           vitality: 10,
           experience: rewards.experience, // Add experience from battle
-          walksTaken: 1 // Increment walks taken
-        }
+          walksTaken: 1, // Increment walks taken
+        },
       },
       { new: true }
     );
-
 
     // Calculate new level based on experience
     const newLevel = Math.floor(updatedDog.experience / 100) + 1;
@@ -117,8 +114,8 @@ router.post('/battle-victory', async (req, res) => {
       userId,
       {
         $inc: {
-          coinCount: rewards.coins
-        }
+          coinCount: rewards.coins,
+        },
       },
       { new: true }
     );
@@ -126,7 +123,7 @@ router.post('/battle-victory', async (req, res) => {
     res.status(200).send({
       updatedDog,
       updatedUser,
-      levelUp: newLevel !== updatedDog.level
+      levelUp: newLevel !== updatedDog.level,
     });
   } catch (error) {
     console.error('Error processing battle victory', error);
@@ -144,8 +141,8 @@ router.post('/battle-defeat', async (req, res) => {
       dogId,
       {
         $set: {
-          health: 50  // Set health to 50% after defeat
-        }
+          health: 50, // Set health to 50% after defeat
+        },
       },
       { new: true }
     );
