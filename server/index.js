@@ -11,7 +11,7 @@ require('dotenv').config();
 
 const userRoutes = require('./routes/userRoutes');
 const dogRoutes = require('./routes/dogRoutes');
-const groomRoutes = require('./routes/groomRoutes');
+const groomRoutes = require('./routes/groomRoutes')
 const wordRoutes = require('./routes/wordRoutes');
 const mapRoutes = require('./routes/mapRoutes');
 
@@ -49,7 +49,7 @@ passport.use(
       passReqToCallback: true,
     },
     (req, username, password, done) => {
-      User.findOne({ username: username }).then((user) => {
+      User.findOne({ username }).then((user) => {
         if (!user) {
           return done(null, false, { message: 'Incorrect username/password' });
         }
@@ -76,9 +76,7 @@ passport.use(
       callbackURL: '/auth/google/callback',
     },
 
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
-    }
+    (accessToken, refreshToken, profile, done) => done(null, profile)
   )
 );
 
@@ -95,7 +93,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-//**************** AUTH ROUTES ********************
+//* *************** AUTH ROUTES ********************
 
 app.post(
   '/auth/login',
@@ -129,9 +127,7 @@ app.post('/auth/register', (req, res) => {
         coinCount: 1000,
         questionCount: 0,
         img,
-      }).then((user) => {
-        return res.status(201).json({ message: 'success', user });
-      });
+      }).then((user) => res.status(201).json({ message: 'success', user }));
     });
   });
 });
