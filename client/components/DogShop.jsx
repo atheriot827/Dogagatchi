@@ -53,7 +53,6 @@ function DogShop({ coins, setCoins }) {
   const handlePurchase = (dog) => {
     if (coins >= dog.price) {
       const userObj = JSON.parse(sessionStorage.getItem('user'));
-      console.log('What is this', userObj);
 
       // Create new dog in database
       axios.post('/dog', {
@@ -64,8 +63,7 @@ function DogShop({ coins, setCoins }) {
       })
       .then((response) => {
         // Update dogs list
-        console.log('what is response: ', response.data);
-        // setDogs(prev => [...prev, response.data]); //
+        
 
         // Update coins
         return axios.put(`/user/coins/${userObj._id}`, {
