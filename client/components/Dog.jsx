@@ -434,10 +434,10 @@ function Dog(props) {
             {' '}
             <Card>
               <div className='d-flex flex-column justify-content-center align-items-center align-self-center '>
-                <Card.Title class='p-3 mb-2 bg-primary text-white'>
-                  {'  '}STATS{'   '}
-                </Card.Title>
                 <Card.Text class='p-3 mb-2 bg-primary text-white'>
+                  <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                    {`STATS           `} {'\n'}
+                  </h6>
                   <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
                     {`Level: ${dog.level}           `} {'\n'}
                   </h6>
@@ -534,7 +534,7 @@ function Dog(props) {
                   striped
                   variant={healthStatus}
                   now={dog.vitality * 0.05 + medicineTimer}
-                  label='IMMUNITY'
+                  label='CONSTITUTION'
                   style={{ height: '35px' }}
                 />
 
