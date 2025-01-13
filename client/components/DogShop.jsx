@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Form from 'react-bootstrap/Form';
 
 function DogShop({ coins, setCoins }) {
   const [availableDogs, setAvailableDogs] = useState([]);
   const [selectedDog, setSelectedDog] = useState(null);
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [editingActive, setEditingActive] = useState(false); // is in edit mode
+  const [dogName, setDogName] = useState('');
+
+
 
   const DOG_BREEDS = [
     'australian_shepherd',
@@ -51,8 +57,7 @@ function DogShop({ coins, setCoins }) {
 
       // Create new dog in database
       axios.post('/dog', {
-        breed: dog.breed,
-        name: `New ${dog.breed.split('_').map(w =>
+        breed: dog.breed, name: dogName || `New ${dog.breed.split('_').map(w =>
           w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
         img: dog.animation,
         owner: userObj._id
@@ -126,6 +131,41 @@ function DogShop({ coins, setCoins }) {
         <Modal.Body>
           {selectedDog && (
             <>
+
+              <div>
+                <h4>
+                  <Badge className='mb-1'>
+                    Name your dog
+                  </Badge>
+                </h4>
+              </div>
+
+              <div>
+
+                {editingActive ? (<Form.Group className='mb-3'>
+                  <Form.Control
+                      value={dogName}
+                      onChange={(e) => {
+                        setDogName(e.target.value);
+                      }}
+                      type='text'
+                      placeholder='Click to name your dog!'
+                  />
+                </Form.Group>) : (<Card
+                    onClick={() => {
+                      setEditingActive(true);
+                    }}
+                    id='heal'
+                    body
+                    style={{width: '400px'}}
+                    className='mb-2'
+                >
+                  {dogName || 'Click to name your dog!'}
+                </Card>)}
+              </div>
+
+
+
               <img
                 src={selectedDog.animation}
                 alt={selectedDog.breed}
