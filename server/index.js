@@ -72,10 +72,8 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: `${process.env.GOOGLE_CLIENT_ID}`,
-      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      callbackURL: 'http://ec2-18-219-27-7.us-east-2.compute.amazonaws.com:4000/auth/google/callback'
-      // callbackURL: '/auth/google/callback',
+      clientID: `${process.env.GOOGLE_CLIENT_ID}`, clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`, // callbackURL: 'http://ec2-18-219-27-7.us-east-2.compute.amazonaws.com:4000/auth/google/callback'
+      callbackURL: '/auth/google/callback',
     }, async (req, accessToken, refreshToken, profile, done) => {
 
         try {
@@ -87,9 +85,7 @@ passport.use(
           if (!user) {
             user = await User.create({
               googleId: profile.id,
-              username: profile.displayName,
-              email: profile.emails[0].value,
-              cointCount: 1000,
+              username: profile.displayName, email: profile.emails[0].value, coinCount: 1000,
               questionCount: 0,
               dogCount: 0,
               breeds: [],
