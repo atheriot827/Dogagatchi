@@ -15,59 +15,27 @@ function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        localStorage.setItem('isAuthenticated', JSON.stringify(false))
-        if (user) {
-            axios
-                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                    headers: {
-                        Authorization: `Bearer ${user.access_token}`,
-                        Accept: 'application/json'
-                    }
-                })
-                .then((res) => {
-                    const username = res.data.email.replace(/@gmail\.com$/, '')
-                    const password = res.data.id
-                    const img = res.data.picture
-                    axios.post('/auth/login', { username, password, img })
-                .then((loginResponse) => {
-                    if (loginResponse.data.message === 'success') {
-                        setUserContext(loginResponse.data.user)
-                        localStorage.setItem('isAuthenticated', JSON.stringify(true))
-                        navigate('/home')
-                    } else {
-                        axios.post('/auth/register', { username, password, img })
-                .then((loginResponse) => {
-                    if (loginResponse.data.message === 'success') {
-                        setUserContext(loginResponse.data.user)
-                        localStorage.setItem('isAuthenticated', JSON.stringify(true))
-                        navigate('/home')
-                    } else {
-                        localStorage.setItem('isAuthenticated', JSON.stringify(false))
-                        setError(loginResponse.data.message)
-                        navigate({ pathname: '/' })
-                    }
-                })
-                .catch((err) => {
-                    setError(err.response.data.message)
-                    console.error('Login failed', err.response.data.message)
-                })
-                    }
-                })
-                .catch((err) => {
-                    console.error('Login failed', err)
-                })
-                
-                })
-                .catch((err) => console.error(err));
-        localStorage.setItem('isAuthenticated', JSON.stringify(false))
-            }
-    }, [user])
 
-    const login = useGoogleLogin({
-        onSuccess: (response) => setUser(response),
-        onError: (error) => console.error(`Login Failed: ${error}`, )
-    });
+    useEffect(() => {
+        // be warned this is bad and not good for security purposes i dont think
+        // should have probably used cookies 0_o may change later tonight we will see
+        // get user data from URL params added in /auth/google/callback
+        const urlParams = new URLSearchParams(window.location.search);
+        const userParam = urlParams.get('user'); // extract user data from the url param
+
+        if (userParam) {
+            try {
+                // convert userParam data to object
+                const userData = JSON.parse(decodeURIComponent(userParam));
+                // update state with userData
+                setUserContext(userData);
+                navigate('/home');
+            } catch (err) {
+                console.error('Error authenticating user data: ', err);
+            }
+        }
+    }, [navigate, setUserContext]);
+
 
     const submit = (e) => {
         e.preventDefault()
@@ -135,7 +103,16 @@ function Login() {
                         <Button variant='outline-light' name='Register' type='submit'>Register</Button>
                     </div>
                         <p style={{marginBottom: '0px', color: 'white'}}> OR </p>
-                        <Button className='mt-2' onClick={()=>login()}>Sign in with Google</Button>
+
+
+                    <Button
+                        className='mt-2'
+                        onClick={() => window.location.href = '/auth/google'}
+                    >
+                        Sign in with Google
+                    </Button>
+
+
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                 </Form>
 
