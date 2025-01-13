@@ -99,7 +99,11 @@ const allMaps = {
       '../assets/animations/DogCatcher/idle-8.png',
       '../assets/animations/DogCatcher/idle-9.png',
     ],
-
+    cow: [
+      '../assets/animations/cow/enemy1-Photoroom.png',
+      '../assets/animations/cow/enemy2-Photoroom.png',
+      '../assets/animations/cow/enemy3-Photoroom.png',
+    ],
     overlays: [
       '../assets/nothing.png', // 0
       '../assets/overlaytiles/apple-Photoroom.png', // 1
@@ -132,6 +136,7 @@ const allMaps = {
     mapCollidableTiles: [2, 6],
     dogStartingPosition: [0, 0],
     enemyStartingPosition: [5, 15],
+    cowStartingPosition: [5, 11],
   },
   map_MiddleOfNowhere: {
     mapLayout: [
@@ -234,6 +239,11 @@ const allMaps = {
       '../assets/animations/DogCatcher/idle-9.png',
     ],
 
+    cow: [
+      '../assets/animations/cow/enemy1-Photoroom.png',
+      '../assets/animations/cow/enemy2-Photoroom.png',
+      '../assets/animations/cow/enemy3-Photoroom.png',
+    ],
     overlays: [
       '../assets/nothing.png', // 0
       '../assets/overlaytiles/apple-Photoroom.png', // 1
@@ -266,6 +276,7 @@ const allMaps = {
     mapCollidableTiles: [2, 6],
     dogStartingPosition: [0, 0],
     enemyStartingPosition: [9, 9],
+    cowStartingPosition: [7, 5],
   },
 };
 export { allMaps };
