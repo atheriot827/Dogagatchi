@@ -29,7 +29,7 @@ router.post('/exit', (req, res) => {
         },
         {
           exp: 0,
-          $inc: { lvl: 1 },
+          $inc: { level: 1 },
         }
       )
         .then(() => console.log('updated level'))

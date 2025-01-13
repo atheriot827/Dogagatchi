@@ -102,10 +102,6 @@ const dogSchema = new mongoose.Schema({
       'baller',
     ],
   },
-  lvl: {
-    type: Number,
-    default: 0,
-  },
   exp: {
     type: Number,
     default: 0,
