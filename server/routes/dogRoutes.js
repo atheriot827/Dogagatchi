@@ -96,8 +96,10 @@ router.put('/:dogId', (req, res) => {
     });
 });
 
-// ROUTE FOR YELLING AT DOG
-router.put('/yell/:dogId', async (req, res) => {
+
+// **************** DOG STATS ROUTES ********************
+
+router.put('/stats/:dogId', async (req, res) => {
     const {dogId} = req.params;
     const {status} = req.body;
     if (status.decreaseHealth) {
@@ -146,6 +148,41 @@ router.put('/yell/:dogId', async (req, res) => {
     }
 });
 
+
+// **************** DOG COMMANDS ROUTES ********************
+router.put('/commands/:dogId', async (req, res) => {
+    const {dogId} = req.params;
+    const {status} = req.body;
+    const newCommand = status.newCommand;
+    const commandType = status.commandType;
+
+    if (newCommand && commandType === 'heal') {
+        try {
+            const currentDog = await Dog.findById(dogId);
+            const updatedDog = await Dog.findByIdAndUpdate(dogId, {
+                $set: {
+                    'commands.0': newCommand
+                }
+            }, {new: true});
+            res.status(200).send(updatedDog);
+        } catch (error) {
+            console.error('Error updating command', error);
+        }
+    }
+
+    if (newCommand && commandType === 'increaseAttack') {
+        try {
+            const updatedDog = await Dog.findByIdAndUpdate(dogId, {
+                $set: {
+                    'commands.1': newCommand
+                }
+            }, {new: true});
+            res.status(200).send(updatedDog);
+        } catch (error) {
+            console.error('Error updating command', error);
+        }
+    }
+});
 
 
 // **************** DELETE ROUTES ********************

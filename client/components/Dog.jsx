@@ -18,7 +18,7 @@ import VoiceTraining from './VoiceTraining';
 
 const bark = new Audio(barkSound);
 
-const Dog = (props) => {
+function Dog(props) {
   const { dogObj, setCoins, coins } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
@@ -434,12 +434,12 @@ const Dog = (props) => {
             {' '}
             <Card>
               <div className='d-flex flex-column justify-content-center align-items-center align-self-center '>
-                <Card.Title class='p-3 mb-2 bg-primary text-white'>
-                  {'  '}STATS{'   '}
-                </Card.Title>
                 <Card.Text class='p-3 mb-2 bg-primary text-white'>
                   <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
-                    {`Level: ${dog.lvl}           `} {'\n'}
+                    {`STATS           `} {'\n'}
+                  </h6>
+                  <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                    {`Level: ${dog.level}           `} {'\n'}
                   </h6>
                   <h6>
                     {`Vitality: ${dog.vitality} `} {'\n'}
@@ -455,9 +455,10 @@ const Dog = (props) => {
                   <ProgressBar
                     animated
                     striped
+                    variant='warning'
                     now={dog.exp}
-                    label={`Exp.`}
-                    style={{ height: '35px', min_width: '100px' }}
+                    label='Exp.'
+                    style={{ height: '23px', min_width: '100px' }}
                   />
                 </Card.Body>
                 <Card.Img
@@ -532,11 +533,11 @@ const Dog = (props) => {
                   animated
                   striped
                   variant={healthStatus}
-                  now={medicineTimer}
-                  label='HEALTH'
+                  now={dog.vitality * 0.05 + medicineTimer}
+                  label='CONSTITUTION'
                   style={{ height: '35px' }}
                 />
-                <br />
+
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
@@ -580,7 +581,7 @@ const Dog = (props) => {
                 )}
 
                 <div>
-                  <VoiceTraining dogObj={dogObj} />
+                  <VoiceTraining dogStateParent={dog} setDogParent={setDog} />
                 </div>
 
                 <Button onClick={fetchAndShowWord}>Speak!</Button>
@@ -610,7 +611,7 @@ const Dog = (props) => {
                       state={{ dog, user, selectedMap: 'map_DogPark' }}
                     >
                       {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
-                      <Button>{`Dog Park`}</Button>
+                      <Button>Dog Park</Button>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
@@ -619,7 +620,7 @@ const Dog = (props) => {
                       state={{ dog, user, selectedMap: 'map_MiddleOfNowhere' }}
                     >
                       {/* Here I am using the state property of react-doms Link tag to pass information to my Map component */}
-                      <Button>{`Middle Of Nowhere!`}</Button>
+                      <Button>Middle Of Nowhere!</Button>
                     </Link>
                   </Dropdown.Item>
                 </DropdownButton>
@@ -630,6 +631,6 @@ const Dog = (props) => {
       )}
     </div>
   );
-};
+}
 
 export default Dog;
