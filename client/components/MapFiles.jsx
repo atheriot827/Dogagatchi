@@ -67,22 +67,43 @@ const allMaps = {
     },
 
     dogwalk: [
-      '../assets/animations/dogwalk1.png',
-      '../assets/animations/dogwalk2.png',
-      '../assets/animations/dogwalk3.png',
-      '../assets/animations/dogwalk4.png',
-      '../assets/animations/dogwalk5.png',
-      '../assets/animations/dogwalk6.png',
-      '../assets/animations/dogwalk7.png',
-      '../assets/animations/dogwalk8.png',
+      '../assets/animations/DogWalk/dogwalk1.png',
+      '../assets/animations/DogWalk/dogwalk2.png',
+      '../assets/animations/DogWalk/dogwalk3.png',
+      '../assets/animations/DogWalk/dogwalk4.png',
+      '../assets/animations/DogWalk/dogwalk5.png',
+      '../assets/animations/DogWalk/dogwalk6.png',
+      '../assets/animations/DogWalk/dogwalk7.png',
+      '../assets/animations/DogWalk/dogwalk8.png',
     ],
 
     enemy: [
-      '../assets/overlaytiles/enemy1-Photoroom.png',
-      '../assets/overlaytiles/enemy2-Photoroom.png',
-      '../assets/overlaytiles/enemy3-Photoroom.png',
+      '../assets/animations/DogCatcher/idle-10.png',
+      '../assets/animations/DogCatcher/idle-11.png',
+      '../assets/animations/DogCatcher/idle-12.png',
+      '../assets/animations/DogCatcher/idle-13.png',
+      '../assets/animations/DogCatcher/idle-14.png',
+      '../assets/animations/DogCatcher/idle-15.png',
+      '../assets/animations/DogCatcher/idle-16.png',
+      '../assets/animations/DogCatcher/idle-17.png',
+      '../assets/animations/DogCatcher/idle-18.png',
+      '../assets/animations/DogCatcher/idle-19.png',
+      '../assets/animations/DogCatcher/idle-0.png',
+      '../assets/animations/DogCatcher/idle-1.png',
+      '../assets/animations/DogCatcher/idle-2.png',
+      '../assets/animations/DogCatcher/idle-3.png',
+      '../assets/animations/DogCatcher/idle-4.png',
+      '../assets/animations/DogCatcher/idle-5.png',
+      '../assets/animations/DogCatcher/idle-6.png',
+      '../assets/animations/DogCatcher/idle-7.png',
+      '../assets/animations/DogCatcher/idle-8.png',
+      '../assets/animations/DogCatcher/idle-9.png',
     ],
-
+    cow: [
+      '../assets/animations/cow/enemy1-Photoroom.png',
+      '../assets/animations/cow/enemy2-Photoroom.png',
+      '../assets/animations/cow/enemy3-Photoroom.png',
+    ],
     overlays: [
       '../assets/nothing.png', // 0
       '../assets/overlaytiles/apple-Photoroom.png', // 1
@@ -115,6 +136,7 @@ const allMaps = {
     mapCollidableTiles: [2, 6],
     dogStartingPosition: [0, 0],
     enemyStartingPosition: [5, 15],
+    cowStartingPosition: [5, 11],
   },
   map_MiddleOfNowhere: {
     mapLayout: [
@@ -184,22 +206,44 @@ const allMaps = {
     },
 
     dogwalk: [
-      '../assets/animations/dogwalk1.png',
-      '../assets/animations/dogwalk2.png',
-      '../assets/animations/dogwalk3.png',
-      '../assets/animations/dogwalk4.png',
-      '../assets/animations/dogwalk5.png',
-      '../assets/animations/dogwalk6.png',
-      '../assets/animations/dogwalk7.png',
-      '../assets/animations/dogwalk8.png',
+      '../assets/animations/DogWalk/dogwalk1.png',
+      '../assets/animations/DogWalk/dogwalk2.png',
+      '../assets/animations/DogWalk/dogwalk3.png',
+      '../assets/animations/DogWalk/dogwalk4.png',
+      '../assets/animations/DogWalk/dogwalk5.png',
+      '../assets/animations/DogWalk/dogwalk6.png',
+      '../assets/animations/DogWalk/dogwalk7.png',
+      '../assets/animations/DogWalk/dogwalk8.png',
     ],
 
     enemy: [
-      '../assets/overlaytiles/enemy1-Photoroom.png',
-      '../assets/overlaytiles/enemy2-Photoroom.png',
-      '../assets/overlaytiles/enemy3-Photoroom.png',
+      '../assets/animations/DogCatcher/idle-10.png',
+      '../assets/animations/DogCatcher/idle-11.png',
+      '../assets/animations/DogCatcher/idle-12.png',
+      '../assets/animations/DogCatcher/idle-13.png',
+      '../assets/animations/DogCatcher/idle-14.png',
+      '../assets/animations/DogCatcher/idle-15.png',
+      '../assets/animations/DogCatcher/idle-16.png',
+      '../assets/animations/DogCatcher/idle-17.png',
+      '../assets/animations/DogCatcher/idle-18.png',
+      '../assets/animations/DogCatcher/idle-19.png',
+      '../assets/animations/DogCatcher/idle-0.png',
+      '../assets/animations/DogCatcher/idle-1.png',
+      '../assets/animations/DogCatcher/idle-2.png',
+      '../assets/animations/DogCatcher/idle-3.png',
+      '../assets/animations/DogCatcher/idle-4.png',
+      '../assets/animations/DogCatcher/idle-5.png',
+      '../assets/animations/DogCatcher/idle-6.png',
+      '../assets/animations/DogCatcher/idle-7.png',
+      '../assets/animations/DogCatcher/idle-8.png',
+      '../assets/animations/DogCatcher/idle-9.png',
     ],
 
+    cow: [
+      '../assets/animations/cow/enemy1-Photoroom.png',
+      '../assets/animations/cow/enemy2-Photoroom.png',
+      '../assets/animations/cow/enemy3-Photoroom.png',
+    ],
     overlays: [
       '../assets/nothing.png', // 0
       '../assets/overlaytiles/apple-Photoroom.png', // 1
@@ -232,6 +276,7 @@ const allMaps = {
     mapCollidableTiles: [2, 6],
     dogStartingPosition: [0, 0],
     enemyStartingPosition: [9, 9],
+    cowStartingPosition: [7, 5],
   },
 };
 export { allMaps };

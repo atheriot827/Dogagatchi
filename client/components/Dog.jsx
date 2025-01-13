@@ -434,10 +434,10 @@ function Dog(props) {
             {' '}
             <Card>
               <div className='d-flex flex-column justify-content-center align-items-center align-self-center '>
-                <Card.Title class='p-3 mb-2 bg-primary text-white'>
-                  {'  '}STATS{'   '}
-                </Card.Title>
                 <Card.Text class='p-3 mb-2 bg-primary text-white'>
+                  <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
+                    {`STATS           `} {'\n'}
+                  </h6>
                   <h6 className='d-flex flex-column justify-content-center align-items-center align-self-center '>
                     {`Level: ${dog.level}           `} {'\n'}
                   </h6>
@@ -455,9 +455,10 @@ function Dog(props) {
                   <ProgressBar
                     animated
                     striped
+                    variant='warning'
                     now={dog.exp}
                     label='Exp.'
-                    style={{ height: '35px', min_width: '100px' }}
+                    style={{ height: '23px', min_width: '100px' }}
                   />
                 </Card.Body>
                 <Card.Img
@@ -528,15 +529,15 @@ function Dog(props) {
                     🐕‍🦺
                   </Button>
                 )}
-                {/* <ProgressBar */}
-                {/*  animated */}
-                {/*  striped */}
-                {/*  variant={healthStatus} */}
-                {/*  now={medicineTimer} */}
-                {/*  label='HEALTH' */}
-                {/*  style={{ height: '35px' }} */}
-                {/* /> */}
-                {/* <br /> */}
+                <ProgressBar
+                  animated
+                  striped
+                  variant={healthStatus}
+                  now={dog.vitality * 0.05 + medicineTimer}
+                  label='CONSTITUTION'
+                  style={{ height: '35px' }}
+                />
+
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
