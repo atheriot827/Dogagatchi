@@ -29,11 +29,13 @@ const Map = () => {
     tiles,
     dogwalk,
     enemy,
+    cow,
     overlays,
     overlayCollidableTiles,
     mapCollidableTiles,
     dogStartingPosition,
     enemyStartingPosition,
+    cowStartingPosition,
     music,
   } = gameMap;
 
@@ -69,6 +71,7 @@ const Map = () => {
   const [overlayData, setOverlayData] = useState(overlayLayout);
   const [tileSprites, setTileSprites] = useState(tiles);
   const [dogAnimation, setDogAnimation] = useState(dogwalk);
+  const [cowAnimation, setCowAnimation] = useState(cow);
   const [overlayTiles, setOverlayTiles] = useState(overlays);
   const [overlayCollidable, setOverlayCollidable] = useState(
     overlayCollidableTiles
@@ -84,8 +87,11 @@ const Map = () => {
   // X & Y starting position values based on 32px
   const [dogX32, setdogX32] = useState(dogStartingPosition[1] * 32);
   const [dogY32, setdogY32] = useState(dogStartingPosition[0] * 32);
+  const [cowX32, setcowX32] = useState(cowStartingPosition[1] * 32);
+  const [cowY32, setcowY32] = useState(cowStartingPosition[0] * 32);
   const [enemyX32, setenemyX32] = useState(enemyStartingPosition[1] * 32);
   const [enemyY32, setenemyY32] = useState(enemyStartingPosition[0] * 32);
+  const [cowPosition, setCowPosition] = useState([cowY32 / 32, cowX32 / 32]);
   const [enemyPos, setEnemyPos] = useState([enemyY32 / 32, enemyX32 / 32]);
   const [dogPosition, setDogPosition] = useState([dogY32 / 32, dogX32 / 32]);
   const [itemPosition, setItemPosition] = useState(itemLoc);
@@ -99,6 +105,9 @@ const Map = () => {
       return true;
     }
     if (overlayCollidable.includes(overlayLayout[y][x])) {
+      return true;
+    }
+    if (y === cowPosition[0] && x === cowPosition[1]) {
       return true;
     }
     return false;
@@ -402,12 +411,12 @@ const Map = () => {
               images={enemyAnimation}
               isPlaying
               initialFrame={0}
-              animationSpeed={0.1}
+              animationSpeed={0.3}
               anchor={0.5}
               x={enemyX32}
               y={enemyY32}
-              width={32}
-              height={32}
+              width={80}
+              height={80}
             />
           </Container>
           <Container position={[16, 16]}>
@@ -420,6 +429,20 @@ const Map = () => {
               anchor={0.5}
               x={dogX32}
               y={dogY32}
+              width={32}
+              height={32}
+            />
+          </Container>
+          <Container position={[16, 16]}>
+            <AnimatedSprite
+              key='cowPos'
+              images={cowAnimation}
+              isPlaying
+              initialFrame={0}
+              animationSpeed={0.1}
+              anchor={0.5}
+              x={cowX32}
+              y={cowY32}
               width={32}
               height={32}
             />
