@@ -533,7 +533,7 @@ function Dog(props) {
                   animated
                   striped
                   variant={healthStatus}
-                  now={medicineTimer + dog.vitality * 0.05}
+                  now={dog.vitality * 0.05 + medicineTimer}
                   label='IMMUNITY'
                   style={{ height: '35px' }}
                 />
