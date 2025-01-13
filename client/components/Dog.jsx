@@ -455,9 +455,10 @@ function Dog(props) {
                   <ProgressBar
                     animated
                     striped
+                    variant='warning'
                     now={dog.exp}
                     label='Exp.'
-                    style={{ height: '35px', min_width: '100px' }}
+                    style={{ height: '23px', min_width: '100px' }}
                   />
                 </Card.Body>
                 <Card.Img
@@ -528,15 +529,15 @@ function Dog(props) {
                     🐕‍🦺
                   </Button>
                 )}
-                {/* <ProgressBar */}
-                {/*  animated */}
-                {/*  striped */}
-                {/*  variant={healthStatus} */}
-                {/*  now={medicineTimer} */}
-                {/*  label='HEALTH' */}
-                {/*  style={{ height: '35px' }} */}
-                {/* /> */}
-                {/* <br /> */}
+                <ProgressBar
+                  animated
+                  striped
+                  variant={healthStatus}
+                  now={medicineTimer + dog.vitality * 0.05}
+                  label='IMMUNITY'
+                  style={{ height: '35px' }}
+                />
+
                 {meals ? (
                   <DropdownButton title='Feed from Pantry!'>
                     {meals.map((meal) => (
