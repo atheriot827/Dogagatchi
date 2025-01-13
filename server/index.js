@@ -74,13 +74,37 @@ passport.use(
     {
       clientID: `${process.env.GOOGLE_CLIENT_ID}`,
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      // callbackURL: 'http://ec2-13-58-125-52.us-east-2.compute.amazonaws.com/auth/google/callback'
-      callbackURL: '/auth/google/callback',
-    },
+      callbackURL: 'http://ec2-18-219-27-7.us-east-2.compute.amazonaws.com:4000/auth/google/callback'
+      // callbackURL: '/auth/google/callback',
+    }, async (req, accessToken, refreshToken, profile, done) => {
 
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
-    }
+        try {
+
+          // check if user exists in DB
+          let user = await User.findOne({googleId: profile.id});
+
+          // create user with default values
+          if (!user) {
+            user = await User.create({
+              googleId: profile.id,
+              username: profile.displayName,
+              email: profile.emails[0].value,
+              cointCount: 1000,
+              questionCount: 0,
+              dogCount: 0,
+              breeds: [],
+              meals: [],
+              activities: [],
+              medicines: [],
+            });
+          }
+          return done(null, user);
+
+        } catch (error) {
+          console.log('error creating new user after authentication', error);
+          return done(null, user);
+        }
+      }
   )
 );
 
@@ -138,8 +162,7 @@ app.post('/auth/register', (req, res) => {
   });
 });
 
-app.get(
-  'auth/google',
+app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
@@ -147,11 +170,15 @@ app.get('/fail', (req, res) => {
   res.json({ message: req.flash('error')[0] });
 });
 
-app.get(
-  'auth/google/callback',
+app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/fail' }),
   (req, res) => {
-    res.redirect('/home');
+
+    // be warned this is bad and not good for security purposes i dont think
+    // should have probably used cookies 0_o may change later tonight we will see
+    // encode user object to send data in URL param
+    const userData = encodeURIComponent(JSON.stringify(req.user));
+    res.redirect(`/?user=${userData}`);
   }
 );
 
